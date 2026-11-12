@@ -65,7 +65,7 @@ const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
 const procWrap = $('[data-pin="process"]'), stepsEl = $$('.step'), procImgs = $$('.proc__visual img');
 const fieldWrap = $('#fieldWrap'), track = $('#fieldTrack');
-const netBg = $('#netBg'), network = $('#network');
+const disc = $('#disc'), discWord = $('#discWord'), discFg = $('#discFg'), discBg = $('.disc__bg');
 
 const sizeField = () => {
   if (!isDesk()){ fieldWrap.style.height = ''; return; }
@@ -85,9 +85,11 @@ function frame(){
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
     tcards.forEach(c => c.style.transform = `translate3d(0,${(tp-.5)*parseFloat(c.dataset.speed)*vh}px,0)`);
-    /* network bg parallax */
-    const nr = network.getBoundingClientRect(); const np = (vh - nr.top) / (vh + nr.height);
-    netBg.style.transform = `translate3d(0,${(np-.5)*-12}%,0)`;
+    /* network: word sinks behind the hiker, layers drift at different speeds */
+    const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
+    discWord.style.transform = `translate3d(0,${(dp-.5)*30}vh,0) scale(${1.14 - dp*.22})`;
+    discBg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
+    discFg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
   }
 
   if (isDesk()){
@@ -209,6 +211,15 @@ form.addEventListener('submit', e => {
     <div className="is-root">
 <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
   <defs>
+    <symbol id="navmap" viewBox="0 0 520 420" fill="none" stroke="currentColor">
+      <g strokeWidth=".8" opacity=".55"><path d="M0 70H520M0 175H520M0 280H520M0 385H520M90 0V420M210 0V420M330 0V420M450 0V420" strokeDasharray="2 6" /></g>
+      <g font-family="almoni,sans-serif" fontSize="11" fill="currentColor" stroke="none" opacity=".8"><text x="96" y="64">31°46′</text><text x="216" y="64">32°10′</text><text x="336" y="64">32°48′</text><text x="456" y="166">35°13′</text></g>
+      <path d="M40 360C90 330 120 340 150 300S200 220 250 230 320 280 360 230 390 140 440 120 490 90 505 60" strokeWidth="2.2" strokeDasharray="7 7" strokeLinecap="round" />
+      <g strokeWidth="1.6"><circle cx="40" cy="360" r="6" /><circle cx="250" cy="230" r="5" /><path d="M499 54l12 12M511 54l-12 12" /></g>
+      <path d="M150 300c-4-10 4-18 10-18s14 8 10 18l-10 14z" strokeWidth="1.6" fill="currentColor" fill-opacity=".18" />
+      <g transform="translate(400 300)" strokeWidth="1.3"><circle r="54" /><circle r="44" strokeDasharray="1.5 4" /><path d="M0-70V70M-70 0H70" strokeWidth=".7" /><path d="M0-62L10-10 0 0-10-10z" fill="currentColor" fill-opacity=".55" /><path d="M0 62L10 10 0 0-10 10z" /><path d="M-40-40l8 4M40-40l-4 8M-40 40l4-8M40 40l-8-4" strokeWidth=".9" /><text y="-74" text-anchor="middle" font-family="almoni-tzar,sans-serif" fontSize="16" fontWeight="800" fill="currentColor" stroke="none">N</text></g>
+      <g strokeWidth=".9" opacity=".7"><path d="M60 120c40-30 90-30 120 0s70 30 100 0" /><path d="M70 140c40-24 80-24 106 0s66 24 96 0" /><path d="M84 160c34-18 66-18 88 0s56 18 82 0" /></g>
+    </symbol>
     <symbol id="topo" viewBox="0 0 800 600" fill="none" stroke="currentColor" strokeWidth="1.2">
       <path d="M458 300C459 301 460 303 460 304C461 305 461 307 460 308C460 309 460 310 459 312C458 313 457 314 456 315C455 316 454 317 453 318C451 319 450 320 449 321C447 321 446 322 444 323C443 323 441 324 440 325C439 325 437 326 436 326C435 327 433 328 432 328C431 329 430 329 428 330C427 330 426 331 425 332C423 332 422 332 421 333C419 333 418 334 417 334C415 334 414 334 412 334C411 334 410 334 408 334C407 334 405 334 404 333C403 333 401 333 400 333C399 332 397 332 396 332C395 331 394 331 393 331C391 331 390 330 389 330C388 330 386 330 385 330C384 330 382 330 381 331C379 331 377 331 376 331C374 331 372 331 370 331C369 331 367 331 365 331C363 331 361 330 359 330C358 329 356 329 355 328C353 327 352 326 351 325C350 324 349 323 349 322C348 321 348 319 348 318C348 316 348 315 349 314C349 312 350 311 351 310C351 308 352 307 353 306C354 305 355 304 356 303C357 302 358 301 358 300C359 299 359 298 360 297C360 297 360 296 360 295C360 294 360 293 360 292C360 291 360 290 359 289C359 288 359 287 359 286C358 285 358 283 358 282C358 281 358 280 358 279C359 277 359 276 360 275C360 274 361 273 362 272C363 271 364 270 365 269C366 268 367 267 368 267C370 266 371 266 373 265C374 264 375 264 377 264C378 263 380 263 381 262C383 262 384 262 386 261C387 261 389 261 390 260C392 260 394 260 395 259C397 259 398 259 400 259C402 259 403 259 405 259C407 259 408 259 410 260C411 260 413 260 414 261C416 262 417 262 418 263C419 264 420 265 421 266C422 267 423 269 424 270C424 271 425 272 425 274C425 275 426 276 426 277C426 278 426 279 427 280C427 281 427 282 427 283C428 284 428 284 429 285C430 286 431 286 432 287C433 287 434 287 435 288C437 288 438 289 440 289C441 290 443 290 445 291C447 292 448 293 450 294C452 294 453 295 455 296C456 298 457 299 458 300Z" vectorEffect="non-scaling-stroke" />
       <path d="M539 295C541 298 542 301 543 304C544 307 544 310 543 312C543 315 541 318 539 321C538 323 535 326 533 328C530 330 527 332 523 334C520 336 517 338 513 339C509 341 506 342 502 343C499 344 495 345 492 346C489 347 486 348 483 349C480 350 477 351 475 352C472 354 469 355 467 356C464 357 462 358 459 359C457 360 454 361 452 362C449 363 446 364 443 365C441 365 438 366 435 366C432 367 429 367 426 367C423 367 420 367 418 367C415 367 412 366 409 366C406 366 403 365 401 365C398 364 395 364 393 363C390 363 387 362 385 362C382 362 379 362 376 362C373 362 370 362 367 362C363 362 360 362 356 362C353 362 349 363 345 362C341 362 337 362 333 361C329 361 325 360 322 359C318 358 315 357 312 355C309 353 306 351 304 349C302 347 300 344 299 342C298 339 298 336 298 333C298 330 298 327 299 324C300 322 302 319 303 316C305 313 307 310 309 308C311 306 313 303 315 301C316 299 318 297 320 295C321 293 322 291 323 289C324 288 324 286 324 284C324 282 324 280 323 278C323 276 322 274 322 272C321 269 320 267 319 264C319 262 318 259 318 256C317 253 317 251 317 248C318 245 318 242 319 240C321 237 322 235 324 232C326 230 328 228 331 226C333 224 336 223 339 221C342 220 345 219 348 218C352 217 355 216 359 215C362 215 365 214 369 214C372 213 376 213 379 213C382 212 386 212 389 212C392 212 396 211 399 211C402 211 406 211 409 211C412 211 416 211 419 211C422 212 426 212 429 213C432 213 435 214 438 215C441 217 444 218 446 220C449 221 451 223 453 225C455 228 457 230 458 232C460 234 461 237 462 239C463 242 464 244 465 246C466 248 466 250 467 252C468 254 469 256 470 258C471 259 472 260 474 262C475 263 477 264 480 265C482 266 485 267 488 268C491 269 495 270 498 271C502 272 506 274 510 275C513 277 517 278 521 280C525 282 528 285 531 287C534 290 537 292 539 295Z" vectorEffect="non-scaling-stroke" />
@@ -308,6 +319,7 @@ form.addEventListener('submit', e => {
 
 <section className="about" id="about">
   <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
+  <svg className="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap" /></svg>
   <div className="about__grid">
     <div>
       <h2 className="rv">עשור על השבילים.<br /><em>בלב הקהל החרדי.</em></h2>
@@ -321,7 +333,7 @@ form.addEventListener('submit', e => {
       <p className="quote rv">"המטרה שלי פשוטה:<br />שכל משפחה חרדית תכיר את הארץ,<br />ושכל מקום טוב יכיר אותה."</p>
     </div>
     <div className="portrait rv d2">
-      <div className="frame"><img src="assets/img/portrait.jpg" alt="איור דיוקן של ישראל שפירא עם תרמיל וקווי גובה" /></div>
+      <div className="frame"><img src="assets/img/israel.jpg" alt="ישראל שפירא בשביל ביער, עם תרמיל טיולים" /></div>
       <div className="chip"><img src="assets/img/ein-gedi.jpg" alt="מפל שולמית בעין גדי" loading="lazy" /></div>
       <div className="stamp" aria-label="10+ שנים בשטח">
         <svg className="stamp__ring" viewBox="0 0 200 200" aria-hidden="true">
@@ -372,8 +384,7 @@ form.addEventListener('submit', e => {
 
 
 <section className="press" aria-label="ערוצים וגופים שעבדתי איתם">
-  <h2 className="rv">מרואיין, מרצה ושותף<br /><em>בבתים הגדולים.</em></h2>
-  <div className="press__band"><div className="press__track"><div className="press__copy"><div className="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div></div><div className="press__copy" aria-hidden="true"><div className="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div></div></div></div>
+  <div className="press__band"><div className="press__track"><div className="press__copy"><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div></div><div className="press__copy" aria-hidden="true"><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div></div></div></div>
 </section>
 
 
@@ -395,30 +406,31 @@ form.addEventListener('submit', e => {
         <div className="svc__label"><i>05</i>הרצאות</div>
         <div className="svc__label"><i>06</i>קורס מדריכים</div>
       </div>
-      <div className="svc__head"><h2>מה אני עושה · <em>לבעלי עסקים ולמטיילים</em></h2></div>
+      <div className="svc__head"><h2>לבעלי עסקים <em>ולמטיילים</em></h2></div>
       <div className="svc__text">
-        <div className="svc__item"><span className="kicker">השירות המרכזי</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>אני מגיע, חווה את המקום ומספר עליו לקהילה שלי בסרטונים, בסטטוסים ובערוצים שבהם הקהל החרדי באמת נמצא. תוכן שנראה כמו המלצה מחבר, לא כמו פרסומת.</p><a className="btn btn-rust" href="#contact">לבדיקת התאמה</a></div>
-        <div className="svc__item"><span className="kicker">לבעלי עסקים חרדים</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים וגם עושים עסקים. מסלול מודרך והיכרויות אמיתיות, קשרים שנבנים על השביל ומחזיקים הרבה אחרי.</p><a className="btn btn-rust" href="#network">ליום הבא</a></div>
-        <div className="svc__item"><span className="kicker">לקהלים רחבים</span><h3>טיולים מודרכים</h3><p>מסלולים מותאמים למשפחות, ישיבות, מוסדות וקהילות. מהמעיין הנסתר ועד התצפית הגדולה.</p><a className="btn btn-rust" href="#contact">לתיאום טיול</a></div>
-        <div className="svc__item"><span className="kicker">לעצמאים ולצוותים</span><h3>סדנאות וימי גיבוש</h3><p>סדנאות לעצמאים בטבע וימי גיבוש לצוותים. לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a className="btn btn-rust" href="#contact">לפרטים</a></div>
-        <div className="svc__item"><span className="kicker">לקהילות ולכנסים</span><h3>הרצאות</h3><p>הרצאות מרתקות על טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a className="btn btn-rust" href="#contact">להזמנת הרצאה</a></div>
-        <div className="svc__item"><span className="kicker">מטעם אוניברסיטת חיפה</span><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים, מהשטח ועם ניסיון של עשור.</p><a className="btn btn-rust" href="#contact">להצטרפות</a></div>
+        <div className="svc__item"><h3>שיווק ופרסום לאתרי תיירות</h3><p>אני מגיע, חווה את המקום ומספר עליו לקהילה שלי בסרטונים, בסטטוסים ובערוצים שבהם הקהל החרדי באמת נמצא. תוכן שנראה כמו המלצה מחבר, לא כמו פרסומת.</p><a className="btn btn-rust" href="#contact">לבדיקת התאמה</a></div>
+        <div className="svc__item"><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים וגם עושים עסקים. מסלול מודרך והיכרויות אמיתיות, קשרים שנבנים על השביל ומחזיקים הרבה אחרי.</p><a className="btn btn-rust" href="#network">ליום הבא</a></div>
+        <div className="svc__item"><h3>טיולים מודרכים</h3><p>מסלולים מותאמים למשפחות, ישיבות, מוסדות וקהילות. מהמעיין הנסתר ועד התצפית הגדולה.</p><a className="btn btn-rust" href="#contact">לתיאום טיול</a></div>
+        <div className="svc__item"><h3>סדנאות וימי גיבוש</h3><p>סדנאות לעצמאים בטבע וימי גיבוש לצוותים. לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a className="btn btn-rust" href="#contact">לפרטים</a></div>
+        <div className="svc__item"><h3>הרצאות</h3><p>הרצאות מרתקות על טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a className="btn btn-rust" href="#contact">להזמנת הרצאה</a></div>
+        <div className="svc__item"><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים מטעם אוניברסיטת חיפה,<br />מהשטח ועם ניסיון של עשור.</p><a className="btn btn-rust" href="#contact">להצטרפות</a></div>
       </div>
     </div>
   </div>
   <div className="mob">
-    <h2>מה אני עושה<br /><em>לבעלי עסקים ולמטיילים.</em></h2>
-    <article className="mcard rv"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy" /><span className="kicker">השירות המרכזי</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p></article>
-    <article className="mcard rv"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy" /><span className="kicker">לבעלי עסקים</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים.</p></article>
-    <article className="mcard rv"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy" /><span className="kicker">לקהלים רחבים</span><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p></article>
-    <article className="mcard rv"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><span className="kicker">לעצמאים ולצוותים</span><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p></article>
-    <article className="mcard rv"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy" /><span className="kicker">לקהילות ולכנסים</span><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע.</p></article>
-    <article className="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>מטעם אוניברסיטת חיפה</span><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים.</p></article>
+    <h2>לבעלי עסקים<br /><em>ולמטיילים.</em></h2>
+    <article className="mcard rv"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy" /><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p></article>
+    <article className="mcard rv"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy" /><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים.</p></article>
+    <article className="mcard rv"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy" /><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p></article>
+    <article className="mcard rv"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p></article>
+    <article className="mcard rv"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy" /><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע.</p></article>
+    <article className="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה.</p></article>
   </div>
 </section>
 
 
 <section className="why">
+  <svg className="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap" /></svg>
   <div className="why__grid">
     <div>
       <h2 className="rv">יש לכם מקום מדהים.<br /><em>חסר לכם קהל?</em></h2>
@@ -481,11 +493,6 @@ form.addEventListener('submit', e => {
           <div className="reel"><video src="assets/video/reel4.mp4" poster="assets/video/reel4.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: הטבה לעוקבים"><i><svg><use href="#i-play" /></svg></i><b>הטבה בלעדית לעוקבים</b><span>שיתוף פעולה עם בית עסק</span></button></div>
           <div className="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: מלון בוטיק"><i><svg><use href="#i-play" /></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div>
         </div>
-        <div className="field__media dark">
-          <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
-          <b>מרואיין<br />בכל<br />הערוצים.</b>
-          <p>התארחתי באולפן חדשות 13 ובערוצי התקשורת החרדית והכללית, כקול של הטבע והטיולים בציבור החרדי.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -493,16 +500,24 @@ form.addEventListener('submit', e => {
 
 
 <section className="network" id="network">
-  <div className="network__bg" id="netBg"><img src="assets/img/galilee-view.jpg" alt="נוף הגליל מתצפית" loading="lazy" /></div>
-  <div className="box rv">
-    <h2>גם מטיילים.<br /><em>גם עושים עסקים.</em></h2>
-    <p className="lead">ימי נטוורקינג בטבע לבעלי עסקים חרדים.<br />יום אחד בשטח שמחליף עשר פגישות במשרד.</p>
+  <div className="disc" id="disc">
+    <img className="disc__bg" src="assets/img/network-hiker.jpg" alt="מטייל עם תרמיל על רכס, מביט אל עמק ירוק" loading="lazy" />
+    <div className="disc__word" id="discWord" aria-hidden="true">נטוורקינג</div>
+    <img className="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="" loading="lazy" />
+    <div className="disc__cap">ימי נטוורקינג בטבע · לבעלי עסקים חרדים</div>
+  </div>
+  <div className="net__body">
+    <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
+    <div className="net__intro">
+      <h2 className="rv">גם מטיילים.<br /><em>גם עושים עסקים.</em></h2>
+      <p className="lead rv d1">יום אחד בשטח<br />שמחליף עשר פגישות במשרד.</p>
+      <a className="btn btn-rust rv d2" href="#contact">להרשמה ליום הבא</a>
+    </div>
     <ul className="net__list">
-      <li><i><img className="ic3" src="assets/icons/backpack.png" alt="" loading="lazy" /></i><span><b>מסלול מודרך</b>מותאם לקבוצה, בקצב נוח לכולם</span></li>
-      <li><i><img className="ic3" src="assets/icons/people.png" alt="" loading="lazy" /></i><span><b>היכרויות אמיתיות</b>בעלי עסקים מתחומים משלימים</span></li>
-      <li><i><img className="ic3" src="assets/icons/chat.png" alt="" loading="lazy" /></i><span><b>שיחות שנשארות</b>קשרים שנבנים על השביל ומחזיקים</span></li>
+      <li className="rv"><i><img className="ic3" src="assets/icons/backpack.png" alt="" loading="lazy" /></i><b>מסלול מודרך</b><span>מותאם לקבוצה,<br />בקצב נוח לכולם</span></li>
+      <li className="rv d1"><i><img className="ic3" src="assets/icons/people.png" alt="" loading="lazy" /></i><b>היכרויות אמיתיות</b><span>בעלי עסקים<br />מתחומים משלימים</span></li>
+      <li className="rv d2"><i><img className="ic3" src="assets/icons/chat.png" alt="" loading="lazy" /></i><b>שיחות שנשארות</b><span>קשרים שנבנים על השביל<br />ומחזיקים</span></li>
     </ul>
-    <a className="btn btn-rust" href="#contact">להרשמה ליום הבא</a>
   </div>
 </section>
 
@@ -513,7 +528,7 @@ form.addEventListener('submit', e => {
     <div>
       <h2 className="rv">מטיילים איתי<br /><em>בכל ערוץ.</em></h2>
     </div>
-    <p className="lead rv d1" style={{ color: "hsl(var(--cream)/.8)" }}>מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br />בחרו את הערוץ שנוח לכם.</p>
+    <p className="lead rv d1 to-left" style={{ color: "hsl(var(--cream)/.8)" }}>מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br />בחרו את הערוץ שנוח לכם.</p>
   </div>
   <div className="ch-grid">
     <a className="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img className="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><span className="ic"><img className="ic3" src="assets/icons/drop.png" alt="" loading="lazy" /></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
@@ -560,6 +575,11 @@ form.addEventListener('submit', e => {
       <button className="btn btn-rust" type="submit">שליחה <svg><use href="#i-arrow" /></svg></button>
     </form>
   </div>
+  <svg className="ridge" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 150L70 118 130 132 210 74 270 104 330 88 400 126 470 60 540 98 600 84 660 112 740 46 810 92 880 78 950 118 1020 70 1090 102 1160 64 1230 110 1300 90 1370 120 1440 96V220H0Z" fill="hsl(var(--sage))" opacity=".35" />
+    <path d="M0 176L90 146 160 160 240 120 300 140 380 104 450 146 520 128 590 156 660 112 730 142 800 122 880 158 950 116 1030 150 1100 132 1180 160 1250 124 1330 152 1440 132V220H0Z" fill="hsl(var(--forest))" />
+    <path d="M0 200L80 184 150 194 230 168 310 188 390 172 470 196 560 176 640 192 720 170 800 190 880 178 960 198 1040 174 1120 192 1200 180 1290 198 1370 182 1440 190V220H0Z" fill="hsl(var(--deep))" />
+  </svg>
 </section>
 </main>
 

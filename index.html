@@ -44,6 +44,7 @@ html{-webkit-text-size-adjust:100%;scrollbar-width:thin;scrollbar-color:hsl(var(
 ::-webkit-scrollbar-thumb{background:hsl(var(--forest)/.45);border-radius:99px;border:3px solid hsl(var(--paper))}
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
 body{margin:0;background:hsl(var(--paper));color:hsl(var(--ink));font-family:var(--font-body);font-weight:400;font-size:var(--fs-body);line-height:1.65;overflow-x:clip;-webkit-font-smoothing:antialiased}
+body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;background:url(assets/img/grain.png);background-size:240px;opacity:.55}
 ::selection{background:hsl(var(--forest));color:hsl(var(--cream))}
 .dark ::selection{background:hsl(var(--cream));color:hsl(var(--deep))}
 img,video,svg{display:block;max-width:100%}
@@ -124,12 +125,12 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .hero__inner{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:110px var(--side) 120px;will-change:transform,opacity}
 .hero__inner .kicker{color:hsl(var(--cream))}
 .hero__inner .kicker::after{content:"";width:30px;height:1.5px;background:currentColor}
-.hero h1{font-size:var(--fs-hero);margin:0 0 26px;text-shadow:0 4px 40px hsl(var(--deep)/.35)}
-.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1{font-size:var(--fs-hero);line-height:.86;margin:0 0 22px;text-shadow:0 4px 40px hsl(var(--deep)/.35)}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
 .hero h1 .ln>span{display:block;transform:translateY(110%);animation:rise 1.2s var(--ease) forwards}
 .hero h1 .ln:nth-child(2)>span{animation-delay:.14s;color:hsl(var(--sage))}
 @keyframes rise{to{transform:none}}
-.hero .lead{color:hsl(0 0% 100%/.88);margin-inline:auto}
+.hero .lead{color:hsl(0 0% 100%/.88);margin-inline:auto;line-height:1.42}
 .hero .pair{margin-top:34px}
 .fade-in{opacity:0;animation:fin 1s .55s var(--ease) forwards}.fade-in.l2{animation-delay:.75s}
 @keyframes fin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
@@ -156,11 +157,16 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 @media (max-width:600px){.tiul__row{gap:10px}.tcard{width:calc((100% - 30px)/4)}.tcard b{font-size:2.6rem}.tcard span{font-size:11px}}
 
 /* ================= ABOUT ================= */
-.about{position:relative;background:hsl(var(--cream));padding:var(--sec) var(--side);overflow:hidden}
+.about,.why,.process,.contact{background-image:radial-gradient(ellipse 80% 60% at 20% 0%,hsl(42 60% 98%/.7),transparent 70%),radial-gradient(ellipse 70% 50% at 100% 100%,hsl(36 40% 85%/.45),transparent 70%)}
+.about{position:relative;background-color:hsl(var(--cream));padding:var(--sec) var(--side);overflow:hidden}
 .about .topo{width:min(950px,130vw);right:-18%;top:-8%}
 .about__grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(40px,6vw,110px);align-items:center}
 .about h2{margin:20px 0 26px}
 .creds{list-style:none;padding:0;margin:var(--group) 0 0}
+.navmap{position:absolute;pointer-events:none;z-index:0;color:hsl(var(--forest));opacity:.16}
+.about .navmap{width:min(560px,70vw);left:-40px;bottom:-30px}
+.why .navmap{width:min(560px,70vw);left:-30px;top:-20px;transform:scaleY(-1)}
+@media (max-width:900px){.about .navmap,.why .navmap{width:min(420px,90vw);opacity:.12}}
 .creds li{display:grid;grid-template-columns:58px 1fr;gap:16px;align-items:center;padding:14px 0;border-top:1px solid hsl(var(--forest)/.15)}
 .creds li:last-child{border-bottom:1px solid hsl(var(--forest)/.15)}
 .creds .ic{width:58px;height:58px;transition:transform .5s var(--ease)}
@@ -170,7 +176,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .quote{margin:var(--group) 0 0;font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;line-height:1.2;color:hsl(var(--forest));padding-inline-start:22px;border-inline-start:3px solid hsl(var(--rust))}
 .portrait{position:relative}
 .portrait .frame{aspect-ratio:4/5;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -40px hsl(var(--deep)/.45)}
-.portrait .frame img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.portrait .frame img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
 .portrait .chip{position:absolute;bottom:-28px;left:-28px;width:44%;aspect-ratio:1;border-radius:var(--r);overflow:hidden;border:6px solid hsl(var(--cream));box-shadow:0 30px 60px -30px hsl(var(--deep)/.6)}
 .portrait .chip img{width:100%;height:100%;object-fit:cover}
 .stamp{position:absolute;top:-18px;right:-34px;width:178px;height:178px;border-radius:50%;color:hsl(var(--cream));background:radial-gradient(circle at 32% 28%,hsl(23 70% 56%),hsl(var(--rust)) 55%,hsl(23 65% 36%));box-shadow:inset 0 3px 6px hsl(0 0% 100%/.25),inset 0 -6px 12px hsl(23 70% 20%/.45),0 22px 40px -18px hsl(23 70% 25%/.75);transform:rotate(-10deg);display:grid;place-items:center}
@@ -195,14 +201,14 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .reg__slide img{width:100%;height:100%;object-fit:cover}
 .reg__slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,hsl(var(--deep)/.15),hsl(var(--deep)/.72))}
 .reg__titles{position:absolute;inset:0;z-index:2;color:#fff;pointer-events:none}
-.reg__t{position:absolute;top:50%;right:var(--side);transform-origin:right center;will-change:transform,opacity,filter;max-width:min(80vw,900px)}
+.reg__t{position:absolute;top:52%;right:var(--side);transform-origin:right center;will-change:transform,opacity,filter;max-width:min(80vw,900px)}
 .loc{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:700;letter-spacing:.04em;color:hsl(var(--cream))}
 .loc i{width:38px;height:38px;flex:none}
 .reg__t h3{font-size:clamp(3.4rem,9vw,10rem);line-height:.88;margin:16px 0 14px}
 .reg__t h3 .lat{display:inline-block;font-size:.26em;color:hsl(var(--rust));margin-inline-start:.4em;vertical-align:.4em;font-weight:400}
 .reg__t p{margin:0;max-width:40ch;font-weight:300;opacity:.9}
 .reg__head{position:absolute;top:110px;right:var(--side);left:var(--side);z-index:3;color:#fff;display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
-.reg__head h2{font-size:clamp(1.6rem,2.4vw,2.4rem)}
+.reg__head h2{font-size:var(--fs-h2)}
 .reg__nav{position:absolute;bottom:34px;right:var(--side);left:var(--side);z-index:3;color:#fff;display:flex;align-items:center;gap:22px;font-size:var(--fs-small)}
 .num{font-family:var(--font-display);font-size:2.4rem;font-weight:800;line-height:1;min-width:2ch}
 .bar{flex:1;height:2px;background:hsl(0 0% 100%/.2);position:relative;overflow:hidden}
@@ -213,16 +219,13 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .hint::after{content:"";width:1px;height:26px;background:currentColor;animation:hint 1.8s infinite}
 @keyframes hint{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ================= PRESS (tilted infinite logo loop) ================= */
-.press{position:relative;background:hsl(var(--cream));padding:var(--sec) 0 calc(var(--sec) + 20px);overflow:hidden;text-align:center}
-.press h2{padding-inline:var(--side);margin-bottom:var(--group)}
-.press__band{width:120vw;margin-inline-start:-10vw;transform:rotate(3deg);background:hsl(var(--forest));padding:22px 0;box-shadow:0 30px 60px -40px hsl(var(--deep)/.7);direction:ltr}
-.press__track{display:flex;width:max-content;animation:pressLoop 34s linear infinite}
-.press__band:hover .press__track{animation-play-state:paused}
-.press__copy{display:flex;gap:22px;padding-inline-end:22px;flex:none}
-.plogo{width:clamp(170px,15vw,230px);height:clamp(88px,7.5vw,112px);background:hsl(var(--paper));border-radius:18px;display:grid;place-items:center;padding:18px 26px;flex:none;transition:transform .4s var(--ease)}
-.plogo:hover{transform:translateY(-4px) rotate(-2deg)}
-.plogo img{max-width:100%;max-height:100%;object-fit:contain}
+/* ================= PRESS (logos only, tilted band bridging two dark sections) ================= */
+.press{position:relative;z-index:6;height:0;background:hsl(var(--deep));overflow-x:clip}
+.press__band{position:absolute;top:50%;left:-6vw;width:112vw;transform:translateY(-50%) rotate(2.2deg);background:hsl(var(--forest));border-block:1px solid hsl(var(--sage)/.25);padding:clamp(18px,1.8vw,26px) 0;overflow:hidden;direction:ltr;box-shadow:0 24px 50px -20px hsl(var(--deep)/.8)}
+.press__track{display:flex;width:max-content;animation:pressLoop 38s linear infinite}
+.press__copy{display:flex;align-items:center;flex:none}
+.plogo{flex:none;height:clamp(40px,3.4vw,54px);margin-inline:clamp(30px,3.6vw,60px);display:flex;align-items:center;justify-content:center}
+.plogo img{width:auto;height:100%;max-width:none;filter:brightness(0) invert(94%) sepia(12%) saturate(300%) hue-rotate(10deg);opacity:.92}
 @keyframes pressLoop{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 /* ================= SERVICES (card expands into background) ================= */
 .services{position:relative;background:hsl(var(--deep))}
@@ -237,10 +240,10 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .svc__text{position:absolute;z-index:21;top:54%;right:var(--side);width:min(40vw,560px);color:#fff}
 .svc__item{position:absolute;right:0;left:0;top:0;will-change:opacity,transform}
 .svc__item .kicker{color:hsl(var(--cream));background:hsl(0 0% 100%/.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:.45em 1em;border-radius:999px;letter-spacing:.04em}
-.svc__item h3{font-size:clamp(3rem,5.6vw,6rem);line-height:.9;margin:16px 0 18px}
+.svc__item h3{font-size:clamp(3rem,5.6vw,6rem);line-height:.9;margin:0 0 18px}
 .svc__item p{margin:0 0 26px;font-weight:300;opacity:.88;max-width:44ch}
 .svc__head{position:absolute;z-index:21;top:110px;right:var(--side);color:#fff}
-.svc__head h2{font-size:clamp(1.6rem,2.4vw,2.4rem)}
+.svc__head h2{font-size:var(--fs-h2)}
 .svc__head h2 em{color:hsl(var(--sage))}
 .svc__foot{position:absolute;z-index:21;bottom:34px;right:var(--side);left:var(--side);display:flex;align-items:center;gap:22px;color:#fff}
 
@@ -263,7 +266,8 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 }
 
 /* ================= WHY ================= */
-.why{background:hsl(var(--paper));padding:var(--sec) var(--side)}
+.why{position:relative;overflow:hidden;background:hsl(var(--paper));padding:var(--sec) var(--side)}
+.why__grid{position:relative;z-index:1}
 .why__grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,6vw,100px);align-items:start}
 .why h2{margin:20px 0 24px}
 .chips{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px;max-width:560px}
@@ -349,21 +353,28 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .krow.inv span.o{color:transparent;-webkit-text-stroke:1.5px hsl(var(--deep)/.5)}
 .krow.inv span.dotsep{color:hsl(var(--rust))}
 
-/* ================= NETWORK ================= */
-.network{position:relative;min-height:clamp(600px,92vh,860px);display:flex;align-items:center;padding:var(--sec) var(--side);color:#fff;overflow:hidden;isolation:isolate}
-.network__bg{position:absolute;inset:-10% 0;z-index:-2;will-change:transform}
-.network__bg img{width:100%;height:100%;object-fit:cover}
-.network::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(270deg,hsl(var(--deep)/.55),transparent 70%)}
-.network .box{max-width:560px;background:hsl(var(--deep)/.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid hsl(var(--cream)/.12);border-radius:28px;padding:clamp(28px,3.4vw,50px)}
-.network .kicker{color:hsl(var(--cream))}
-.network h2{margin:18px 0 22px}.network h2 em{color:hsl(var(--sage))}
-.network .lead{color:hsl(0 0% 100%/.88)}
-.net__list{list-style:none;padding:0;margin:30px 0 34px;display:grid;gap:12px}
-.net__list li{display:flex;gap:16px;align-items:center;padding:12px 14px;border-radius:16px;background:hsl(var(--cream)/.07);border:1px solid hsl(var(--cream)/.08)}
-.net__list i{width:54px;height:54px;flex:none}
-.net__list b{display:block;font-size:18px;color:#fff}
-.net__list span{font-size:15px;opacity:.85;line-height:1.35}
-@media (max-width:760px){.network{align-items:flex-end;padding-top:40vh}}
+/* ================= NETWORK (inspiration: giant word behind the hiker) ================= */
+.network{position:relative;background:hsl(var(--deep));color:hsl(var(--cream))}
+.disc{position:relative;height:100dvh;min-height:560px;overflow:hidden;isolation:isolate}
+.disc__bg,.disc__fg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%;will-change:transform}
+.disc__bg{z-index:0}
+.disc::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,hsl(var(--deep)/.25),transparent 30%,transparent 70%,hsl(var(--deep)))}
+.disc__word{position:absolute;z-index:2;left:0;right:0;top:20%;text-align:center;font-family:var(--font-display);font-weight:800;font-size:clamp(4.4rem,18vw,19rem);line-height:.8;color:#fff;letter-spacing:-.01em;will-change:transform;text-shadow:0 10px 60px hsl(var(--deep)/.25);white-space:nowrap}
+.disc__fg{z-index:3}
+.disc__cap{position:absolute;z-index:4;bottom:42px;left:0;right:0;text-align:center;font-size:var(--fs-small);font-weight:700;letter-spacing:.08em;color:#fff}
+.net__body{position:relative;overflow:hidden;padding:clamp(40px,4vw,70px) var(--side) var(--sec);display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,6vw,100px);align-items:center}
+.net__body .topo{width:min(900px,130vw);left:-20%;top:-30%}
+.net__intro,.net__list{position:relative;z-index:1}
+.network h2{margin:0 0 22px}.network h2 em{color:hsl(var(--sage))}
+.network .lead{color:hsl(var(--cream)/.85);margin-bottom:30px}
+.net__list{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.net__list li{display:flex;flex-direction:column;gap:6px;padding:22px 20px;border-radius:22px;background:hsl(var(--cream)/.06);border:1px solid hsl(var(--cream)/.1);transition:transform .5s var(--ease),background .4s}
+.net__list li:hover{transform:translateY(-6px);background:hsl(var(--cream)/.1)}
+.net__list i{width:70px;height:70px;margin-bottom:8px}
+.net__list b{font-family:var(--font-display);font-size:1.7rem;line-height:1;color:#fff}
+.net__list span{font-size:15px;opacity:.8;line-height:1.4}
+@media (max-width:1000px){.net__body{grid-template-columns:1fr}}
+@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:78svh}.disc__word{top:24%;font-size:22vw}}
 
 /* ================= COMMUNITY ================= */
 .community{position:relative;background:hsl(var(--forest));padding:var(--sec) var(--side);overflow:hidden}
@@ -372,6 +383,8 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .sec-head h2{margin-top:18px}
 .community .kicker{color:hsl(var(--sage))}
 .community h2 em{color:hsl(var(--sage))}
+.to-left{text-align:left;text-align-last:left}
+@media (max-width:700px){.to-left{text-align:right;text-align-last:auto}}
 .ch-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .ch{--tint:95 24% 68%;position:relative;overflow:hidden;isolation:isolate;display:flex;align-items:center;gap:18px;padding:20px 22px;border-radius:22px;background:linear-gradient(135deg,hsl(var(--tint)/.32),hsl(var(--tint)/.08) 60%),hsl(var(--deep)/.45);border:1px solid hsl(var(--tint)/.35);transition:transform .5s var(--ease),box-shadow .5s,background .4s}
 .ch:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 26px 50px -26px hsl(var(--tint)/.9);background:linear-gradient(135deg,hsl(var(--tint)/.55),hsl(var(--tint)/.15) 70%),hsl(var(--deep)/.45)}
@@ -390,7 +403,8 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 @media (max-width:560px){.ch-grid{grid-template-columns:1fr}}
 
 /* ================= CONTACT + FOOTER ================= */
-.contact{position:relative;background:hsl(var(--cream));padding:var(--sec) var(--side);overflow:hidden}
+.contact{position:relative;background:hsl(var(--cream));padding:var(--sec) var(--side) calc(var(--sec) + clamp(90px,12vw,200px));overflow:hidden}
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:clamp(90px,14vw,220px);z-index:0;pointer-events:none}
 .contact .topo{width:min(1100px,160vw);right:-25%;top:-15%}
 .contact__grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);align-items:center}
 .contact h2{margin:18px 0 22px}
@@ -458,6 +472,15 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
+    <symbol id="navmap" viewBox="0 0 520 420" fill="none" stroke="currentColor">
+      <g stroke-width=".8" opacity=".55"><path d="M0 70H520M0 175H520M0 280H520M0 385H520M90 0V420M210 0V420M330 0V420M450 0V420" stroke-dasharray="2 6"/></g>
+      <g font-family="almoni,sans-serif" font-size="11" fill="currentColor" stroke="none" opacity=".8"><text x="96" y="64">31°46′</text><text x="216" y="64">32°10′</text><text x="336" y="64">32°48′</text><text x="456" y="166">35°13′</text></g>
+      <path d="M40 360C90 330 120 340 150 300S200 220 250 230 320 280 360 230 390 140 440 120 490 90 505 60" stroke-width="2.2" stroke-dasharray="7 7" stroke-linecap="round"/>
+      <g stroke-width="1.6"><circle cx="40" cy="360" r="6"/><circle cx="250" cy="230" r="5"/><path d="M499 54l12 12M511 54l-12 12"/></g>
+      <path d="M150 300c-4-10 4-18 10-18s14 8 10 18l-10 14z" stroke-width="1.6" fill="currentColor" fill-opacity=".18"/>
+      <g transform="translate(400 300)" stroke-width="1.3"><circle r="54"/><circle r="44" stroke-dasharray="1.5 4"/><path d="M0-70V70M-70 0H70" stroke-width=".7"/><path d="M0-62L10-10 0 0-10-10z" fill="currentColor" fill-opacity=".55"/><path d="M0 62L10 10 0 0-10 10z"/><path d="M-40-40l8 4M40-40l-4 8M-40 40l4-8M40 40l-8-4" stroke-width=".9"/><text y="-74" text-anchor="middle" font-family="almoni-tzar,sans-serif" font-size="16" font-weight="800" fill="currentColor" stroke="none">N</text></g>
+      <g stroke-width=".9" opacity=".7"><path d="M60 120c40-30 90-30 120 0s70 30 100 0"/><path d="M70 140c40-24 80-24 106 0s66 24 96 0"/><path d="M84 160c34-18 66-18 88 0s56 18 82 0"/></g>
+    </symbol>
     <symbol id="topo" viewBox="0 0 800 600" fill="none" stroke="currentColor" stroke-width="1.2">
       <path d="M458 300C459 301 460 303 460 304C461 305 461 307 460 308C460 309 460 310 459 312C458 313 457 314 456 315C455 316 454 317 453 318C451 319 450 320 449 321C447 321 446 322 444 323C443 323 441 324 440 325C439 325 437 326 436 326C435 327 433 328 432 328C431 329 430 329 428 330C427 330 426 331 425 332C423 332 422 332 421 333C419 333 418 334 417 334C415 334 414 334 412 334C411 334 410 334 408 334C407 334 405 334 404 333C403 333 401 333 400 333C399 332 397 332 396 332C395 331 394 331 393 331C391 331 390 330 389 330C388 330 386 330 385 330C384 330 382 330 381 331C379 331 377 331 376 331C374 331 372 331 370 331C369 331 367 331 365 331C363 331 361 330 359 330C358 329 356 329 355 328C353 327 352 326 351 325C350 324 349 323 349 322C348 321 348 319 348 318C348 316 348 315 349 314C349 312 350 311 351 310C351 308 352 307 353 306C354 305 355 304 356 303C357 302 358 301 358 300C359 299 359 298 360 297C360 297 360 296 360 295C360 294 360 293 360 292C360 291 360 290 359 289C359 288 359 287 359 286C358 285 358 283 358 282C358 281 358 280 358 279C359 277 359 276 360 275C360 274 361 273 362 272C363 271 364 270 365 269C366 268 367 267 368 267C370 266 371 266 373 265C374 264 375 264 377 264C378 263 380 263 381 262C383 262 384 262 386 261C387 261 389 261 390 260C392 260 394 260 395 259C397 259 398 259 400 259C402 259 403 259 405 259C407 259 408 259 410 260C411 260 413 260 414 261C416 262 417 262 418 263C419 264 420 265 421 266C422 267 423 269 424 270C424 271 425 272 425 274C425 275 426 276 426 277C426 278 426 279 427 280C427 281 427 282 427 283C428 284 428 284 429 285C430 286 431 286 432 287C433 287 434 287 435 288C437 288 438 289 440 289C441 290 443 290 445 291C447 292 448 293 450 294C452 294 453 295 455 296C456 298 457 299 458 300Z" vector-effect="non-scaling-stroke"/>
       <path d="M539 295C541 298 542 301 543 304C544 307 544 310 543 312C543 315 541 318 539 321C538 323 535 326 533 328C530 330 527 332 523 334C520 336 517 338 513 339C509 341 506 342 502 343C499 344 495 345 492 346C489 347 486 348 483 349C480 350 477 351 475 352C472 354 469 355 467 356C464 357 462 358 459 359C457 360 454 361 452 362C449 363 446 364 443 365C441 365 438 366 435 366C432 367 429 367 426 367C423 367 420 367 418 367C415 367 412 366 409 366C406 366 403 365 401 365C398 364 395 364 393 363C390 363 387 362 385 362C382 362 379 362 376 362C373 362 370 362 367 362C363 362 360 362 356 362C353 362 349 363 345 362C341 362 337 362 333 361C329 361 325 360 322 359C318 358 315 357 312 355C309 353 306 351 304 349C302 347 300 344 299 342C298 339 298 336 298 333C298 330 298 327 299 324C300 322 302 319 303 316C305 313 307 310 309 308C311 306 313 303 315 301C316 299 318 297 320 295C321 293 322 291 323 289C324 288 324 286 324 284C324 282 324 280 323 278C323 276 322 274 322 272C321 269 320 267 319 264C319 262 318 259 318 256C317 253 317 251 317 248C318 245 318 242 319 240C321 237 322 235 324 232C326 230 328 228 331 226C333 224 336 223 339 221C342 220 345 219 348 218C352 217 355 216 359 215C362 215 365 214 369 214C372 213 376 213 379 213C382 212 386 212 389 212C392 212 396 211 399 211C402 211 406 211 409 211C412 211 416 211 419 211C422 212 426 212 429 213C432 213 435 214 438 215C441 217 444 218 446 220C449 221 451 223 453 225C455 228 457 230 458 232C460 234 461 237 462 239C463 242 464 244 465 246C466 248 466 250 467 252C468 254 469 256 470 258C471 259 472 260 474 262C475 263 477 264 480 265C482 266 485 267 488 268C491 269 495 270 498 271C502 272 506 274 510 275C513 277 517 278 521 280C525 282 528 285 531 287C534 290 537 292 539 295Z" vector-effect="non-scaling-stroke"/>
@@ -557,6 +580,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 <!-- ================= ABOUT ================= -->
 <section class="about" id="about">
   <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
+  <svg class="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap"/></svg>
   <div class="about__grid">
     <div>
       <h2 class="rv">עשור על השבילים.<br><em>בלב הקהל החרדי.</em></h2>
@@ -570,7 +594,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
       <p class="quote rv">"המטרה שלי פשוטה:<br>שכל משפחה חרדית תכיר את הארץ,<br>ושכל מקום טוב יכיר אותה."</p>
     </div>
     <div class="portrait rv d2">
-      <div class="frame"><img src="assets/img/portrait.jpg" alt="איור דיוקן של ישראל שפירא עם תרמיל וקווי גובה"></div>
+      <div class="frame"><img src="assets/img/israel.jpg" alt="ישראל שפירא בשביל ביער, עם תרמיל טיולים"></div>
       <div class="chip"><img src="assets/img/ein-gedi.jpg" alt="מפל שולמית בעין גדי" loading="lazy"></div>
       <div class="stamp" aria-label="10+ שנים בשטח">
         <svg class="stamp__ring" viewBox="0 0 200 200" aria-hidden="true">
@@ -621,8 +645,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 
 <!-- ================= PRESS / PARTNERS ================= -->
 <section class="press" aria-label="ערוצים וגופים שעבדתי איתם">
-  <h2 class="rv">מרואיין, מרצה ושותף<br><em>בבתים הגדולים.</em></h2>
-  <div class="press__band"><div class="press__track"><div class="press__copy"><div class="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy"></div><div class="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy"></div><div class="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div></div><div class="press__copy" aria-hidden="true"><div class="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy"></div><div class="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo"><img src="assets/logos/kan11.svg" alt="כאן 11" loading="lazy"></div><div class="plogo"><img src="assets/logos/reshet13.svg" alt="רשת 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/news13.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div></div></div></div>
+  <div class="press__band"><div class="press__track"><div class="press__copy"><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div></div><div class="press__copy" aria-hidden="true"><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy"></div></div></div></div>
 </section>
 
 <!-- ================= SERVICES ================= -->
@@ -644,30 +667,31 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
         <div class="svc__label"><i>05</i>הרצאות</div>
         <div class="svc__label"><i>06</i>קורס מדריכים</div>
       </div>
-      <div class="svc__head"><h2>מה אני עושה · <em>לבעלי עסקים ולמטיילים</em></h2></div>
+      <div class="svc__head"><h2>לבעלי עסקים <em>ולמטיילים</em></h2></div>
       <div class="svc__text">
-        <div class="svc__item"><span class="kicker">השירות המרכזי</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>אני מגיע, חווה את המקום ומספר עליו לקהילה שלי בסרטונים, בסטטוסים ובערוצים שבהם הקהל החרדי באמת נמצא. תוכן שנראה כמו המלצה מחבר, לא כמו פרסומת.</p><a class="btn btn-rust" href="#contact">לבדיקת התאמה</a></div>
-        <div class="svc__item"><span class="kicker">לבעלי עסקים חרדים</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים וגם עושים עסקים. מסלול מודרך והיכרויות אמיתיות, קשרים שנבנים על השביל ומחזיקים הרבה אחרי.</p><a class="btn btn-rust" href="#network">ליום הבא</a></div>
-        <div class="svc__item"><span class="kicker">לקהלים רחבים</span><h3>טיולים מודרכים</h3><p>מסלולים מותאמים למשפחות, ישיבות, מוסדות וקהילות. מהמעיין הנסתר ועד התצפית הגדולה.</p><a class="btn btn-rust" href="#contact">לתיאום טיול</a></div>
-        <div class="svc__item"><span class="kicker">לעצמאים ולצוותים</span><h3>סדנאות וימי גיבוש</h3><p>סדנאות לעצמאים בטבע וימי גיבוש לצוותים. לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a class="btn btn-rust" href="#contact">לפרטים</a></div>
-        <div class="svc__item"><span class="kicker">לקהילות ולכנסים</span><h3>הרצאות</h3><p>הרצאות מרתקות על טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a class="btn btn-rust" href="#contact">להזמנת הרצאה</a></div>
-        <div class="svc__item"><span class="kicker">מטעם אוניברסיטת חיפה</span><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים, מהשטח ועם ניסיון של עשור.</p><a class="btn btn-rust" href="#contact">להצטרפות</a></div>
+        <div class="svc__item"><h3>שיווק ופרסום לאתרי תיירות</h3><p>אני מגיע, חווה את המקום ומספר עליו לקהילה שלי בסרטונים, בסטטוסים ובערוצים שבהם הקהל החרדי באמת נמצא. תוכן שנראה כמו המלצה מחבר, לא כמו פרסומת.</p><a class="btn btn-rust" href="#contact">לבדיקת התאמה</a></div>
+        <div class="svc__item"><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים וגם עושים עסקים. מסלול מודרך והיכרויות אמיתיות, קשרים שנבנים על השביל ומחזיקים הרבה אחרי.</p><a class="btn btn-rust" href="#network">ליום הבא</a></div>
+        <div class="svc__item"><h3>טיולים מודרכים</h3><p>מסלולים מותאמים למשפחות, ישיבות, מוסדות וקהילות. מהמעיין הנסתר ועד התצפית הגדולה.</p><a class="btn btn-rust" href="#contact">לתיאום טיול</a></div>
+        <div class="svc__item"><h3>סדנאות וימי גיבוש</h3><p>סדנאות לעצמאים בטבע וימי גיבוש לצוותים. לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a class="btn btn-rust" href="#contact">לפרטים</a></div>
+        <div class="svc__item"><h3>הרצאות</h3><p>הרצאות מרתקות על טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a class="btn btn-rust" href="#contact">להזמנת הרצאה</a></div>
+        <div class="svc__item"><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים מטעם אוניברסיטת חיפה,<br>מהשטח ועם ניסיון של עשור.</p><a class="btn btn-rust" href="#contact">להצטרפות</a></div>
       </div>
     </div>
   </div>
   <div class="mob">
-    <h2>מה אני עושה<br><em>לבעלי עסקים ולמטיילים.</em></h2>
-    <article class="mcard rv"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy"><span class="kicker">השירות המרכזי</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p></article>
-    <article class="mcard rv"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy"><span class="kicker">לבעלי עסקים</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים.</p></article>
-    <article class="mcard rv"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy"><span class="kicker">לקהלים רחבים</span><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p></article>
-    <article class="mcard rv"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="kicker">לעצמאים ולצוותים</span><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p></article>
-    <article class="mcard rv"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy"><span class="kicker">לקהילות ולכנסים</span><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע.</p></article>
-    <article class="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy"><span class="loc"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i>מטעם אוניברסיטת חיפה</span><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים.</p></article>
+    <h2>לבעלי עסקים<br><em>ולמטיילים.</em></h2>
+    <article class="mcard rv"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy"><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p></article>
+    <article class="mcard rv"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy"><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים.</p></article>
+    <article class="mcard rv"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy"><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p></article>
+    <article class="mcard rv"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p></article>
+    <article class="mcard rv"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy"><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע.</p></article>
+    <article class="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy"><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה.</p></article>
   </div>
 </section>
 
 <!-- ================= WHY ================= -->
 <section class="why">
+  <svg class="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap"/></svg>
   <div class="why__grid">
     <div>
       <h2 class="rv">יש לכם מקום מדהים.<br><em>חסר לכם קהל?</em></h2>
@@ -730,11 +754,6 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
           <div class="reel"><video src="assets/video/reel4.mp4" poster="assets/video/reel4.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: הטבה לעוקבים"><i><svg><use href="#i-play"/></svg></i><b>הטבה בלעדית לעוקבים</b><span>שיתוף פעולה עם בית עסק</span></button></div>
           <div class="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: מלון בוטיק"><i><svg><use href="#i-play"/></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div>
         </div>
-        <div class="field__media dark">
-          <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
-          <b>מרואיין<br>בכל<br>הערוצים.</b>
-          <p>התארחתי באולפן חדשות 13 ובערוצי התקשורת החרדית והכללית, כקול של הטבע והטיולים בציבור החרדי.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -742,16 +761,24 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 
 <!-- ================= NETWORK ================= -->
 <section class="network" id="network">
-  <div class="network__bg" id="netBg"><img src="assets/img/galilee-view.jpg" alt="נוף הגליל מתצפית" loading="lazy"></div>
-  <div class="box rv">
-    <h2>גם מטיילים.<br><em>גם עושים עסקים.</em></h2>
-    <p class="lead">ימי נטוורקינג בטבע לבעלי עסקים חרדים.<br>יום אחד בשטח שמחליף עשר פגישות במשרד.</p>
+  <div class="disc" id="disc">
+    <img class="disc__bg" src="assets/img/network-hiker.jpg" alt="מטייל עם תרמיל על רכס, מביט אל עמק ירוק" loading="lazy">
+    <div class="disc__word" id="discWord" aria-hidden="true">נטוורקינג</div>
+    <img class="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="" loading="lazy">
+    <div class="disc__cap">ימי נטוורקינג בטבע · לבעלי עסקים חרדים</div>
+  </div>
+  <div class="net__body">
+    <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
+    <div class="net__intro">
+      <h2 class="rv">גם מטיילים.<br><em>גם עושים עסקים.</em></h2>
+      <p class="lead rv d1">יום אחד בשטח<br>שמחליף עשר פגישות במשרד.</p>
+      <a class="btn btn-rust rv d2" href="#contact">להרשמה ליום הבא</a>
+    </div>
     <ul class="net__list">
-      <li><i><img class="ic3" src="assets/icons/backpack.png" alt="" loading="lazy"></i><span><b>מסלול מודרך</b>מותאם לקבוצה, בקצב נוח לכולם</span></li>
-      <li><i><img class="ic3" src="assets/icons/people.png" alt="" loading="lazy"></i><span><b>היכרויות אמיתיות</b>בעלי עסקים מתחומים משלימים</span></li>
-      <li><i><img class="ic3" src="assets/icons/chat.png" alt="" loading="lazy"></i><span><b>שיחות שנשארות</b>קשרים שנבנים על השביל ומחזיקים</span></li>
+      <li class="rv"><i><img class="ic3" src="assets/icons/backpack.png" alt="" loading="lazy"></i><b>מסלול מודרך</b><span>מותאם לקבוצה,<br>בקצב נוח לכולם</span></li>
+      <li class="rv d1"><i><img class="ic3" src="assets/icons/people.png" alt="" loading="lazy"></i><b>היכרויות אמיתיות</b><span>בעלי עסקים<br>מתחומים משלימים</span></li>
+      <li class="rv d2"><i><img class="ic3" src="assets/icons/chat.png" alt="" loading="lazy"></i><b>שיחות שנשארות</b><span>קשרים שנבנים על השביל<br>ומחזיקים</span></li>
     </ul>
-    <a class="btn btn-rust" href="#contact">להרשמה ליום הבא</a>
   </div>
 </section>
 
@@ -762,7 +789,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
     <div>
       <h2 class="rv">מטיילים איתי<br><em>בכל ערוץ.</em></h2>
     </div>
-    <p class="lead rv d1" style="color:hsl(var(--cream)/.8)">מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br>בחרו את הערוץ שנוח לכם.</p>
+    <p class="lead rv d1 to-left" style="color:hsl(var(--cream)/.8)">מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br>בחרו את הערוץ שנוח לכם.</p>
   </div>
   <div class="ch-grid">
     <a class="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img class="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="ic"><img class="ic3" src="assets/icons/drop.png" alt="" loading="lazy"></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
@@ -809,6 +836,11 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
       <button class="btn btn-rust" type="submit">שליחה <svg><use href="#i-arrow"/></svg></button>
     </form>
   </div>
+  <svg class="ridge" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 150L70 118 130 132 210 74 270 104 330 88 400 126 470 60 540 98 600 84 660 112 740 46 810 92 880 78 950 118 1020 70 1090 102 1160 64 1230 110 1300 90 1370 120 1440 96V220H0Z" fill="hsl(var(--sage))" opacity=".35"/>
+    <path d="M0 176L90 146 160 160 240 120 300 140 380 104 450 146 520 128 590 156 660 112 730 142 800 122 880 158 950 116 1030 150 1100 132 1180 160 1250 124 1330 152 1440 132V220H0Z" fill="hsl(var(--forest))"/>
+    <path d="M0 200L80 184 150 194 230 168 310 188 390 172 470 196 560 176 640 192 720 170 800 190 880 178 960 198 1040 174 1120 192 1200 180 1290 198 1370 182 1440 190V220H0Z" fill="hsl(var(--deep))"/>
+  </svg>
 </section>
 </main>
 
@@ -887,7 +919,7 @@ const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
 const procWrap = $('[data-pin="process"]'), stepsEl = $$('.step'), procImgs = $$('.proc__visual img');
 const fieldWrap = $('#fieldWrap'), track = $('#fieldTrack');
-const netBg = $('#netBg'), network = $('#network');
+const disc = $('#disc'), discWord = $('#discWord'), discFg = $('#discFg'), discBg = $('.disc__bg');
 
 const sizeField = () => {
   if (!isDesk()){ fieldWrap.style.height = ''; return; }
@@ -907,9 +939,11 @@ function frame(){
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
     tcards.forEach(c => c.style.transform = `translate3d(0,${(tp-.5)*parseFloat(c.dataset.speed)*vh}px,0)`);
-    /* network bg parallax */
-    const nr = network.getBoundingClientRect(); const np = (vh - nr.top) / (vh + nr.height);
-    netBg.style.transform = `translate3d(0,${(np-.5)*-12}%,0)`;
+    /* network: word sinks behind the hiker, layers drift at different speeds */
+    const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
+    discWord.style.transform = `translate3d(0,${(dp-.5)*30}vh,0) scale(${1.14 - dp*.22})`;
+    discBg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
+    discFg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
   }
 
   if (isDesk()){
