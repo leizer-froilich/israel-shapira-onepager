@@ -168,8 +168,49 @@ function frame(){
 
   requestAnimationFrame(frame);
 }
+
+/* tiul captions: fill the full width of each image */
+const fitCaps = () => $$('.tcard figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
+fitCaps(); addEventListener('resize', fitCaps); if (document.fonts) document.fonts.ready.then(fitCaps);
+
+/* buttons: a little compass that spins on hover */
+$$('.btn').forEach(b => b.insertAdjacentHTML('afterbegin', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));
 sizeField(); addEventListener('resize', sizeField); addEventListener('load', sizeField);
 requestAnimationFrame(frame);
+
+
+/* ---- Waze-style route (custom scrollbar) ---- */
+const route = $('#route'), rBase = $('#rBase'), rDone = $('#rDone'), rCar = $('#rCar'), rEta = $('#rEta'), rName = $('#rName'), rPct = $('#rPct');
+const stops = [['#hero','יוצאים לדרך'],['#about','נעים להכיר'],['#regions','איפה מטיילים'],['#services','לבעלי עסקים'],['.why','למה איתי'],['#process','ארבע תחנות'],['#field','מהשטח'],['#network','נטוורקינג'],['#community','הקהילה'],['#contact','הגעתם ליעד']].map(([q,n])=>[$(q),n]).filter(a=>a[0]);
+const rLen = rBase.getTotalLength();
+let rLast = -1, rTimer = 0, rDrag = false;
+const maxY = () => document.documentElement.scrollHeight - innerHeight;
+function routeTick(){
+  const p = clamp(scrollY / Math.max(1, maxY()));
+  if (Math.abs(p - rLast) > .0004){
+    if (rLast >= 0){ route.classList.add('moving'); clearTimeout(rTimer); rTimer = setTimeout(()=>route.classList.remove('moving'), 1100); }
+    rLast = p;
+    const W = route.clientWidth, H = route.clientHeight, pt = rBase.getPointAtLength(p * rLen);
+    const x = pt.x / 34 * W, yy = pt.y / 1000 * H;
+    rCar.style.transform = `translate3d(${x}px,${yy}px,0)`;
+    rEta.style.transform = route.classList.contains('moving') || route.matches(':hover') ? `translate3d(0,${yy - 16}px,0)` : `translate3d(8px,${yy - 16}px,0)`;
+    rDone.setAttribute('stroke-dasharray', `${p*1000} 1000`);
+    let name = stops[0][1];
+    stops.forEach(([el,n]) => { if (el.getBoundingClientRect().top < innerHeight*.45) name = n; });
+    rName.textContent = name; rPct.textContent = Math.round(p*100) + '%';
+    route.setAttribute('aria-valuenow', Math.round(p*100));
+  }
+  requestAnimationFrame(routeTick);
+}
+requestAnimationFrame(routeTick);
+const routeTo = (e) => {
+  const r = route.getBoundingClientRect(), p = clamp((e.clientY - r.top) / r.height), y = p * maxY();
+  if (window.siteLenis) siteLenis.scrollTo(y, {immediate: rDrag}); else scrollTo(0, y);
+};
+route.addEventListener('pointerdown', e => { rDrag = true; route.setPointerCapture(e.pointerId); routeTo(e); });
+route.addEventListener('pointermove', e => { if (rDrag) routeTo(e); });
+const rUp = () => { rDrag = false; };
+route.addEventListener('pointerup', rUp); route.addEventListener('pointercancel', rUp);
 
 const onS = () => header.classList.toggle('solid', scrollY > innerHeight*.6);
 onS(); addEventListener('scroll', onS, {passive:true});
@@ -307,10 +348,10 @@ form.addEventListener('submit', e => {
 <section className="tiul dark" id="tiul">
   <svg className="topo" viewBox="0 0 800 600" aria-hidden="true" style={{ width: "min(1200px,160vw)", right: "-30%", top: "-10%" }}><use href="#topo" /></svg>
   <div className="tiul__row">
-    <div className="tcard" data-speed="-.12"><figure><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /></figure><span>מעיינות</span></div>
-    <div className="tcard" data-speed=".08"><figure><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /></figure><span>שבילים</span></div>
-    <div className="tcard" data-speed="-.04"><figure><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /></figure><span>מפלים</span></div>
-    <div className="tcard" data-speed=".14"><figure><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /></figure><span>נופים</span></div>
+    <div className="tcard" data-speed="-.12"><figure><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption>מעיינות</figcaption></figure></div>
+    <div className="tcard" data-speed=".08"><figure><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption>שבילים</figcaption></figure></div>
+    <div className="tcard" data-speed="-.04"><figure><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption>מפלים</figcaption></figure></div>
+    <div className="tcard" data-speed=".14"><figure><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption>נופים</figcaption></figure></div>
   </div>
   <h2 className="rv">כל טיול מתחיל<br /><em>במי שמוביל אותו.</em></h2>
   <p className="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br />והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
@@ -368,7 +409,6 @@ form.addEventListener('submit', e => {
       <div className="reg__nav">
         <span className="num" id="regNum">01</span><span style={{ opacity: ".6" }}>/ 05</span>
         <div className="bar"><i id="regBar"></i></div>
-        <div className="names" id="regNames"><span>הגליל</span><span>הכנרת</span><span>מדבר יהודה</span><span>עין גדי</span><span>הנגב</span></div>
       </div>
     </div>
   </div>
@@ -380,11 +420,6 @@ form.addEventListener('submit', e => {
     <article className="mcard rv"><img src="assets/img/ein-gedi.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>המעיינות הנדירים</span><h3>עין גדי</h3><p>מפלים בלב המדבר.</p></article>
     <article className="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>דרום</span><h3>הנגב</h3><p>מכתש רמון ומרחבים אינסופיים.</p></article>
   </div>
-</section>
-
-
-<section className="press" aria-label="ערוצים וגופים שעבדתי איתם">
-  <div className="press__band"><div className="press__track"><div className="press__copy"><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div></div><div className="press__copy" aria-hidden="true"><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div></div></div></div>
 </section>
 
 
@@ -429,10 +464,15 @@ form.addEventListener('submit', e => {
 </section>
 
 
+<section className="press" aria-label="ערוצים וגופים שעבדתי איתם">
+  <div className="press__band"><div className="press__track"><div className="press__copy"><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy" /></div></div><div className="press__copy" aria-hidden="true"><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div><div className="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy" /></div><div className="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy" /></div><div className="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy" /></div><div className="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy" /></div></div></div></div>
+</section>
+
+
 <section className="why">
   <svg className="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap" /></svg>
   <div className="why__grid">
-    <div>
+    <div className="why__intro">
       <h2 className="rv">יש לכם מקום מדהים.<br /><em>חסר לכם קהל?</em></h2>
       <p className="lead rv d1" style={{ color: "hsl(var(--stone))" }}>הציבור החרדי הוא קהל נאמן, משפחתי ועצום,<br />אבל הוא לא נמצא איפה שכולם מפרסמים.<br />אני כבר שם.</p>
       <div className="chips rv d2">
@@ -460,10 +500,10 @@ form.addEventListener('submit', e => {
           <h2>ארבע תחנות<br /><em>בדרך ללקוחות.</em></h2>
           <ol className="steps">
             <span className="fill" id="stepFill"></span>
-            <li className="step on"><span className="dot">1</span><h3>שיחת היכרות</h3><p>מבינים מה המקום שלכם מציע, למי הוא מתאים ומה היעד.</p></li>
-            <li className="step"><span className="dot">2</span><h3>מגיע לשטח</h3><p>אני חווה את המקום בעצמי, כי אני ממליץ רק על מה שאני מאמין בו.</p></li>
-            <li className="step"><span className="dot">3</span><h3>יוצרים תוכן</h3><p>סרטונים וסטוריז אותנטיים, בשפה ובטון שהקהל החרדי מתחבר אליהם.</p></li>
-            <li className="step"><span className="dot">4</span><h3>הקהל מגיע</h3><p>הפצה בכל הערוצים והקהילות, ושיחות טלפון שמתחילות להיכנס.</p></li>
+            <li className="step on"><span className="dot"><img className="ic3" src="assets/icons/n1.png" alt="1" /></span><h3>שיחת היכרות</h3><p>מבינים מה המקום שלכם מציע, למי הוא מתאים ומה היעד.</p></li>
+            <li className="step"><span className="dot"><img className="ic3" src="assets/icons/n2.png" alt="2" /></span><h3>מגיע לשטח</h3><p>אני חווה את המקום בעצמי, כי אני ממליץ רק על מה שאני מאמין בו.</p></li>
+            <li className="step"><span className="dot"><img className="ic3" src="assets/icons/n3.png" alt="3" /></span><h3>יוצרים תוכן</h3><p>סרטונים וסטוריז אותנטיים, בשפה ובטון שהקהל החרדי מתחבר אליהם.</p></li>
+            <li className="step"><span className="dot"><img className="ic3" src="assets/icons/n4.png" alt="4" /></span><h3>הקהל מגיע</h3><p>הפצה בכל הערוצים והקהילות, ושיחות טלפון שמתחילות להיכנס.</p></li>
           </ol>
         </div>
         <div className="proc__visual">
@@ -504,20 +544,17 @@ form.addEventListener('submit', e => {
     <img className="disc__bg" src="assets/img/network-hiker.jpg" alt="מטייל עם תרמיל על רכס, מביט אל עמק ירוק" loading="lazy" />
     <div className="disc__word" id="discWord" aria-hidden="true">נטוורקינג</div>
     <img className="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="" loading="lazy" />
-    <div className="disc__cap">ימי נטוורקינג בטבע · לבעלי עסקים חרדים</div>
   </div>
   <div className="net__body">
     <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
-    <div className="net__intro">
-      <h2 className="rv">גם מטיילים.<br /><em>גם עושים עסקים.</em></h2>
-      <p className="lead rv d1">יום אחד בשטח<br />שמחליף עשר פגישות במשרד.</p>
-      <a className="btn btn-rust rv d2" href="#contact">להרשמה ליום הבא</a>
-    </div>
+    <h2 className="net__h rv">גם מטיילים.<br /><em>גם עושים עסקים.</em></h2>
     <ul className="net__list">
       <li className="rv"><i><img className="ic3" src="assets/icons/backpack.png" alt="" loading="lazy" /></i><b>מסלול מודרך</b><span>מותאם לקבוצה,<br />בקצב נוח לכולם</span></li>
       <li className="rv d1"><i><img className="ic3" src="assets/icons/people.png" alt="" loading="lazy" /></i><b>היכרויות אמיתיות</b><span>בעלי עסקים<br />מתחומים משלימים</span></li>
       <li className="rv d2"><i><img className="ic3" src="assets/icons/chat.png" alt="" loading="lazy" /></i><b>שיחות שנשארות</b><span>קשרים שנבנים על השביל<br />ומחזיקים</span></li>
     </ul>
+    <p className="lead net__lead rv d1">יום אחד בשטח<br />שמחליף עשר פגישות במשרד.</p>
+    <a className="btn btn-rust net__cta rv d2" href="#contact">להרשמה ליום הבא</a>
   </div>
 </section>
 
@@ -532,13 +569,18 @@ form.addEventListener('submit', e => {
   </div>
   <div className="ch-grid">
     <a className="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img className="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><span className="ic"><img className="ic3" src="assets/icons/drop.png" alt="" loading="lazy" /></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv" style={{ "--tint": "142 70% 45%" }} href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv d1" style={{ "--tint": "150 60% 38%" }} href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/gchat.png" alt="" loading="lazy" /></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
+    <a className="ch rv" style={{ "--tint": "142 68% 40%" }} href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
+    <a className="ch rv d1" style={{ "--tint": "205 85% 48%" }} href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/gchat.png" alt="" loading="lazy" /></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
     <a className="ch rv d2" style={{ "--tint": "0 75% 50%" }} href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/youtube.png" alt="" loading="lazy" /></span><span><b>יוטיוב</b><span>סרטוני טיולים מלאים</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
     <a className="ch rv" style={{ "--tint": "330 70% 55%" }} href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/instagram.png" alt="" loading="lazy" /></span><span><b>אינסטגרם</b><span>@israel_shapira_travels</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv d1" style={{ "--tint": "180 60% 45%" }} href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy" /></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
+    <a className="ch rv d1" style={{ "--tint": "178 70% 36%" }} href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy" /></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
     <a className="ch rv d2" style={{ "--tint": "220 70% 55%" }} href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/facebook.png" alt="" loading="lazy" /></span><span><b>פייסבוק</b><span>הקהילה הרחבה</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
   </div>
+  <svg className="ccut" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 52C150 18 290 70 440 58S690 6 860 30 1120 96 1260 62 1400 26 1440 40" fill="none" stroke="hsl(var(--sage))" strokeOpacity=".35" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
+    <path d="M0 78C170 42 300 96 470 84S700 30 880 56 1110 120 1270 88 1390 58 1440 66" fill="none" stroke="hsl(var(--cream))" strokeOpacity=".35" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
+    <path d="M0 104C190 68 320 128 500 112S720 56 900 84 1100 150 1280 116 1380 92 1440 96V170H0Z" fill="hsl(var(--cream))" />
+  </svg>
 </section>
 
 
@@ -575,11 +617,6 @@ form.addEventListener('submit', e => {
       <button className="btn btn-rust" type="submit">שליחה <svg><use href="#i-arrow" /></svg></button>
     </form>
   </div>
-  <svg className="ridge" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 150L70 118 130 132 210 74 270 104 330 88 400 126 470 60 540 98 600 84 660 112 740 46 810 92 880 78 950 118 1020 70 1090 102 1160 64 1230 110 1300 90 1370 120 1440 96V220H0Z" fill="hsl(var(--sage))" opacity=".35" />
-    <path d="M0 176L90 146 160 160 240 120 300 140 380 104 450 146 520 128 590 156 660 112 730 142 800 122 880 158 950 116 1030 150 1100 132 1180 160 1250 124 1330 152 1440 132V220H0Z" fill="hsl(var(--forest))" />
-    <path d="M0 200L80 184 150 194 230 168 310 188 390 172 470 196 560 176 640 192 720 170 800 190 880 178 960 198 1040 174 1120 192 1200 180 1290 198 1370 182 1440 190V220H0Z" fill="hsl(var(--deep))" />
-  </svg>
 </section>
 </main>
 
@@ -610,6 +647,16 @@ form.addEventListener('submit', e => {
   
   <a href="https://wa.me/972000000000" target="_blank" rel="noopener" aria-label="שיחה בווטסאפ"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></a>
   <span className="bubble">רוצים קהל חרדי? דברו איתי</span>
+</div>
+<div className="route" id="route" role="scrollbar" aria-label="התקדמות בדף" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabIndex="-1">
+  <svg className="road" viewBox="0 0 34 1000" preserveAspectRatio="none" aria-hidden="true">
+    <path className="r-base" id="rBase" vectorEffect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
+    <path className="r-done" id="rDone" vectorEffect="non-scaling-stroke" pathLength="1000" strokeDasharray="0 1000" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
+    <path className="r-line" vectorEffect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
+  </svg>
+  <span className="r-start"></span><span className="r-end"></span>
+  <div className="car" id="rCar"><img src="assets/icons/pin.png" alt="" /></div>
+  <div className="eta" id="rEta"><b id="rName">יוצאים לדרך</b><small id="rPct">0%</small></div>
 </div>
 <div className="toast" id="toast" role="status">תודה! אחזור אליכם בהקדם</div>
     </div>
