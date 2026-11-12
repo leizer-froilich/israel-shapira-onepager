@@ -180,12 +180,13 @@ requestAnimationFrame(frame);
 
 
 /* ---- Waze-style route (custom scrollbar) ---- */
-const route = $('#route'), rBase = $('#rBase'), rDone = $('#rDone'), rCar = $('#rCar'), rEta = $('#rEta'), rName = $('#rName'), rPct = $('#rPct');
-const stops = [['#hero','יוצאים לדרך'],['#about','נעים להכיר'],['#regions','איפה מטיילים'],['#services','לבעלי עסקים'],['.why','למה איתי'],['#process','ארבע תחנות'],['#field','מהשטח'],['#network','נטוורקינג'],['#community','הקהילה'],['#contact','הגעתם ליעד']].map(([q,n])=>[$(q),n]).filter(a=>a[0]);
+const route = $('#route'), rBase = $('#rBase'), rDone = $('#rDone'), rCar = $('#rCar');
 const rLen = rBase.getTotalLength();
 let rLast = -1, rTimer = 0, rDrag = false;
-const maxY = () => document.documentElement.scrollHeight - innerHeight;
+const foot = $('footer');
+const maxY = () => Math.max(1, foot.getBoundingClientRect().top + scrollY - innerHeight * .55);
 function routeTick(){
+  if (!route.offsetWidth){ requestAnimationFrame(routeTick); return; }
   const p = clamp(scrollY / Math.max(1, maxY()));
   if (Math.abs(p - rLast) > .0004){
     if (rLast >= 0){ route.classList.add('moving'); clearTimeout(rTimer); rTimer = setTimeout(()=>route.classList.remove('moving'), 1100); }
@@ -193,11 +194,7 @@ function routeTick(){
     const W = route.clientWidth, H = route.clientHeight, pt = rBase.getPointAtLength(p * rLen);
     const x = pt.x / 34 * W, yy = pt.y / 1000 * H;
     rCar.style.transform = `translate3d(${x}px,${yy}px,0)`;
-    rEta.style.transform = route.classList.contains('moving') || route.matches(':hover') ? `translate3d(0,${yy - 16}px,0)` : `translate3d(8px,${yy - 16}px,0)`;
     rDone.setAttribute('stroke-dasharray', `${p*1000} 1000`);
-    let name = stops[0][1];
-    stops.forEach(([el,n]) => { if (el.getBoundingClientRect().top < innerHeight*.45) name = n; });
-    rName.textContent = name; rPct.textContent = Math.round(p*100) + '%';
     route.setAttribute('aria-valuenow', Math.round(p*100));
   }
   requestAnimationFrame(routeTick);
@@ -211,6 +208,17 @@ route.addEventListener('pointerdown', e => { rDrag = true; route.setPointerCaptu
 route.addEventListener('pointermove', e => { if (rDrag) routeTo(e); });
 const rUp = () => { rDrag = false; };
 route.addEventListener('pointerup', rUp); route.addEventListener('pointercancel', rUp);
+
+
+/* loader: hide after the logo has been drawn and the page is ready */
+(() => {
+  const ld = $('#loader'); if (!ld) return;
+  const t0 = performance.now(), MIN = RM ? 0 : 3000;
+  const done = () => { ld.classList.add('done'); document.body.classList.remove('loading'); };
+  const go = () => setTimeout(done, Math.max(0, MIN - (performance.now() - t0)));
+  if (document.readyState === 'complete') go(); else addEventListener('load', go, {once: true});
+  setTimeout(done, 6000);
+})();
 
 const onS = () => header.classList.toggle('solid', scrollY > innerHeight*.6);
 onS(); addEventListener('scroll', onS, {passive:true});
@@ -250,6 +258,15 @@ form.addEventListener('submit', e => {
 
   return (
     <div className="is-root">
+<div className="loader" id="loader" aria-hidden="true">
+  <div className="loader__logo">
+    <img className="loader__art" src="assets/img/logo-full.jpg" alt="" />
+    <img className="loader__name" src="assets/img/logo-full.jpg" alt="" />
+    <img className="loader__tag" src="assets/img/logo-full.jpg" alt="" />
+    <span className="loader__pen"></span>
+  </div>
+</div>
+
 <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
   <defs>
     <symbol id="navmap" viewBox="0 0 520 420" fill="none" stroke="currentColor">
@@ -414,11 +431,11 @@ form.addEventListener('submit', e => {
   </div>
   <div className="mob">
     <h2>איפה מטיילים איתי:<br /><em>מהגליל ועד הנגב.</em></h2>
-    <article className="mcard rv"><img src="assets/img/galil-meron.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>צפון</span><h3>הגליל</h3><p>מירון, נחלים ושבילים ירוקים.</p></article>
-    <article className="mcard rv"><img src="assets/img/kinneret.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>עמק הירדן</span><h3>הכנרת</h3><p>חופים, מעיינות ותצפיות.</p></article>
-    <article className="mcard rv"><img src="assets/img/judea-masada.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>ים המלח</span><h3>מדבר יהודה</h3><p>מצדה, נחלי אכזב ושקט של מדבר.</p></article>
-    <article className="mcard rv"><img src="assets/img/ein-gedi.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>המעיינות הנדירים</span><h3>עין גדי</h3><p>מפלים בלב המדבר.</p></article>
-    <article className="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><span className="loc"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i>דרום</span><h3>הנגב</h3><p>מכתש רמון ומרחבים אינסופיים.</p></article>
+    <article className="mcard rv"><img src="assets/img/galil-meron.jpg" alt="" loading="lazy" /><span className="loc">צפון</span><h3>הגליל</h3><p>מירון, נחלים ושבילים ירוקים.</p></article>
+    <article className="mcard rv"><img src="assets/img/kinneret.jpg" alt="" loading="lazy" /><span className="loc">עמק הירדן</span><h3>הכנרת</h3><p>חופים, מעיינות ותצפיות.</p></article>
+    <article className="mcard rv"><img src="assets/img/judea-masada.jpg" alt="" loading="lazy" /><span className="loc">ים המלח</span><h3>מדבר יהודה</h3><p>מצדה, נחלי אכזב ושקט של מדבר.</p></article>
+    <article className="mcard rv"><img src="assets/img/ein-gedi.jpg" alt="" loading="lazy" /><span className="loc">המעיינות הנדירים</span><h3>עין גדי</h3><p>מפלים בלב המדבר.</p></article>
+    <article className="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><span className="loc">דרום</span><h3>הנגב</h3><p>מכתש רמון ומרחבים אינסופיים.</p></article>
   </div>
 </section>
 
@@ -656,7 +673,6 @@ form.addEventListener('submit', e => {
   </svg>
   <span className="r-start"></span><span className="r-end"></span>
   <div className="car" id="rCar"><img src="assets/icons/pin.png" alt="" /></div>
-  <div className="eta" id="rEta"><b id="rName">יוצאים לדרך</b><small id="rPct">0%</small></div>
 </div>
 <div className="toast" id="toast" role="status">תודה! אחזור אליכם בהקדם</div>
     </div>
