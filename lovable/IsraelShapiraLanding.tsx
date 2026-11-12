@@ -59,13 +59,23 @@ const smooth = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i;
 const stepped = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i; return Math.min(n-1, i + ease(clamp((f-.3)/.4))); };
 
 const heroInner = $('#heroInner'), heroBg = $('#heroBg');
-const tcards = $$('.tcard'), tiul = $('#tiul');
+const tcards = $$('.wedge'), tiul = $('#tiul');
 const regWrap = $('[data-pin="regions"]'), regSlides = $$('.reg__slide'), regT = $$('.reg__t'), regNames = $$('#regNames span');
 const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
 const procWrap = $('[data-pin="process"]'), stepsEl = $$('.step'), procImgs = $$('.proc__visual img');
 const fieldWrap = $('#fieldWrap'), track = $('#fieldTrack');
 const disc = $('#disc'), discWord = $('#discWord'), discFg = $('#discFg'), discBg = $('.disc__bg');
+/* the word fills the width edge to edge, and its ר sits right behind the hiker */
+let discDx = 0;
+const fitDisc = () => {
+  const t = discWord.firstChild; discWord.style.fontSize = '100px';
+  const W = disc.clientWidth; const all = document.createRange(); all.selectNodeContents(discWord); discWord.style.fontSize = (100 * W * .985 / Math.max(1, all.getBoundingClientRect().width)) + 'px';
+  const i = t.textContent.indexOf('ר'), rg = document.createRange(); rg.setStart(t, i); rg.setEnd(t, i + 1);
+  const rr = rg.getBoundingClientRect(), wr = discWord.getBoundingClientRect();
+  discDx = Math.max(-W * .08, Math.min(W * .08, W / 2 - (rr.left - wr.left + rr.width / 2)));
+};
+fitDisc(); addEventListener('resize', fitDisc); if (document.fonts) document.fonts.ready.then(fitDisc);
 
 const sizeField = () => {
   if (!isDesk()){ fieldWrap.style.height = ''; return; }
@@ -84,12 +94,12 @@ function frame(){
     heroBg.style.transform = `translate3d(0,${hp*18}%,0) scale(${1+hp*.06})`;
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
-    tcards.forEach(c => c.style.transform = `translate3d(0,${(tp-.5)*parseFloat(c.dataset.speed)*vh}px,0)`);
+    tcards.forEach(c => c.firstElementChild.style.translate = `0 ${(tp-.5)*parseFloat(c.dataset.speed)*vh}px`);
     /* network: word sinks behind the hiker, layers drift at different speeds */
     const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
-    discWord.style.transform = `translate3d(0,${(dp-.5)*30}vh,0) scale(${1.14 - dp*.22})`;
-    discBg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
-    discFg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
+    discWord.style.transform = `translate3d(${discDx}px,${(dp-.5)*12}vh,0)`;
+    discBg.style.transform = `translate3d(0,${(dp-.5)*-6 - 7}%,0) scale(1.18)`;
+    discFg.style.transform = `translate3d(0,${(dp-.5)*-6 - 7}%,0) scale(1.18)`;
   }
 
   if (isDesk()){
@@ -170,11 +180,11 @@ function frame(){
 }
 
 /* tiul captions: fill the full width of each image */
-const fitCaps = () => $$('.tcard figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
+const fitCaps = () => $$('.wedge figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
 fitCaps(); addEventListener('resize', fitCaps); if (document.fonts) document.fonts.ready.then(fitCaps);
 
 /* buttons: a little compass that spins on hover */
-$$('.btn').forEach(b => b.insertAdjacentHTML('afterbegin', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));
+$$('.btn,.ch').forEach(b => b.insertAdjacentHTML('beforeend', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));
 sizeField(); addEventListener('resize', sizeField); addEventListener('load', sizeField);
 requestAnimationFrame(frame);
 
@@ -183,8 +193,7 @@ requestAnimationFrame(frame);
 const route = $('#route'), rBase = $('#rBase'), rDone = $('#rDone'), rCar = $('#rCar');
 const rLen = rBase.getTotalLength();
 let rLast = -1, rTimer = 0, rDrag = false;
-const foot = $('footer');
-const maxY = () => Math.max(1, foot.getBoundingClientRect().top + scrollY - innerHeight * .55);
+const maxY = () => Math.max(1, document.documentElement.scrollHeight - innerHeight);
 function routeTick(){
   if (!route.offsetWidth){ requestAnimationFrame(routeTick); return; }
   const p = clamp(scrollY / Math.max(1, maxY()));
@@ -194,7 +203,7 @@ function routeTick(){
     const W = route.clientWidth, H = route.clientHeight, pt = rBase.getPointAtLength(p * rLen);
     const x = pt.x / 34 * W, yy = pt.y / 1000 * H;
     rCar.style.transform = `translate3d(${x}px,${yy}px,0)`;
-    rDone.setAttribute('stroke-dasharray', `${p*1000} 1000`);
+    rDone.style.clipPath = `inset(0 0 ${100 - pt.y/10}% 0)`;
     route.setAttribute('aria-valuenow', Math.round(p*100));
   }
   requestAnimationFrame(routeTick);
@@ -364,14 +373,15 @@ form.addEventListener('submit', e => {
 
 <section className="tiul dark" id="tiul">
   <svg className="topo" viewBox="0 0 800 600" aria-hidden="true" style={{ width: "min(1200px,160vw)", right: "-30%", top: "-10%" }}><use href="#topo" /></svg>
-  <div className="tiul__row">
-    <div className="tcard" data-speed="-.12"><figure><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption>מעיינות</figcaption></figure></div>
-    <div className="tcard" data-speed=".08"><figure><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption>שבילים</figcaption></figure></div>
-    <div className="tcard" data-speed="-.04"><figure><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption>מפלים</figcaption></figure></div>
-    <div className="tcard" data-speed=".14"><figure><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption>נופים</figcaption></figure></div>
+  <div className="fan">
+    <figure className="wedge w1" data-speed="-.10"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption>מעיינות</figcaption></figure>
+    <figure className="wedge w2" data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption>שבילים</figcaption></figure>
+    <figure className="wedge w3" data-speed="-.06"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption>מפלים</figcaption></figure>
+    <figure className="wedge w4" data-speed=".12"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption>נופים</figcaption></figure>
+    <img className="fan__man" src="assets/img/israel-cut.png" alt="ישראל שפירא" loading="lazy" />
+    <h2 className="fan__h rv"><span className="r">כל טיול<br />מתחיל</span> <span className="l"><em>במי שמוביל<br />אותו.</em></span></h2>
+    <p className="lead fan__p rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית. והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
   </div>
-  <h2 className="rv">כל טיול מתחיל<br /><em>במי שמוביל אותו.</em></h2>
-  <p className="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br />והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
 </section>
 
 
@@ -527,7 +537,7 @@ form.addEventListener('submit', e => {
           <img className="on" src="assets/img/portrait.jpg" alt="ישראל שפירא" style={{ objectPosition: "center 20%" }} />
           <img src="assets/video/reel3.jpg" alt="ביקור במתחם אירוח" />
           <img src="assets/video/reel2.jpg" alt="צילום תוכן בבריכה בטבע" />
-          <img src="assets/video/reel5.jpg" alt="מתחם אירוח מוכן לאורחים" />
+          <img src="assets/img/arrive.jpg" alt="משפחות מגיעות למתחם אירוח בטבע" />
         </div>
       </div>
     </div>
@@ -577,6 +587,7 @@ form.addEventListener('submit', e => {
 
 
 <section className="community dark" id="community">
+  <img className="comm__land" src="assets/img/galilee-view.jpg" alt="" loading="lazy" />
   <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
   <div className="sec-head">
     <div>
@@ -585,18 +596,18 @@ form.addEventListener('submit', e => {
     <p className="lead rv d1 to-left" style={{ color: "hsl(var(--cream)/.8)" }}>מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br />בחרו את הערוץ שנוח לכם.</p>
   </div>
   <div className="ch-grid">
-    <a className="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img className="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><span className="ic"><img className="ic3" src="assets/icons/drop.png" alt="" loading="lazy" /></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv" style={{ "--tint": "142 68% 40%" }} href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv d1" style={{ "--tint": "205 85% 48%" }} href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/gchat.png" alt="" loading="lazy" /></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv d2" style={{ "--tint": "0 75% 50%" }} href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/youtube.png" alt="" loading="lazy" /></span><span><b>יוטיוב</b><span>סרטוני טיולים מלאים</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv" style={{ "--tint": "330 70% 55%" }} href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/instagram.png" alt="" loading="lazy" /></span><span><b>אינסטגרם</b><span>@israel_shapira_travels</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv d1" style={{ "--tint": "178 70% 36%" }} href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy" /></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
-    <a className="ch rv d2" style={{ "--tint": "220 70% 55%" }} href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/facebook.png" alt="" loading="lazy" /></span><span><b>פייסבוק</b><span>הקהילה הרחבה</span></span><svg className="arr"><use href="#i-arrow" /></svg></a>
+    <a className="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img className="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><span className="ic"><img className="ic3" src="assets/icons/drop.png" alt="" loading="lazy" /></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span></a>
+    <a className="ch rv" style={{ "--tint": "142 68% 40%" }} href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span></a>
+    <a className="ch rv d1" style={{ "--tint": "205 85% 48%" }} href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/gchat.png" alt="" loading="lazy" /></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span></a>
+    <a className="ch rv d2" style={{ "--tint": "0 75% 50%" }} href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/youtube.png" alt="" loading="lazy" /></span><span><b>יוטיוב</b><span>סרטוני טיולים מלאים</span></span></a>
+    <a className="ch rv" style={{ "--tint": "330 70% 55%" }} href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/instagram.png" alt="" loading="lazy" /></span><span><b>אינסטגרם</b><span>@israel_shapira_travels</span></span></a>
+    <a className="ch rv d1" style={{ "--tint": "178 70% 36%" }} href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy" /></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span></a>
+    <a className="ch rv d2" style={{ "--tint": "220 70% 55%" }} href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener"><span className="ic"><img className="ic3" src="assets/icons/facebook.png" alt="" loading="lazy" /></span><span><b>פייסבוק</b><span>הקהילה הרחבה</span></span></a>
   </div>
-  <svg className="ccut" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 52C150 18 290 70 440 58S690 6 860 30 1120 96 1260 62 1400 26 1440 40" fill="none" stroke="hsl(var(--sage))" strokeOpacity=".35" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
-    <path d="M0 78C170 42 300 96 470 84S700 30 880 56 1110 120 1270 88 1390 58 1440 66" fill="none" stroke="hsl(var(--cream))" strokeOpacity=".35" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
-    <path d="M0 104C190 68 320 128 500 112S720 56 900 84 1100 150 1280 116 1380 92 1440 96V170H0Z" fill="hsl(var(--cream))" />
+  <svg className="ccut" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70C210 10 420 150 700 120S1150 6 1440 64" fill="none" stroke="hsl(var(--sage))" strokeOpacity=".45" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+    <path d="M0 110C220 50 430 190 710 160S1160 46 1440 104" fill="none" stroke="hsl(var(--cream))" strokeOpacity=".45" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+    <path d="M0 150C230 90 440 230 720 200S1170 86 1440 144V250H0Z" fill="hsl(var(--cream))" />
   </svg>
 </section>
 
@@ -631,7 +642,7 @@ form.addEventListener('submit', e => {
         </div>
       </div>
       <div className="f"><label htmlFor="f-msg">ספרו לי בקצרה</label><textarea id="f-msg" name="message"></textarea></div>
-      <button className="btn btn-rust" type="submit">שליחה <svg><use href="#i-arrow" /></svg></button>
+      <button className="btn btn-rust" type="submit">שליחה</button>
     </form>
   </div>
 </section>
@@ -668,7 +679,7 @@ form.addEventListener('submit', e => {
 <div className="route" id="route" role="scrollbar" aria-label="התקדמות בדף" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabIndex="-1">
   <svg className="road" viewBox="0 0 34 1000" preserveAspectRatio="none" aria-hidden="true">
     <path className="r-base" id="rBase" vectorEffect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
-    <path className="r-done" id="rDone" vectorEffect="non-scaling-stroke" pathLength="1000" strokeDasharray="0 1000" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
+    <path className="r-done" id="rDone" vectorEffect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
     <path className="r-line" vectorEffect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
   </svg>
   <span className="r-start"></span><span className="r-end"></span>

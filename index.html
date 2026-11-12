@@ -69,11 +69,11 @@ em{font-style:normal;color:hsl(var(--rust))}
 .btn:hover::before,.btn:focus-visible::before{transform:translateY(0)}
 .btn-line::before{background:hsl(var(--cream))}
 .btn-line:hover{color:hsl(var(--deep))}
-.btn .cmp{width:20px;height:20px;flex:none;overflow:visible}
-.btn .cmp circle{fill:none;stroke:currentColor;stroke-width:1.6;stroke-dasharray:3 2.2;transition:stroke-dashoffset 1.2s linear}
-.btn .cmp .n1{fill:currentColor}.btn .cmp .n2{fill:currentColor;opacity:.45}
-.btn .cmp g{transform-box:view-box;transform-origin:50% 50%;transform:rotate(-35deg);transition:transform 1s cubic-bezier(.3,1.7,.4,1)}
-.btn:hover .cmp g{transform:rotate(370deg)}.btn:hover .cmp circle{stroke-dashoffset:-20}
+:is(.btn,.ch) .cmp{width:20px;height:20px;flex:none;overflow:visible}
+:is(.btn,.ch) .cmp circle{fill:none;stroke:currentColor;stroke-width:1.6;stroke-dasharray:3 2.2;transition:stroke-dashoffset 1.2s linear}
+:is(.btn,.ch) .cmp .n1{fill:currentColor}:is(.btn,.ch) .cmp .n2{fill:currentColor;opacity:.45}
+:is(.btn,.ch) .cmp g{transform-box:view-box;transform-origin:50% 50%;transform:rotate(-35deg);transition:transform 1s cubic-bezier(.3,1.7,.4,1)}
+:is(.btn,.ch):hover .cmp g{transform:rotate(370deg)}:is(.btn,.ch):hover .cmp circle{stroke-dashoffset:-20}
 .btn:hover{transform:translateY(-3px)}
 .btn:active{transform:translateY(-1px) scale(.98)}
 .btn svg{width:18px;height:18px;flex:none}
@@ -151,19 +151,32 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .hero__social a:hover{color:hsl(var(--sage))}
 @media (max-width:600px){.hero__social{display:none}.hero__inner{padding-bottom:90px}}
 
-/* ================= TIUL (staggered tall images + big letters) ================= */
-.tiul{position:relative;background:hsl(var(--deep));padding:var(--sec) var(--side);overflow:hidden;text-align:center}
-.tiul__row{position:relative;z-index:1;display:flex;justify-content:center;gap:clamp(14px,2.6vw,40px);margin-bottom:var(--group)}
-.tcard{width:clamp(120px,15vw,230px);flex:none;will-change:transform}
-.tcard figure{margin:0;aspect-ratio:3/4.4;border-radius:14px;overflow:hidden;position:relative;isolation:isolate}
-.tcard figcaption{position:absolute;z-index:2;left:6%;right:6%;bottom:5%;text-align:center;font-family:var(--font-display);font-weight:800;font-size:var(--fs-h2);line-height:.8;white-space:nowrap;color:hsl(150 40% 6%);mix-blend-mode:multiply;opacity:.92}
-.tcard img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);transition:transform 1.4s var(--ease)}
-.tcard:hover img{transform:scale(1.02)}
-.tcard:nth-child(1){margin-top:60px}.tcard:nth-child(3){margin-top:90px}.tcard:nth-child(4){margin-top:30px}
-.tiul .lead{margin:0 auto;color:hsl(var(--cream)/.8);max-width:58ch;position:relative;z-index:1}
-.tiul h2{margin-bottom:22px;position:relative;z-index:1}
-.tiul h2 em{color:hsl(var(--sage))}
-@media (max-width:600px){.tiul__row{gap:10px}.tcard{width:calc((100% - 30px)/4)}.tcard b{font-size:2.6rem}}
+/* ================= TIUL (fan of wedges radiating from the guide) ================= */
+.tiul{position:relative;background:hsl(var(--deep));padding:clamp(40px,5vw,80px) 0 0;overflow:hidden}
+.fan{position:relative;z-index:1;height:clamp(560px,60vw,920px)}
+.wedge{position:absolute;inset:0;margin:0;overflow:hidden;isolation:isolate}
+.wedge img{position:absolute;top:-6%;height:112%;object-fit:cover;transition:transform 1.4s var(--ease);will-change:transform}
+.wedge figcaption{position:absolute;z-index:2;top:4.5%;text-align:center;font-family:var(--font-display);font-weight:800;line-height:.8;white-space:nowrap;color:hsl(150 40% 6%);mix-blend-mode:multiply;opacity:.92}
+.w1{clip-path:polygon(50% 84%,100% 38%,100% 0,76% 0)}.w1 img{left:50%;width:50%}.w1 figcaption{left:78%;right:3%}
+.w2{clip-path:polygon(50% 84%,75% 0,50.5% 0)}.w2 img{left:49%;width:28%}.w2 figcaption{left:54%;right:28%}
+.w3{clip-path:polygon(50% 84%,49.5% 0,25% 0)}.w3 img{left:23%;width:28%}.w3 figcaption{left:28%;right:54%}
+.w4{clip-path:polygon(50% 84%,24% 0,0 0,0 38%)}.w4 img{left:0;width:50%}.w4 figcaption{left:3%;right:78%}
+.wedge:hover img{transform:scale(1.05)}
+.fan__man{position:absolute;z-index:3;left:50%;bottom:0;height:54%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 20px 40px hsl(var(--deep)/.6))}
+.fan__h{position:absolute;inset:0;z-index:2;margin:0;pointer-events:none}
+.fan__h span{position:absolute;bottom:clamp(30px,4vw,70px);line-height:.92}
+.fan__h .r{right:var(--side);text-align:right}
+.fan__h .l{left:var(--side);bottom:calc(clamp(30px,4vw,70px) + 84px);text-align:left;color:hsl(var(--sage))}
+.fan__p{position:absolute;z-index:2;left:var(--side);bottom:clamp(30px,4vw,70px);max-width:min(30vw,380px);margin:0;text-align:left;color:hsl(var(--cream)/.8);font-size:clamp(16px,1.2vw,19px)}
+@media (max-width:900px){
+  .fan{height:auto;padding-top:118vw}
+  .wedge{bottom:auto;height:118vw}
+  .w1{clip-path:polygon(50% 90%,100% 50%,100% 0,76% 0)}.w2{clip-path:polygon(50% 90%,75% 0,50.5% 0)}.w3{clip-path:polygon(50% 90%,49.5% 0,25% 0)}.w4{clip-path:polygon(50% 90%,24% 0,0 0,0 50%)}
+  .fan__man{height:56vw;bottom:auto;top:62vw}
+  .fan__h{position:static;text-align:center;padding:36px var(--side) 14px}
+  .fan__h .r,.fan__h .l{position:static;display:block;text-align:center}
+  .fan__p{position:static;margin:0 auto;padding:0 var(--side) var(--sec);max-width:none;text-align:center}
+}
 
 /* ================= ABOUT ================= */
 .about,.why,.process{background-image:radial-gradient(ellipse 80% 60% at 20% 0%,hsl(42 60% 98%/.7),transparent 70%),radial-gradient(ellipse 70% 50% at 100% 100%,hsl(36 40% 85%/.45),transparent 70%)}
@@ -370,7 +383,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .disc__bg,.disc__fg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%;will-change:transform}
 .disc__bg{z-index:0}
 .disc::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,hsl(var(--deep)/.25),transparent 30%,transparent 70%,hsl(var(--deep)))}
-.disc__word{position:absolute;z-index:2;left:0;right:0;top:20%;text-align:center;font-family:var(--font-display);font-weight:800;font-size:clamp(4.4rem,18vw,19rem);line-height:.8;color:#fff;letter-spacing:-.01em;will-change:transform;text-shadow:0 10px 60px hsl(var(--deep)/.25);white-space:nowrap}
+.disc__word{position:absolute;z-index:2;left:0;right:0;top:33%;text-align:center;font-family:var(--font-display);font-weight:800;font-size:22vw;line-height:.8;color:#fff;letter-spacing:0;will-change:transform;text-shadow:0 10px 60px hsl(var(--deep)/.25);white-space:nowrap}
 .disc__fg{z-index:3}
 .net__body{position:relative;overflow:hidden;padding:clamp(40px,4vw,70px) var(--side) var(--sec);display:grid;grid-template-columns:.85fr 1.15fr;grid-template-areas:"h list" "lead cta";column-gap:clamp(40px,6vw,100px);row-gap:26px;align-items:end}
 .net__h{grid-area:h}.net__body .net__list{grid-area:list}.net__lead{grid-area:lead;align-self:start}.net__cta{grid-area:cta;justify-self:end;align-self:start}
@@ -385,11 +398,13 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .net__list b{font-family:var(--font-display);font-size:1.7rem;line-height:1;color:#fff}
 .net__list span{font-size:15px;opacity:.8;line-height:1.4}
 @media (max-width:1000px){.net__body{grid-template-columns:1fr;grid-template-areas:"h" "lead" "list" "cta"}.net__cta{justify-self:start}}
-@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:78svh}.disc__word{top:24%;font-size:22vw}}
+@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:78svh}.disc__word{top:36%}}
 
 /* ================= COMMUNITY ================= */
-.community{position:relative;background:radial-gradient(ellipse 50% 60% at 8% 12%,hsl(95 45% 42%/.55),transparent 70%),radial-gradient(ellipse 45% 55% at 95% 70%,hsl(var(--rust)/.35),transparent 70%),radial-gradient(ellipse 40% 40% at 60% 30%,hsl(170 60% 35%/.35),transparent 70%),hsl(var(--forest));padding:var(--sec) var(--side) calc(var(--sec) + clamp(70px,9vw,150px));overflow:hidden}
-.ccut{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:clamp(80px,11vw,170px);z-index:2;pointer-events:none}
+.community{position:relative;background:radial-gradient(ellipse 50% 60% at 8% 12%,hsl(95 45% 42%/.55),transparent 70%),radial-gradient(ellipse 45% 55% at 95% 70%,hsl(var(--rust)/.35),transparent 70%),radial-gradient(ellipse 40% 40% at 60% 30%,hsl(170 60% 35%/.35),transparent 70%),hsl(var(--forest));padding:var(--sec) var(--side) calc(var(--sec) + clamp(100px,14vw,230px));overflow:hidden}
+.ccut{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:clamp(110px,16vw,250px);z-index:2;pointer-events:none}
+.comm__land{position:absolute;right:0;top:0;width:min(560px,40vw);height:72%;object-fit:cover;z-index:0;opacity:.32;mix-blend-mode:luminosity;-webkit-mask:radial-gradient(ellipse 90% 80% at 100% 25%,#000 25%,transparent 72%);mask:radial-gradient(ellipse 90% 80% at 100% 25%,#000 25%,transparent 72%);pointer-events:none}
+@media (max-width:900px){.comm__land{width:70vw;height:40%}}
 .community .topo{width:min(1000px,140vw);left:-20%;top:-20%}
 .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:var(--group);position:relative;z-index:1}
 .sec-head h2{margin-top:18px}
@@ -406,7 +421,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .ch b{display:block;line-height:1.25}
 .ch span{font-size:14px;opacity:.92}
 .ch b{font-size:18px}
-.ch .arr{margin-inline-start:auto;width:18px;height:18px;opacity:.9;flex:none}
+.ch .cmp{margin-inline-start:auto;width:22px;height:22px}
 .ch.big{grid-column:1/-1;min-height:220px;align-items:flex-end;padding:clamp(26px,3vw,40px);background:none;border:0;color:#fff;box-shadow:0 30px 60px -30px hsl(var(--deep))}
 .ch.big::after{display:none}
 .ch.big .ic{background:none;box-shadow:none;padding:0}
@@ -623,14 +638,15 @@ body.loading{overflow:hidden}
 <!-- ================= TIUL ================= -->
 <section class="tiul dark" id="tiul">
   <svg class="topo" viewBox="0 0 800 600" aria-hidden="true" style="width:min(1200px,160vw);right:-30%;top:-10%"><use href="#topo"/></svg>
-  <div class="tiul__row">
-    <div class="tcard" data-speed="-.12"><figure><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption>מעיינות</figcaption></figure></div>
-    <div class="tcard" data-speed=".08"><figure><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy"><figcaption>שבילים</figcaption></figure></div>
-    <div class="tcard" data-speed="-.04"><figure><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy"><figcaption>מפלים</figcaption></figure></div>
-    <div class="tcard" data-speed=".14"><figure><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy"><figcaption>נופים</figcaption></figure></div>
+  <div class="fan">
+    <figure class="wedge w1" data-speed="-.10"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption>מעיינות</figcaption></figure>
+    <figure class="wedge w2" data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy"><figcaption>שבילים</figcaption></figure>
+    <figure class="wedge w3" data-speed="-.06"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy"><figcaption>מפלים</figcaption></figure>
+    <figure class="wedge w4" data-speed=".12"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy"><figcaption>נופים</figcaption></figure>
+    <img class="fan__man" src="assets/img/israel-cut.png" alt="ישראל שפירא" loading="lazy">
+    <h2 class="fan__h rv"><span class="r">כל טיול<br>מתחיל</span> <span class="l"><em>במי שמוביל<br>אותו.</em></span></h2>
+    <p class="lead fan__p rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית. והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
   </div>
-  <h2 class="rv">כל טיול מתחיל<br><em>במי שמוביל אותו.</em></h2>
-  <p class="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br>והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
 </section>
 
 <!-- ================= ABOUT ================= -->
@@ -786,7 +802,7 @@ body.loading{overflow:hidden}
           <img class="on" src="assets/img/portrait.jpg" alt="ישראל שפירא" style="object-position:center 20%">
           <img src="assets/video/reel3.jpg" alt="ביקור במתחם אירוח">
           <img src="assets/video/reel2.jpg" alt="צילום תוכן בבריכה בטבע">
-          <img src="assets/video/reel5.jpg" alt="מתחם אירוח מוכן לאורחים">
+          <img src="assets/img/arrive.jpg" alt="משפחות מגיעות למתחם אירוח בטבע">
         </div>
       </div>
     </div>
@@ -836,6 +852,7 @@ body.loading{overflow:hidden}
 
 <!-- ================= COMMUNITY ================= -->
 <section class="community dark" id="community">
+  <img class="comm__land" src="assets/img/galilee-view.jpg" alt="" loading="lazy">
   <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
   <div class="sec-head">
     <div>
@@ -844,18 +861,18 @@ body.loading{overflow:hidden}
     <p class="lead rv d1 to-left" style="color:hsl(var(--cream)/.8)">מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br>בחרו את הערוץ שנוח לכם.</p>
   </div>
   <div class="ch-grid">
-    <a class="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img class="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="ic"><img class="ic3" src="assets/icons/drop.png" alt="" loading="lazy"></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
-    <a class="ch rv" style="--tint:142 68% 40%" href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
-    <a class="ch rv d1" style="--tint:205 85% 48%" href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/gchat.png" alt="" loading="lazy"></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
-    <a class="ch rv d2" style="--tint:0 75% 50%" href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/youtube.png" alt="" loading="lazy"></span><span><b>יוטיוב</b><span>סרטוני טיולים מלאים</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
-    <a class="ch rv" style="--tint:330 70% 55%" href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/instagram.png" alt="" loading="lazy"></span><span><b>אינסטגרם</b><span>@israel_shapira_travels</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
-    <a class="ch rv d1" style="--tint:178 70% 36%" href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy"></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
-    <a class="ch rv d2" style="--tint:220 70% 55%" href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/facebook.png" alt="" loading="lazy"></span><span><b>פייסבוק</b><span>הקהילה הרחבה</span></span><svg class="arr"><use href="#i-arrow"/></svg></a>
+    <a class="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img class="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="ic"><img class="ic3" src="assets/icons/drop.png" alt="" loading="lazy"></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span></a>
+    <a class="ch rv" style="--tint:142 68% 40%" href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span></a>
+    <a class="ch rv d1" style="--tint:205 85% 48%" href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/gchat.png" alt="" loading="lazy"></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span></a>
+    <a class="ch rv d2" style="--tint:0 75% 50%" href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/youtube.png" alt="" loading="lazy"></span><span><b>יוטיוב</b><span>סרטוני טיולים מלאים</span></span></a>
+    <a class="ch rv" style="--tint:330 70% 55%" href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/instagram.png" alt="" loading="lazy"></span><span><b>אינסטגרם</b><span>@israel_shapira_travels</span></span></a>
+    <a class="ch rv d1" style="--tint:178 70% 36%" href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy"></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span></a>
+    <a class="ch rv d2" style="--tint:220 70% 55%" href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/facebook.png" alt="" loading="lazy"></span><span><b>פייסבוק</b><span>הקהילה הרחבה</span></span></a>
   </div>
-  <svg class="ccut" viewBox="0 0 1440 170" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 52C150 18 290 70 440 58S690 6 860 30 1120 96 1260 62 1400 26 1440 40" fill="none" stroke="hsl(var(--sage))" stroke-opacity=".35" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
-    <path d="M0 78C170 42 300 96 470 84S700 30 880 56 1110 120 1270 88 1390 58 1440 66" fill="none" stroke="hsl(var(--cream))" stroke-opacity=".35" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
-    <path d="M0 104C190 68 320 128 500 112S720 56 900 84 1100 150 1280 116 1380 92 1440 96V170H0Z" fill="hsl(var(--cream))"/>
+  <svg class="ccut" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70C210 10 420 150 700 120S1150 6 1440 64" fill="none" stroke="hsl(var(--sage))" stroke-opacity=".45" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+    <path d="M0 110C220 50 430 190 710 160S1160 46 1440 104" fill="none" stroke="hsl(var(--cream))" stroke-opacity=".45" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+    <path d="M0 150C230 90 440 230 720 200S1170 86 1440 144V250H0Z" fill="hsl(var(--cream))"/>
   </svg>
 </section>
 
@@ -890,7 +907,7 @@ body.loading{overflow:hidden}
         </div>
       </div>
       <div class="f"><label for="f-msg">ספרו לי בקצרה</label><textarea id="f-msg" name="message"></textarea></div>
-      <button class="btn btn-rust" type="submit">שליחה <svg><use href="#i-arrow"/></svg></button>
+      <button class="btn btn-rust" type="submit">שליחה</button>
     </form>
   </div>
 </section>
@@ -927,7 +944,7 @@ body.loading{overflow:hidden}
 <div class="route" id="route" role="scrollbar" aria-label="התקדמות בדף" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="-1">
   <svg class="road" viewBox="0 0 34 1000" preserveAspectRatio="none" aria-hidden="true">
     <path class="r-base" id="rBase" vector-effect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000"/>
-    <path class="r-done" id="rDone" vector-effect="non-scaling-stroke" pathLength="1000" stroke-dasharray="0 1000" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000"/>
+    <path class="r-done" id="rDone" vector-effect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000"/>
     <path class="r-line" vector-effect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000"/>
   </svg>
   <span class="r-start"></span><span class="r-end"></span>
@@ -974,13 +991,23 @@ const smooth = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i;
 const stepped = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i; return Math.min(n-1, i + ease(clamp((f-.3)/.4))); };
 
 const heroInner = $('#heroInner'), heroBg = $('#heroBg');
-const tcards = $$('.tcard'), tiul = $('#tiul');
+const tcards = $$('.wedge'), tiul = $('#tiul');
 const regWrap = $('[data-pin="regions"]'), regSlides = $$('.reg__slide'), regT = $$('.reg__t'), regNames = $$('#regNames span');
 const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
 const procWrap = $('[data-pin="process"]'), stepsEl = $$('.step'), procImgs = $$('.proc__visual img');
 const fieldWrap = $('#fieldWrap'), track = $('#fieldTrack');
 const disc = $('#disc'), discWord = $('#discWord'), discFg = $('#discFg'), discBg = $('.disc__bg');
+/* the word fills the width edge to edge, and its ר sits right behind the hiker */
+let discDx = 0;
+const fitDisc = () => {
+  const t = discWord.firstChild; discWord.style.fontSize = '100px';
+  const W = disc.clientWidth; const all = document.createRange(); all.selectNodeContents(discWord); discWord.style.fontSize = (100 * W * .985 / Math.max(1, all.getBoundingClientRect().width)) + 'px';
+  const i = t.textContent.indexOf('ר'), rg = document.createRange(); rg.setStart(t, i); rg.setEnd(t, i + 1);
+  const rr = rg.getBoundingClientRect(), wr = discWord.getBoundingClientRect();
+  discDx = Math.max(-W * .08, Math.min(W * .08, W / 2 - (rr.left - wr.left + rr.width / 2)));
+};
+fitDisc(); addEventListener('resize', fitDisc); if (document.fonts) document.fonts.ready.then(fitDisc);
 
 const sizeField = () => {
   if (!isDesk()){ fieldWrap.style.height = ''; return; }
@@ -999,12 +1026,12 @@ function frame(){
     heroBg.style.transform = `translate3d(0,${hp*18}%,0) scale(${1+hp*.06})`;
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
-    tcards.forEach(c => c.style.transform = `translate3d(0,${(tp-.5)*parseFloat(c.dataset.speed)*vh}px,0)`);
+    tcards.forEach(c => c.firstElementChild.style.translate = `0 ${(tp-.5)*parseFloat(c.dataset.speed)*vh}px`);
     /* network: word sinks behind the hiker, layers drift at different speeds */
     const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
-    discWord.style.transform = `translate3d(0,${(dp-.5)*30}vh,0) scale(${1.14 - dp*.22})`;
-    discBg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
-    discFg.style.transform = `translate3d(0,${(dp-.5)*-6}%,0) scale(1.08)`;
+    discWord.style.transform = `translate3d(${discDx}px,${(dp-.5)*12}vh,0)`;
+    discBg.style.transform = `translate3d(0,${(dp-.5)*-6 - 7}%,0) scale(1.18)`;
+    discFg.style.transform = `translate3d(0,${(dp-.5)*-6 - 7}%,0) scale(1.18)`;
   }
 
   if (isDesk()){
@@ -1085,11 +1112,11 @@ function frame(){
 }
 
 /* tiul captions: fill the full width of each image */
-const fitCaps = () => $$('.tcard figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
+const fitCaps = () => $$('.wedge figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
 fitCaps(); addEventListener('resize', fitCaps); if (document.fonts) document.fonts.ready.then(fitCaps);
 
 /* buttons: a little compass that spins on hover */
-$$('.btn').forEach(b => b.insertAdjacentHTML('afterbegin', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));
+$$('.btn,.ch').forEach(b => b.insertAdjacentHTML('beforeend', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));
 sizeField(); addEventListener('resize', sizeField); addEventListener('load', sizeField);
 requestAnimationFrame(frame);
 
@@ -1098,8 +1125,7 @@ requestAnimationFrame(frame);
 const route = $('#route'), rBase = $('#rBase'), rDone = $('#rDone'), rCar = $('#rCar');
 const rLen = rBase.getTotalLength();
 let rLast = -1, rTimer = 0, rDrag = false;
-const foot = $('footer');
-const maxY = () => Math.max(1, foot.getBoundingClientRect().top + scrollY - innerHeight * .55);
+const maxY = () => Math.max(1, document.documentElement.scrollHeight - innerHeight);
 function routeTick(){
   if (!route.offsetWidth){ requestAnimationFrame(routeTick); return; }
   const p = clamp(scrollY / Math.max(1, maxY()));
@@ -1109,7 +1135,7 @@ function routeTick(){
     const W = route.clientWidth, H = route.clientHeight, pt = rBase.getPointAtLength(p * rLen);
     const x = pt.x / 34 * W, yy = pt.y / 1000 * H;
     rCar.style.transform = `translate3d(${x}px,${yy}px,0)`;
-    rDone.setAttribute('stroke-dasharray', `${p*1000} 1000`);
+    rDone.style.clipPath = `inset(0 0 ${100 - pt.y/10}% 0)`;
     route.setAttribute('aria-valuenow', Math.round(p*100));
   }
   requestAnimationFrame(routeTick);
