@@ -151,31 +151,34 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .hero__social a:hover{color:hsl(var(--sage))}
 @media (max-width:600px){.hero__social{display:none}.hero__inner{padding-bottom:90px}}
 
-/* ================= TIUL (fan of wedges radiating from the guide) ================= */
-.tiul{position:relative;background:hsl(var(--deep));padding:clamp(40px,5vw,80px) 0 0;overflow:hidden}
-.fan{position:relative;z-index:1;height:clamp(560px,60vw,920px)}
-.wedge{position:absolute;inset:0;margin:0;overflow:hidden;isolation:isolate}
-.wedge img{position:absolute;top:-6%;height:112%;object-fit:cover;transition:transform 1.4s var(--ease);will-change:transform}
-.wedge figcaption{position:absolute;z-index:2;top:4.5%;text-align:center;font-family:var(--font-display);font-weight:800;line-height:.8;white-space:nowrap;color:hsl(150 40% 6%);mix-blend-mode:multiply;opacity:.92}
-.w1{clip-path:polygon(50% 84%,100% 38%,100% 0,76% 0)}.w1 img{left:50%;width:50%}.w1 figcaption{left:78%;right:3%}
-.w2{clip-path:polygon(50% 84%,75% 0,50.5% 0)}.w2 img{left:49%;width:28%}.w2 figcaption{left:54%;right:28%}
-.w3{clip-path:polygon(50% 84%,49.5% 0,25% 0)}.w3 img{left:23%;width:28%}.w3 figcaption{left:28%;right:54%}
-.w4{clip-path:polygon(50% 84%,24% 0,0 0,0 38%)}.w4 img{left:0;width:50%}.w4 figcaption{left:3%;right:78%}
-.wedge:hover img{transform:scale(1.05)}
-.fan__man{position:absolute;z-index:3;left:50%;bottom:0;height:54%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 20px 40px hsl(var(--deep)/.6))}
-.fan__h{position:absolute;inset:0;z-index:2;margin:0;pointer-events:none}
-.fan__h span{position:absolute;bottom:clamp(30px,4vw,70px);line-height:.92}
-.fan__h .r{right:var(--side);text-align:right}
-.fan__h .l{left:var(--side);bottom:calc(clamp(30px,4vw,70px) + 84px);text-align:left;color:hsl(var(--sage))}
-.fan__p{position:absolute;z-index:2;left:var(--side);bottom:clamp(30px,4vw,70px);max-width:min(30vw,380px);margin:0;text-align:left;color:hsl(var(--cream)/.8);font-size:clamp(16px,1.2vw,19px)}
+/* ================= TIUL (cards rising out of the Kinneret, hills in front) ================= */
+.tiul{position:relative;overflow:hidden;background:hsl(205 45% 38%);padding:clamp(70px,7vw,120px) 0 7vw;isolation:isolate}
+.tiul__bg{position:absolute;inset:-6% 0 0;z-index:-2;width:100%;height:106%;object-fit:cover;object-position:center 75%;will-change:transform}
+.tiul::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,hsl(212 55% 22%/.55),transparent 45%)}
+.tiul__head{position:relative;z-index:1;padding:0 var(--side);display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:clamp(30px,3.4vw,56px)}
+.tiul h2{margin:0}.tiul h2 em{color:hsl(42 80% 78%)}
+.tiul__head .lead{color:hsl(0 0% 100%/.88);max-width:44ch;text-align:left}
+.vcards{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.8vw,28px);padding:0 var(--side)}
+.vcard{--tint:200 60% 30%;position:relative;margin:0;aspect-ratio:3/4.3;overflow:hidden;border-radius:6px;box-shadow:0 30px 60px -30px hsl(212 60% 12%/.7);will-change:transform}
+.vcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.vcard::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,hsl(var(--tint)/.92) 0%,hsl(var(--tint)/.7) 26%,hsl(var(--tint)/0) 52%)}
+.vcard figcaption{position:relative;z-index:2;padding:clamp(18px,1.8vw,28px);color:#fff}
+.vcard h3{font-family:var(--font-display);font-weight:800;font-size:clamp(1.9rem,2.6vw,2.9rem);line-height:.95;margin:0 0 10px}
+.vcard p{margin:0;font-size:clamp(13px,1vw,15px);line-height:1.45;opacity:.92;max-width:26ch}
+.vcard:hover img{transform:scale(1.05)}
+.tiul__fg{position:absolute;left:0;bottom:-9vw;z-index:2;width:100%;height:auto;pointer-events:none;will-change:transform}
+.tiul__note{position:absolute;z-index:3;left:var(--side);bottom:clamp(14px,1.8vw,30px);margin:0;color:#fff;font-size:clamp(14px,1.1vw,17px);font-style:italic;text-shadow:0 2px 14px hsl(212 60% 12%/.6)}
 @media (max-width:900px){
-  .fan{height:auto;padding-top:118vw}
-  .wedge{bottom:auto;height:118vw}
-  .w1{clip-path:polygon(50% 90%,100% 50%,100% 0,76% 0)}.w2{clip-path:polygon(50% 90%,75% 0,50.5% 0)}.w3{clip-path:polygon(50% 90%,49.5% 0,25% 0)}.w4{clip-path:polygon(50% 90%,24% 0,0 0,0 50%)}
-  .fan__man{height:56vw;bottom:auto;top:62vw}
-  .fan__h{position:static;text-align:center;padding:36px var(--side) 14px}
-  .fan__h .r,.fan__h .l{position:static;display:block;text-align:center}
-  .fan__p{position:static;margin:0 auto;padding:0 var(--side) var(--sec);max-width:none;text-align:center}
+  .tiul{padding-bottom:10vw}
+  .tiul__head{flex-direction:column;align-items:flex-start;gap:16px}
+  .tiul__head .lead{text-align:right}
+  .vcards{grid-template-columns:repeat(2,1fr);gap:12px}
+  .vcard{aspect-ratio:3/4.4}
+  .vcard figcaption{padding:14px}
+  .vcard h3{font-size:1.6rem;margin-bottom:6px}
+  .vcard p{font-size:12.5px}
+  .tiul__fg{width:170%;max-width:none;left:-35%;bottom:-10vw}
+  .tiul__note{display:none}
 }
 
 /* ================= ABOUT ================= */
@@ -637,16 +640,19 @@ body.loading{overflow:hidden}
 
 <!-- ================= TIUL ================= -->
 <section class="tiul dark" id="tiul">
-  <svg class="topo" viewBox="0 0 800 600" aria-hidden="true" style="width:min(1200px,160vw);right:-30%;top:-10%"><use href="#topo"/></svg>
-  <div class="fan">
-    <figure class="wedge w1" data-speed="-.10"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption>מעיינות</figcaption></figure>
-    <figure class="wedge w2" data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy"><figcaption>שבילים</figcaption></figure>
-    <figure class="wedge w3" data-speed="-.06"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy"><figcaption>מפלים</figcaption></figure>
-    <figure class="wedge w4" data-speed=".12"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy"><figcaption>נופים</figcaption></figure>
-    <img class="fan__man" src="assets/img/israel-cut.png" alt="ישראל שפירא" loading="lazy">
-    <h2 class="fan__h rv"><span class="r">כל טיול<br>מתחיל</span> <span class="l"><em>במי שמוביל<br>אותו.</em></span></h2>
-    <p class="lead fan__p rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית. והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
+  <img class="tiul__bg" src="assets/img/tiul-base.jpg" alt="" loading="lazy">
+  <div class="tiul__head">
+    <h2 class="rv">כל טיול מתחיל<br><em>במי שמוביל אותו.</em></h2>
+    <p class="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br>והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
   </div>
+  <div class="vcards">
+    <figure class="vcard rv" style="--tint:190 55% 28%" data-speed=".05"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption><h3>מעיינות</h3><p>מים צלולים בין סלעים וצמחייה, רחוק מההמונים.</p></figcaption></figure>
+    <figure class="vcard rv d1" style="--tint:140 40% 22%" data-speed=".02"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy"><figcaption><h3>שבילים</h3><p>מסלולים מסומנים ושבילים שרק מקומיים מכירים.</p></figcaption></figure>
+    <figure class="vcard rv d2" style="--tint:205 60% 26%" data-speed=".04"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy"><figcaption><h3>מפלים</h3><p>מים זורמים, בריכות טבעיות ורגעים של שקט.</p></figcaption></figure>
+    <figure class="vcard rv d3" style="--tint:30 60% 34%" data-speed=".01"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy"><figcaption><h3>נופים</h3><p>תצפיות על הגליל, הכנרת והמדבר, בכל עונה.</p></figcaption></figure>
+  </div>
+  <img class="tiul__fg" src="assets/img/tiul-fg.webp" alt="" loading="lazy">
+  <p class="tiul__note">מהמעיין הנסתר ועד התצפית הגדולה.</p>
 </section>
 
 <!-- ================= ABOUT ================= -->
@@ -991,7 +997,7 @@ const smooth = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i;
 const stepped = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i; return Math.min(n-1, i + ease(clamp((f-.3)/.4))); };
 
 const heroInner = $('#heroInner'), heroBg = $('#heroBg');
-const tcards = $$('.wedge'), tiul = $('#tiul');
+const tcards = $$('.vcard'), tiul = $('#tiul'), tBg = $('.tiul__bg'), tFg = $('.tiul__fg');
 const regWrap = $('[data-pin="regions"]'), regSlides = $$('.reg__slide'), regT = $$('.reg__t'), regNames = $$('#regNames span');
 const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
@@ -1026,7 +1032,9 @@ function frame(){
     heroBg.style.transform = `translate3d(0,${hp*18}%,0) scale(${1+hp*.06})`;
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
-    tcards.forEach(c => c.firstElementChild.style.translate = `0 ${(tp-.5)*parseFloat(c.dataset.speed)*vh}px`);
+    tcards.forEach(c => c.style.translate = `0 ${(tp-.5)*-parseFloat(c.dataset.speed)*vh}px`);
+    tBg.style.transform = `translate3d(0,${(tp-.5)*8}%,0)`;
+    tFg.style.transform = `translate3d(0,${Math.max(0,1-tp)*3}vw,0)`;
     /* network: word sinks behind the hiker, layers drift at different speeds */
     const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
     discWord.style.transform = `translate3d(${discDx}px,${(dp-.5)*12}vh,0)`;
@@ -1111,9 +1119,6 @@ function frame(){
   requestAnimationFrame(frame);
 }
 
-/* tiul captions: fill the full width of each image */
-const fitCaps = () => $$('.wedge figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
-fitCaps(); addEventListener('resize', fitCaps); if (document.fonts) document.fonts.ready.then(fitCaps);
 
 /* buttons: a little compass that spins on hover */
 $$('.btn,.ch').forEach(b => b.insertAdjacentHTML('beforeend', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));

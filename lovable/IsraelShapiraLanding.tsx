@@ -59,7 +59,7 @@ const smooth = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i;
 const stepped = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i; return Math.min(n-1, i + ease(clamp((f-.3)/.4))); };
 
 const heroInner = $('#heroInner'), heroBg = $('#heroBg');
-const tcards = $$('.wedge'), tiul = $('#tiul');
+const tcards = $$('.vcard'), tiul = $('#tiul'), tBg = $('.tiul__bg'), tFg = $('.tiul__fg');
 const regWrap = $('[data-pin="regions"]'), regSlides = $$('.reg__slide'), regT = $$('.reg__t'), regNames = $$('#regNames span');
 const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
@@ -94,7 +94,9 @@ function frame(){
     heroBg.style.transform = `translate3d(0,${hp*18}%,0) scale(${1+hp*.06})`;
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
-    tcards.forEach(c => c.firstElementChild.style.translate = `0 ${(tp-.5)*parseFloat(c.dataset.speed)*vh}px`);
+    tcards.forEach(c => c.style.translate = `0 ${(tp-.5)*-parseFloat(c.dataset.speed)*vh}px`);
+    tBg.style.transform = `translate3d(0,${(tp-.5)*8}%,0)`;
+    tFg.style.transform = `translate3d(0,${Math.max(0,1-tp)*3}vw,0)`;
     /* network: word sinks behind the hiker, layers drift at different speeds */
     const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
     discWord.style.transform = `translate3d(${discDx}px,${(dp-.5)*12}vh,0)`;
@@ -179,9 +181,6 @@ function frame(){
   requestAnimationFrame(frame);
 }
 
-/* tiul captions: fill the full width of each image */
-const fitCaps = () => $$('.wedge figcaption').forEach(c => { c.style.fontSize = '100px'; const w = c.clientWidth; c.style.fontSize = (100 * w / Math.max(1, c.scrollWidth)) + 'px'; });
-fitCaps(); addEventListener('resize', fitCaps); if (document.fonts) document.fonts.ready.then(fitCaps);
 
 /* buttons: a little compass that spins on hover */
 $$('.btn,.ch').forEach(b => b.insertAdjacentHTML('beforeend', '<svg class="cmp" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><g><path class="n1" d="M12 3.5l2.6 8.5h-5.2z"/><path class="n2" d="M12 20.5l2.6-8.5h-5.2z"/></g></svg>'));
@@ -372,16 +371,19 @@ form.addEventListener('submit', e => {
 
 
 <section className="tiul dark" id="tiul">
-  <svg className="topo" viewBox="0 0 800 600" aria-hidden="true" style={{ width: "min(1200px,160vw)", right: "-30%", top: "-10%" }}><use href="#topo" /></svg>
-  <div className="fan">
-    <figure className="wedge w1" data-speed="-.10"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption>מעיינות</figcaption></figure>
-    <figure className="wedge w2" data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption>שבילים</figcaption></figure>
-    <figure className="wedge w3" data-speed="-.06"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption>מפלים</figcaption></figure>
-    <figure className="wedge w4" data-speed=".12"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption>נופים</figcaption></figure>
-    <img className="fan__man" src="assets/img/israel-cut.png" alt="ישראל שפירא" loading="lazy" />
-    <h2 className="fan__h rv"><span className="r">כל טיול<br />מתחיל</span> <span className="l"><em>במי שמוביל<br />אותו.</em></span></h2>
-    <p className="lead fan__p rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית. והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
+  <img className="tiul__bg" src="assets/img/tiul-base.jpg" alt="" loading="lazy" />
+  <div className="tiul__head">
+    <h2 className="rv">כל טיול מתחיל<br /><em>במי שמוביל אותו.</em></h2>
+    <p className="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br />והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
   </div>
+  <div className="vcards">
+    <figure className="vcard rv" style={{ "--tint": "190 55% 28%" }} data-speed=".05"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption><h3>מעיינות</h3><p>מים צלולים בין סלעים וצמחייה, רחוק מההמונים.</p></figcaption></figure>
+    <figure className="vcard rv d1" style={{ "--tint": "140 40% 22%" }} data-speed=".02"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption><h3>שבילים</h3><p>מסלולים מסומנים ושבילים שרק מקומיים מכירים.</p></figcaption></figure>
+    <figure className="vcard rv d2" style={{ "--tint": "205 60% 26%" }} data-speed=".04"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption><h3>מפלים</h3><p>מים זורמים, בריכות טבעיות ורגעים של שקט.</p></figcaption></figure>
+    <figure className="vcard rv d3" style={{ "--tint": "30 60% 34%" }} data-speed=".01"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption><h3>נופים</h3><p>תצפיות על הגליל, הכנרת והמדבר, בכל עונה.</p></figcaption></figure>
+  </div>
+  <img className="tiul__fg" src="assets/img/tiul-fg.webp" alt="" loading="lazy" />
+  <p className="tiul__note">מהמעיין הנסתר ועד התצפית הגדולה.</p>
 </section>
 
 

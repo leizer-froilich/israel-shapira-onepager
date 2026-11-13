@@ -154,31 +154,34 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .hero__social a:hover{color:hsl(var(--sage))}
 @media (max-width:600px){.hero__social{display:none}.hero__inner{padding-bottom:90px}}
 
-/* ================= TIUL (fan of wedges radiating from the guide) ================= */
-.tiul{position:relative;background:hsl(var(--deep));padding:clamp(40px,5vw,80px) 0 0;overflow:hidden}
-.fan{position:relative;z-index:1;height:clamp(560px,60vw,920px)}
-.wedge{position:absolute;inset:0;margin:0;overflow:hidden;isolation:isolate}
-.wedge img{position:absolute;top:-6%;height:112%;object-fit:cover;transition:transform 1.4s var(--ease);will-change:transform}
-.wedge figcaption{position:absolute;z-index:2;top:4.5%;text-align:center;font-family:var(--font-display);font-weight:800;line-height:.8;white-space:nowrap;color:hsl(150 40% 6%);mix-blend-mode:multiply;opacity:.92}
-.w1{clip-path:polygon(50% 84%,100% 38%,100% 0,76% 0)}.w1 img{left:50%;width:50%}.w1 figcaption{left:78%;right:3%}
-.w2{clip-path:polygon(50% 84%,75% 0,50.5% 0)}.w2 img{left:49%;width:28%}.w2 figcaption{left:54%;right:28%}
-.w3{clip-path:polygon(50% 84%,49.5% 0,25% 0)}.w3 img{left:23%;width:28%}.w3 figcaption{left:28%;right:54%}
-.w4{clip-path:polygon(50% 84%,24% 0,0 0,0 38%)}.w4 img{left:0;width:50%}.w4 figcaption{left:3%;right:78%}
-.wedge:hover img{transform:scale(1.05)}
-.fan__man{position:absolute;z-index:3;left:50%;bottom:0;height:54%;width:auto;transform:translateX(-50%);filter:drop-shadow(0 20px 40px hsl(var(--deep)/.6))}
-.fan__h{position:absolute;inset:0;z-index:2;margin:0;pointer-events:none}
-.fan__h span{position:absolute;bottom:clamp(30px,4vw,70px);line-height:.92}
-.fan__h .r{right:var(--side);text-align:right}
-.fan__h .l{left:var(--side);bottom:calc(clamp(30px,4vw,70px) + 84px);text-align:left;color:hsl(var(--sage))}
-.fan__p{position:absolute;z-index:2;left:var(--side);bottom:clamp(30px,4vw,70px);max-width:min(30vw,380px);margin:0;text-align:left;color:hsl(var(--cream)/.8);font-size:clamp(16px,1.2vw,19px)}
+/* ================= TIUL (cards rising out of the Kinneret, hills in front) ================= */
+.tiul{position:relative;overflow:hidden;background:hsl(205 45% 38%);padding:clamp(70px,7vw,120px) 0 7vw;isolation:isolate}
+.tiul__bg{position:absolute;inset:-6% 0 0;z-index:-2;width:100%;height:106%;object-fit:cover;object-position:center 75%;will-change:transform}
+.tiul::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,hsl(212 55% 22%/.55),transparent 45%)}
+.tiul__head{position:relative;z-index:1;padding:0 var(--side);display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:clamp(30px,3.4vw,56px)}
+.tiul h2{margin:0}.tiul h2 em{color:hsl(42 80% 78%)}
+.tiul__head .lead{color:hsl(0 0% 100%/.88);max-width:44ch;text-align:left}
+.vcards{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,1.8vw,28px);padding:0 var(--side)}
+.vcard{--tint:200 60% 30%;position:relative;margin:0;aspect-ratio:3/4.3;overflow:hidden;border-radius:6px;box-shadow:0 30px 60px -30px hsl(212 60% 12%/.7);will-change:transform}
+.vcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.vcard::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,hsl(var(--tint)/.92) 0%,hsl(var(--tint)/.7) 26%,hsl(var(--tint)/0) 52%)}
+.vcard figcaption{position:relative;z-index:2;padding:clamp(18px,1.8vw,28px);color:#fff}
+.vcard h3{font-family:var(--font-display);font-weight:800;font-size:clamp(1.9rem,2.6vw,2.9rem);line-height:.95;margin:0 0 10px}
+.vcard p{margin:0;font-size:clamp(13px,1vw,15px);line-height:1.45;opacity:.92;max-width:26ch}
+.vcard:hover img{transform:scale(1.05)}
+.tiul__fg{position:absolute;left:0;bottom:-9vw;z-index:2;width:100%;height:auto;pointer-events:none;will-change:transform}
+.tiul__note{position:absolute;z-index:3;left:var(--side);bottom:clamp(14px,1.8vw,30px);margin:0;color:#fff;font-size:clamp(14px,1.1vw,17px);font-style:italic;text-shadow:0 2px 14px hsl(212 60% 12%/.6)}
 @media (max-width:900px){
-  .fan{height:auto;padding-top:118vw}
-  .wedge{bottom:auto;height:118vw}
-  .w1{clip-path:polygon(50% 90%,100% 50%,100% 0,76% 0)}.w2{clip-path:polygon(50% 90%,75% 0,50.5% 0)}.w3{clip-path:polygon(50% 90%,49.5% 0,25% 0)}.w4{clip-path:polygon(50% 90%,24% 0,0 0,0 50%)}
-  .fan__man{height:56vw;bottom:auto;top:62vw}
-  .fan__h{position:static;text-align:center;padding:36px var(--side) 14px}
-  .fan__h .r,.fan__h .l{position:static;display:block;text-align:center}
-  .fan__p{position:static;margin:0 auto;padding:0 var(--side) var(--sec);max-width:none;text-align:center}
+  .tiul{padding-bottom:10vw}
+  .tiul__head{flex-direction:column;align-items:flex-start;gap:16px}
+  .tiul__head .lead{text-align:right}
+  .vcards{grid-template-columns:repeat(2,1fr);gap:12px}
+  .vcard{aspect-ratio:3/4.4}
+  .vcard figcaption{padding:14px}
+  .vcard h3{font-size:1.6rem;margin-bottom:6px}
+  .vcard p{font-size:12.5px}
+  .tiul__fg{width:170%;max-width:none;left:-35%;bottom:-10vw}
+  .tiul__note{display:none}
 }
 
 /* ================= ABOUT ================= */
