@@ -525,7 +525,7 @@ body.loading{overflow:hidden}
 h2 em{position:relative;display:inline-block}
 h2 em::after{content:"";position:absolute;left:0;right:0;bottom:-.1em;height:.17em;background:currentColor;opacity:.7;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;clip-path:inset(0 0 0 100%);transition:clip-path 1.5s .35s cubic-bezier(.6,0,.2,1)}
 h2.drawn em::after{clip-path:inset(0 0 0 0)}
-@media (prefers-reduced-motion:reduce){h2 em::after{clip-path:none;transition:none}
+@media (prefers-reduced-motion:reduce){h2 em::after{clip-path:none;transition:none}}
 /* WhatsApp: bottom right */
 .wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px}
 .wa a{width:66px;height:66px;display:block;transition:transform .3s}
