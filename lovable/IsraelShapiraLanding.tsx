@@ -37,6 +37,62 @@ $('#drawerClose').onclick = () => setMenu(false);
 $$('#drawer a').forEach(a => a.addEventListener('click',()=>setMenu(false)));
 addEventListener('keydown',e=>{ if(e.key==='Escape'){ setMenu(false); closeDD(); }});
 
+/* birds: a small flock takes off from the logo and from the menu button */
+const flock = el => {
+  if (RM) return;
+  const r = el.getBoundingClientRect(), x0 = r.left + r.width/2, y0 = r.top + r.height/2;
+  const light = document.body.classList.contains('open') || scrollY < innerHeight*.7;
+  const box = document.createElement('div'); box.className = 'birds'; box.setAttribute('aria-hidden','true');
+  box.style.color = light ? 'hsl(var(--cream))' : 'hsl(var(--deep))';
+  document.body.appendChild(box);
+  const mid = Math.abs(x0 - innerWidth/2) < innerWidth*.15, n = 8; let left = n;
+  for (let i = 0; i < n; i++){
+    const b = document.createElement('i'), sz = 15 + Math.random()*13;
+    b.innerHTML = '<svg viewBox="0 0 24 12"><path d="M0 2.5Q6 1.5 12 9Q18 1.5 24 2.5Q17 3.5 12 11.5Q7 3.5 0 2.5Z"/></svg>';
+    b.style.cssText = `width:${sz}px;left:${x0}px;top:${y0}px`;
+    b.firstChild.style.animationDuration = (.2 + Math.random()*.16) + 's';
+    box.appendChild(b);
+    const dir = mid ? (i % 2 ? 1 : -1) : (x0 < innerWidth/2 ? 1 : -1);
+    const dx = dir * (innerWidth*.25 + Math.random()*innerWidth*.5), dy1 = 30 + Math.random()*110, dy2 = -40 + Math.random()*260;
+    b.animate([
+      {transform:'translate(0,0) scale(.2)', opacity:0},
+      {transform:`translate(${dx*.18}px,${dy1*.6}px) scale(.9)`, opacity:1, offset:.18},
+      {transform:`translate(${dx*.55}px,${dy1}px) scale(1)`, opacity:1, offset:.55},
+      {transform:`translate(${dx}px,${dy2}px) scale(.75)`, opacity:0}
+    ], {duration:1700 + Math.random()*900, delay:i*55, easing:'cubic-bezier(.3,.6,.4,1)', fill:'both'})
+    .onfinish = () => { if (--left === 0) box.remove(); };
+  }
+};
+$$('.header .logo').forEach(l => l.addEventListener('click', () => flock(l.querySelector('img'))));
+$('#menu').addEventListener('click', e => { if (document.body.classList.contains('open')) flock(e.currentTarget); });
+
+/* menu: the item you went to stays marked */
+const navLinks = $$('.header nav a, #drawer a');
+const spyIds = [...new Set(navLinks.map(a => a.getAttribute('href')))];
+let spyLock = 0;
+const setActive = id => navLinks.forEach(a => { const on = a.getAttribute('href') === id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+navLinks.forEach(a => a.addEventListener('click', () => { setActive(a.getAttribute('href')); spyLock = performance.now() + 1800; }));
+const spy = () => {
+  if (performance.now() < spyLock) return;
+  let cur = null; const line = innerHeight*.35;
+  spyIds.forEach(id => { const el = $(id); if (el && el.getBoundingClientRect().top <= line) cur = id; });
+  setActive(cur);
+};
+addEventListener('scroll', spy, {passive:true}); spy();
+
+/* services on mobile: the cards stack, the ones underneath sink back */
+const scards = $$('.scard');
+const stackFx = () => {
+  if (isDesk()) return;
+  scards.forEach((c, i) => {
+    const inr = c.firstElementChild, nx = scards[i+1];
+    const t = nx ? clamp(1 - (nx.getBoundingClientRect().top - c.getBoundingClientRect().top) / c.offsetHeight) : 0;
+    inr.style.transform = t ? `scale(${1 - t*.07})` : '';
+    inr.style.setProperty('--t', t.toFixed(3));
+  });
+};
+addEventListener('scroll', stackFx, {passive:true}); stackFx();
+
 /* Lenis smooth scroll */
 let lenis = null;
 if (window.Lenis && !RM){ lenis = new Lenis({lerp:.1}); (function raf(t){ lenis.raf(t); requestAnimationFrame(raf); })(performance.now()); }
@@ -490,14 +546,14 @@ form.addEventListener('submit', e => {
       </div>
     </div>
   </div>
-  <div className="mob">
+  <div className="mob smob">
     <h2>לבעלי עסקים<br /><em>ולמטיילים.</em></h2>
-    <article className="mcard rv"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy" /><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p></article>
-    <article className="mcard rv"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy" /><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים.</p></article>
-    <article className="mcard rv"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy" /><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p></article>
-    <article className="mcard rv"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p></article>
-    <article className="mcard rv"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy" /><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע.</p></article>
-    <article className="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה.</p></article>
+    <article className="scard" style={{ "--i": "0" }}><div className="scard__in"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy" /><span className="scard__n">01</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p><a className="btn btn-rust" href="#contact">לבדיקת התאמה</a></div></article>
+    <article className="scard" style={{ "--i": "1" }}><div className="scard__in"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy" /><span className="scard__n">02</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים. קשרים שנבנים על השביל.</p><a className="btn btn-rust" href="#network">ליום הבא</a></div></article>
+    <article className="scard" style={{ "--i": "2" }}><div className="scard__in"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy" /><span className="scard__n">03</span><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p><a className="btn btn-rust" href="#contact">לתיאום טיול</a></div></article>
+    <article className="scard" style={{ "--i": "3" }}><div className="scard__in"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy" /><span className="scard__n">04</span><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a className="btn btn-rust" href="#contact">לפרטים</a></div></article>
+    <article className="scard" style={{ "--i": "4" }}><div className="scard__in"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy" /><span className="scard__n">05</span><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a className="btn btn-rust" href="#contact">להזמנת הרצאה</a></div></article>
+    <article className="scard" style={{ "--i": "5" }}><div className="scard__in"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy" /><span className="scard__n">06</span><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה, מהשטח ועם ניסיון של עשור.</p><a className="btn btn-rust" href="#contact">להצטרפות</a></div></article>
   </div>
 </section>
 
@@ -678,7 +734,7 @@ form.addEventListener('submit', e => {
   </div>
   <div className="legal">
     <span>© 2026 ישראל שפירא · כל הזכויות שמורות · <a href="#">הצהרת נגישות</a> · <a href="#">מדיניות פרטיות</a></span>
-    <span>בניית אתרים ואפליקציות · לייזר פרוליך</span>
+    <img className="credit" src="assets/img/credit.webp" alt="בניית אתרים ואפליקציות · לייזר פרוליך" width="951" height="95" loading="lazy" />
   </div>
 </footer>
 

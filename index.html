@@ -105,12 +105,20 @@ em{font-style:normal;color:hsl(var(--rust))}
 .header nav{display:flex;gap:clamp(16px,2vw,32px);font-size:16px}
 .header nav a{position:relative;opacity:.82;transition:opacity .3s}
 .header nav a::after{content:"";position:absolute;inset:auto 0 -6px;height:1.5px;background:hsl(var(--rust));transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
-.header nav a:hover{opacity:1}.header nav a:hover::after{transform:scaleX(1)}
+.header nav a:hover,.header nav a.on{opacity:1}.header nav a:hover::after,.header nav a.on::after{transform:scaleX(1)}
+.drawer a::after{content:"";display:inline-block;vertical-align:middle;width:0;height:3px;border-radius:3px;margin-inline-start:14px;background:currentColor;transition:width .45s var(--ease)}
+.drawer a.on{color:hsl(var(--rust))}.drawer a.on::after{width:34px}
+/* birds that take off from the logo / menu button */
+.birds{position:fixed;inset:0;z-index:70;pointer-events:none;overflow:hidden}
+.birds i{position:absolute;display:block;margin:-6px 0 0 -10px}
+.birds svg{display:block;width:100%;fill:currentColor;overflow:visible;transform-origin:50% 75%;animation:flap .3s ease-in-out infinite alternate}
+@keyframes flap{to{transform:scaleY(-.55)}}
 .header .btn{padding:.75em 1.4em;font-size:15px}
 .menu{display:none;width:46px;height:46px;border-radius:50%;border:1.5px solid hsl(0 0% 100%/.45);background:transparent;position:relative}
-.menu span,.menu::before,.menu::after{content:"";position:absolute;right:13px;left:13px;height:1.5px;background:currentColor;transition:transform .4s var(--ease),opacity .3s}
-.menu::before{top:16px}.menu span{top:22px}.menu::after{top:28px}
-body.open .menu::before{transform:translateY(6px) rotate(45deg)}body.open .menu span{opacity:0}body.open .menu::after{transform:translateY(-6px) rotate(-45deg)}
+.menu::before,.menu::after{content:"";position:absolute;right:8.5px;left:8.5px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .4s var(--ease)}
+.menu span{display:none}
+.menu::before{top:18px}.menu::after{top:25px}
+body.open .menu::before{transform:translateY(3.5px) rotate(45deg)}body.open .menu::after{transform:translateY(-3.5px) rotate(-45deg)}
 .drawer{position:fixed;inset:0;z-index:45;background:hsl(var(--deep));color:hsl(var(--cream));display:grid;align-content:start;gap:6px;padding:120px 35px 60px;opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility .45s;overflow:hidden}
 .drawer a{font-family:var(--font-display);font-weight:800;font-size:clamp(2.4rem,10vw,3.4rem);line-height:1.15;position:relative;z-index:1}
 body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
@@ -282,6 +290,16 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
   .mob .kicker{color:hsl(var(--sage))}
   .mob h2{margin:16px 0 var(--group)}
   .mob h2 em{color:hsl(var(--sage))}
+  .smob{padding-bottom:calc(var(--sec) - 16px)}
+  .scard{position:sticky;top:calc(76px + var(--i)*10px);height:min(64svh,540px);margin-bottom:16px}
+  .scard__in{position:relative;height:100%;border-radius:var(--r);overflow:hidden;isolation:isolate;color:hsl(var(--cream));display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:24px;transform-origin:50% 0;will-change:transform;box-shadow:0 -16px 34px -20px hsl(var(--deep))}
+  .scard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+  .scard__in::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,hsl(var(--deep)/.2),transparent 28%,hsl(var(--deep)/.93) 80%)}
+  .scard__in::before{content:"";position:absolute;inset:0;z-index:3;background:hsl(var(--deep));opacity:calc(var(--t,0)*.6);pointer-events:none}
+  .scard__n{position:absolute;top:10px;left:18px;font-family:var(--font-display);font-weight:800;font-size:5.6rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px hsl(var(--cream-h))}
+  .scard h3{font-size:2.3rem;line-height:.95;margin:0 0 10px;color:hsl(var(--cream-h))}
+  .scard p{margin:0 0 18px;font-weight:300;opacity:.9;font-size:16px}
+  .scard .btn{font-size:15px;padding:.7em 1.3em}
   .mcard{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;margin-bottom:16px;color:hsl(var(--cream));isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:24px}
   .mcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
   .mcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 35%,hsl(var(--deep)/.92))}
@@ -403,7 +421,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .net__list b{font-family:var(--font-display);font-size:1.7rem;line-height:1;color:hsl(var(--cream))}
 .net__list span{font-size:15px;opacity:.8;line-height:1.4}
 @media (max-width:1000px){.net__body{grid-template-columns:1fr;grid-template-areas:"h" "lead" "list" "cta"}.net__cta{justify-self:start}}
-@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:78svh}}
+@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:55svh;min-height:0}.disc__word{top:18%}}
 
 /* ================= COMMUNITY ================= */
 .community{position:relative;background:radial-gradient(ellipse 50% 60% at 8% 12%,hsl(95 45% 42%/.55),transparent 70%),radial-gradient(ellipse 45% 55% at 95% 70%,hsl(var(--rust)/.35),transparent 70%),radial-gradient(ellipse 40% 40% at 60% 30%,hsl(170 60% 35%/.35),transparent 70%),hsl(var(--forest));padding:var(--sec) var(--side) calc(var(--sec) + clamp(100px,14vw,230px));overflow:hidden}
@@ -469,7 +487,7 @@ form.card h3{color:hsl(var(--forest))}
 .dd li:hover,.dd li[aria-selected="true"]{background:hsl(var(--cream));color:hsl(var(--forest));font-weight:700}
 form.card .btn{width:100%;font-size:17px}
 .note{font-size:13px;color:hsl(var(--stone));text-align:center;margin:0}
-@media (max-width:900px){.contact__grid{grid-template-columns:1fr}}
+@media (max-width:900px){.contact__grid{display:flex;flex-direction:column;align-items:stretch;gap:0}.contact__grid>div:first-child{display:contents}.contact__grid>form{order:2;margin-top:34px}.contact .ways{order:3;margin-top:24px}}
 @media (max-width:480px){.field-row{grid-template-columns:1fr}}
 
 footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px,6vw,90px) var(--side) 28px}
@@ -482,7 +500,9 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 .socials{display:flex;gap:10px;margin-top:22px}
 .socials a{width:46px;height:46px;display:block;transition:transform .4s var(--ease)}
 .socials a:hover{transform:translateY(-4px) rotate(-6deg)}
-.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;opacity:.7}
+.legal .credit{height:22px;width:auto}
+@media (max-width:900px){.legal{justify-content:center;text-align:center;padding-bottom:78px}.legal .credit{height:20px}}
+.legal{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;opacity:.7}
 @media (max-width:900px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}
 
 
@@ -759,14 +779,14 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
       </div>
     </div>
   </div>
-  <div class="mob">
+  <div class="mob smob">
     <h2>לבעלי עסקים<br><em>ולמטיילים.</em></h2>
-    <article class="mcard rv"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy"><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p></article>
-    <article class="mcard rv"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy"><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים.</p></article>
-    <article class="mcard rv"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy"><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p></article>
-    <article class="mcard rv"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p></article>
-    <article class="mcard rv"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy"><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע.</p></article>
-    <article class="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy"><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה.</p></article>
+    <article class="scard" style="--i:0"><div class="scard__in"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy"><span class="scard__n">01</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p><a class="btn btn-rust" href="#contact">לבדיקת התאמה</a></div></article>
+    <article class="scard" style="--i:1"><div class="scard__in"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy"><span class="scard__n">02</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים. קשרים שנבנים על השביל.</p><a class="btn btn-rust" href="#network">ליום הבא</a></div></article>
+    <article class="scard" style="--i:2"><div class="scard__in"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy"><span class="scard__n">03</span><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p><a class="btn btn-rust" href="#contact">לתיאום טיול</a></div></article>
+    <article class="scard" style="--i:3"><div class="scard__in"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="scard__n">04</span><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a class="btn btn-rust" href="#contact">לפרטים</a></div></article>
+    <article class="scard" style="--i:4"><div class="scard__in"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy"><span class="scard__n">05</span><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a class="btn btn-rust" href="#contact">להזמנת הרצאה</a></div></article>
+    <article class="scard" style="--i:5"><div class="scard__in"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy"><span class="scard__n">06</span><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה, מהשטח ועם ניסיון של עשור.</p><a class="btn btn-rust" href="#contact">להצטרפות</a></div></article>
   </div>
 </section>
 
@@ -947,7 +967,7 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   </div>
   <div class="legal">
     <span>© 2026 ישראל שפירא · כל הזכויות שמורות · <a href="#">הצהרת נגישות</a> · <a href="#">מדיניות פרטיות</a></span>
-    <span>בניית אתרים ואפליקציות · לייזר פרוליך</span>
+    <img class="credit" src="assets/img/credit.webp" alt="בניית אתרים ואפליקציות · לייזר פרוליך" width="951" height="95" loading="lazy">
   </div>
 </footer>
 
@@ -983,6 +1003,62 @@ $('#menu').onclick = () => setMenu(!document.body.classList.contains('open'));
 $('#drawerClose').onclick = () => setMenu(false);
 $$('#drawer a').forEach(a => a.addEventListener('click',()=>setMenu(false)));
 addEventListener('keydown',e=>{ if(e.key==='Escape'){ setMenu(false); closeDD(); }});
+
+/* birds: a small flock takes off from the logo and from the menu button */
+const flock = el => {
+  if (RM) return;
+  const r = el.getBoundingClientRect(), x0 = r.left + r.width/2, y0 = r.top + r.height/2;
+  const light = document.body.classList.contains('open') || scrollY < innerHeight*.7;
+  const box = document.createElement('div'); box.className = 'birds'; box.setAttribute('aria-hidden','true');
+  box.style.color = light ? 'hsl(var(--cream))' : 'hsl(var(--deep))';
+  document.body.appendChild(box);
+  const mid = Math.abs(x0 - innerWidth/2) < innerWidth*.15, n = 8; let left = n;
+  for (let i = 0; i < n; i++){
+    const b = document.createElement('i'), sz = 15 + Math.random()*13;
+    b.innerHTML = '<svg viewBox="0 0 24 12"><path d="M0 2.5Q6 1.5 12 9Q18 1.5 24 2.5Q17 3.5 12 11.5Q7 3.5 0 2.5Z"/></svg>';
+    b.style.cssText = `width:${sz}px;left:${x0}px;top:${y0}px`;
+    b.firstChild.style.animationDuration = (.2 + Math.random()*.16) + 's';
+    box.appendChild(b);
+    const dir = mid ? (i % 2 ? 1 : -1) : (x0 < innerWidth/2 ? 1 : -1);
+    const dx = dir * (innerWidth*.25 + Math.random()*innerWidth*.5), dy1 = 30 + Math.random()*110, dy2 = -40 + Math.random()*260;
+    b.animate([
+      {transform:'translate(0,0) scale(.2)', opacity:0},
+      {transform:`translate(${dx*.18}px,${dy1*.6}px) scale(.9)`, opacity:1, offset:.18},
+      {transform:`translate(${dx*.55}px,${dy1}px) scale(1)`, opacity:1, offset:.55},
+      {transform:`translate(${dx}px,${dy2}px) scale(.75)`, opacity:0}
+    ], {duration:1700 + Math.random()*900, delay:i*55, easing:'cubic-bezier(.3,.6,.4,1)', fill:'both'})
+    .onfinish = () => { if (--left === 0) box.remove(); };
+  }
+};
+$$('.header .logo').forEach(l => l.addEventListener('click', () => flock(l.querySelector('img'))));
+$('#menu').addEventListener('click', e => { if (document.body.classList.contains('open')) flock(e.currentTarget); });
+
+/* menu: the item you went to stays marked */
+const navLinks = $$('.header nav a, #drawer a');
+const spyIds = [...new Set(navLinks.map(a => a.getAttribute('href')))];
+let spyLock = 0;
+const setActive = id => navLinks.forEach(a => { const on = a.getAttribute('href') === id; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+navLinks.forEach(a => a.addEventListener('click', () => { setActive(a.getAttribute('href')); spyLock = performance.now() + 1800; }));
+const spy = () => {
+  if (performance.now() < spyLock) return;
+  let cur = null; const line = innerHeight*.35;
+  spyIds.forEach(id => { const el = $(id); if (el && el.getBoundingClientRect().top <= line) cur = id; });
+  setActive(cur);
+};
+addEventListener('scroll', spy, {passive:true}); spy();
+
+/* services on mobile: the cards stack, the ones underneath sink back */
+const scards = $$('.scard');
+const stackFx = () => {
+  if (isDesk()) return;
+  scards.forEach((c, i) => {
+    const inr = c.firstElementChild, nx = scards[i+1];
+    const t = nx ? clamp(1 - (nx.getBoundingClientRect().top - c.getBoundingClientRect().top) / c.offsetHeight) : 0;
+    inr.style.transform = t ? `scale(${1 - t*.07})` : '';
+    inr.style.setProperty('--t', t.toFixed(3));
+  });
+};
+addEventListener('scroll', stackFx, {passive:true}); stackFx();
 
 /* Lenis smooth scroll */
 let lenis = null;
