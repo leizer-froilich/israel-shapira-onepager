@@ -521,14 +521,11 @@ body.loading{overflow:hidden}
 
 /* headings on dark ground: the site's cream, not white */
 .hero h1,.tiul h2,.vcard h3,.reg__head h2,.reg__t h3,.mcard h3,.mob h2,.svc__head h2,.svc__item h3,.net__h,.disc__word,.community h2,.ch b{color:hsl(var(--cream-h))}
-/* headings: the emphasised words get a hiking trail drawn under them, ending in a destination pin */
+/* headings: the emphasised words get a hiking trail drawn under them */
 h2 em{position:relative;display:inline-block}
 h2 em::after{content:"";position:absolute;left:0;right:0;bottom:-.1em;height:.17em;background:currentColor;opacity:.7;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;clip-path:inset(0 0 0 100%);transition:clip-path 1.5s .35s cubic-bezier(.6,0,.2,1)}
-h2 em::before{content:"";position:absolute;left:-.26em;bottom:-.14em;width:.24em;height:.24em;border-radius:50% 50% 50% 0;transform:rotate(-45deg) scale(0);background:currentColor;transition:transform .55s 1.75s cubic-bezier(.3,1.7,.4,1)}
 h2.drawn em::after{clip-path:inset(0 0 0 0)}
-h2.drawn em::before{transform:rotate(-45deg) scale(1)}
-@media (prefers-reduced-motion:reduce){h2 em::after{clip-path:none;transition:none}h2 em::before{transform:rotate(-45deg) scale(1);transition:none}}
-
+@media (prefers-reduced-motion:reduce){h2 em::after{clip-path:none;transition:none}
 /* WhatsApp: bottom right */
 .wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px}
 .wa a{width:66px;height:66px;display:block;transition:transform .3s}
