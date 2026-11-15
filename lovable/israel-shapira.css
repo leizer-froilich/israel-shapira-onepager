@@ -15,6 +15,7 @@
 :root{
   /* 60 / 30 / 10 : cream · forest · rust (all CTAs rust) */
   --cream:40 47% 93%;
+  --cream-h:39 64% 86%;
   --paper:42 50% 97%;
   --forest:150 42% 20%;
   --deep:152 46% 10%;
@@ -33,7 +34,7 @@
   --fs-body:clamp(17px,1.15vw,19px);
   --fs-small:14px;
 
-  --side:8vw;
+  --side:10vw;
   --sec:clamp(90px,9vw,130px);
   --group:clamp(32px,3.6vw,56px);
   --r:20px;
@@ -170,7 +171,6 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .vcard p{margin:0;font-size:clamp(13px,1vw,15px);line-height:1.45;opacity:.92;max-width:26ch}
 .vcard:hover img{transform:scale(1.05)}
 .tiul__fg{position:absolute;left:0;bottom:-9vw;z-index:2;width:100%;height:auto;pointer-events:none;will-change:transform}
-.tiul__note{position:absolute;z-index:3;left:var(--side);bottom:clamp(14px,1.8vw,30px);margin:0;color:hsl(var(--cream));font-size:clamp(14px,1.1vw,17px);font-style:italic;text-shadow:0 2px 14px hsl(212 60% 12%/.6)}
 @media (max-width:900px){
   .tiul{padding-bottom:10vw}
   .tiul__head{flex-direction:column;align-items:flex-start;gap:16px}
@@ -181,8 +181,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
   .vcard h3{font-size:1.6rem;margin-bottom:6px}
   .vcard p{font-size:12.5px}
   .tiul__fg{width:170%;max-width:none;left:-35%;bottom:-10vw}
-  .tiul__note{display:none}
-}
+  }
 
 /* ================= ABOUT ================= */
 .about,.why,.process{background-image:radial-gradient(ellipse 80% 60% at 20% 0%,hsl(42 60% 98%/.7),transparent 70%),radial-gradient(ellipse 70% 50% at 100% 100%,hsl(36 40% 85%/.45),transparent 70%)}
@@ -389,7 +388,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .disc__bg,.disc__fg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%;will-change:transform}
 .disc__bg{z-index:0}
 .disc::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,hsl(var(--deep)/.25),transparent 30%,transparent 70%,hsl(var(--deep)))}
-.disc__word{position:absolute;z-index:2;left:0;right:0;top:33%;text-align:center;font-family:var(--font-display);font-weight:800;font-size:22vw;line-height:.8;color:hsl(var(--cream));letter-spacing:0;will-change:transform;text-shadow:0 10px 60px hsl(var(--deep)/.25);white-space:nowrap}
+.disc__word{position:absolute;z-index:2;left:0;right:0;top:50%;text-align:center;font-family:var(--font-display);font-weight:800;font-size:22vw;line-height:.8;color:hsl(var(--cream));letter-spacing:0;will-change:transform;text-shadow:0 10px 60px hsl(var(--deep)/.25);white-space:nowrap}
 .disc__fg{z-index:3}
 .net__body{position:relative;overflow:hidden;padding:clamp(40px,4vw,70px) var(--side) var(--sec);display:grid;grid-template-columns:.85fr 1.15fr;grid-template-areas:"h list" "lead cta";column-gap:clamp(40px,6vw,100px);row-gap:26px;align-items:end}
 .net__h{grid-area:h}.net__body .net__list{grid-area:list}.net__lead{grid-area:lead;align-self:start}.net__cta{grid-area:cta;justify-self:end;align-self:start}
@@ -404,7 +403,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 .net__list b{font-family:var(--font-display);font-size:1.7rem;line-height:1;color:hsl(var(--cream))}
 .net__list span{font-size:15px;opacity:.8;line-height:1.4}
 @media (max-width:1000px){.net__body{grid-template-columns:1fr;grid-template-areas:"h" "lead" "list" "cta"}.net__cta{justify-self:start}}
-@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:78svh}.disc__word{top:36%}}
+@media (max-width:640px){.net__list{grid-template-columns:1fr}.net__list li{flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}.net__list i{width:54px;height:54px;margin:0}.net__list span{flex-basis:100%}.disc{height:78svh}}
 
 /* ================= COMMUNITY ================= */
 .community{position:relative;background:radial-gradient(ellipse 50% 60% at 8% 12%,hsl(95 45% 42%/.55),transparent 70%),radial-gradient(ellipse 45% 55% at 95% 70%,hsl(var(--rust)/.35),transparent 70%),radial-gradient(ellipse 40% 40% at 60% 30%,hsl(170 60% 35%/.35),transparent 70%),hsl(var(--forest));padding:var(--sec) var(--side) calc(var(--sec) + clamp(100px,14vw,230px));overflow:hidden}
@@ -488,7 +487,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 
 
 /* Waze-style route: replaces the scrollbar */
-.route{position:fixed;z-index:41;right:12px;top:100px;bottom:112px;width:34px;cursor:grab;touch-action:none}
+.route{position:fixed;z-index:41;right:30px;top:100px;bottom:112px;width:34px;cursor:grab;touch-action:none}
 .route:active{cursor:grabbing}
 .route svg.road{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .route .r-base{stroke:hsl(var(--deep)/.78);stroke-width:9;fill:none;stroke-linecap:round}
@@ -518,6 +517,17 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 @keyframes ldPen{0%{opacity:1;right:6%}92%{opacity:1}100%{opacity:0;right:94%}}
 body.loading{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.loader{display:none}}
+
+
+/* headings on dark ground: the site's cream, not white */
+.hero h1,.tiul h2,.vcard h3,.reg__head h2,.reg__t h3,.mcard h3,.mob h2,.svc__head h2,.svc__item h3,.net__h,.disc__word,.community h2,.ch b{color:hsl(var(--cream-h))}
+/* headings: the emphasised words get a hiking trail drawn under them, ending in a destination pin */
+h2 em{position:relative;display:inline-block}
+h2 em::after{content:"";position:absolute;left:0;right:0;bottom:-.1em;height:.17em;background:currentColor;opacity:.7;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;clip-path:inset(0 0 0 100%);transition:clip-path 1.5s .35s cubic-bezier(.6,0,.2,1)}
+h2 em::before{content:"";position:absolute;left:-.26em;bottom:-.14em;width:.24em;height:.24em;border-radius:50% 50% 50% 0;transform:rotate(-45deg) scale(0);background:currentColor;transition:transform .55s 1.75s cubic-bezier(.3,1.7,.4,1)}
+h2.drawn em::after{clip-path:inset(0 0 0 0)}
+h2.drawn em::before{transform:rotate(-45deg) scale(1)}
+@media (prefers-reduced-motion:reduce){h2 em::after{clip-path:none;transition:none}h2 em::before{transform:rotate(-45deg) scale(1);transition:none}}
 
 /* WhatsApp: bottom right */
 .wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px}

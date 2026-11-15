@@ -100,7 +100,7 @@ function frame(){
     tFg.style.transform = `translate3d(0,${(.5-tp)*8}vw,0)`;
     /* network: word sinks behind the hiker, layers drift at different speeds */
     const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
-    discWord.style.transform = `translate3d(${discDx}px,${(dp-.5)*12}vh,0)`;
+    discWord.style.transform = `translate3d(${discDx}px,calc(-50% + ${(dp-.5)*12}vh),0)`;
     discBg.style.transform = `translate3d(0,${(dp-.5)*-6 - 7}%,0) scale(1.18)`;
     discFg.style.transform = `translate3d(0,${(dp-.5)*-6 - 7}%,0) scale(1.18)`;
   }
@@ -227,6 +227,15 @@ route.addEventListener('pointerup', rUp); route.addEventListener('pointercancel'
   const go = () => setTimeout(done, Math.max(0, MIN - (performance.now() - t0)));
   if (document.readyState === 'complete') go(); else addEventListener('load', go, {once: true});
   setTimeout(done, 6000);
+})();
+
+
+/* headings: draw the trail under the emphasised words when they come into view */
+(() => {
+  const hs = $$('h2').filter(h => h.querySelector('em'));
+  if (!('IntersectionObserver' in window)) { hs.forEach(h => h.classList.add('drawn')); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('drawn'); io.unobserve(e.target); } }), {threshold: .6});
+  hs.forEach(h => io.observe(h));
 })();
 
 const onS = () => header.classList.toggle('solid', scrollY > innerHeight*.6);
@@ -384,7 +393,6 @@ form.addEventListener('submit', e => {
     <figure className="vcard rv d3" style={{ "--tint": "30 60% 34%" }} data-speed=".05"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption><h3>נופים</h3><p>תצפיות על הגליל, הכנרת והמדבר, בכל עונה.</p></figcaption></figure>
   </div>
   <img className="tiul__fg" src="assets/img/tiul-fg.webp" alt="" loading="lazy" />
-  <p className="tiul__note">מהמעיין הנסתר ועד התצפית הגדולה.</p>
 </section>
 
 
