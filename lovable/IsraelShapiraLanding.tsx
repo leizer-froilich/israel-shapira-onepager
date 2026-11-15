@@ -59,7 +59,7 @@ const smooth = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i;
 const stepped = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i; return Math.min(n-1, i + ease(clamp((f-.3)/.4))); };
 
 const heroInner = $('#heroInner'), heroBg = $('#heroBg');
-const tcards = $$('.vcard'), tiul = $('#tiul'), tBg = $('.tiul__bg'), tFg = $('.tiul__fg');
+const tcards = $$('.vcard'), tiul = $('#tiul'), tBg = $('.tiul__bg'), tFg = $('.tiul__fg'), tHead = $('.tiul__head');
 const regWrap = $('[data-pin="regions"]'), regSlides = $$('.reg__slide'), regT = $$('.reg__t'), regNames = $$('#regNames span');
 const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
 const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
@@ -95,8 +95,9 @@ function frame(){
     /* tiul: staggered parallax */
     const tr = tiul.getBoundingClientRect(); const tp = (vh - tr.top) / (vh + tr.height);
     tcards.forEach(c => c.style.translate = `0 ${(tp-.5)*-parseFloat(c.dataset.speed)*vh}px`);
-    tBg.style.transform = `translate3d(0,${(tp-.5)*8}%,0)`;
-    tFg.style.transform = `translate3d(0,${Math.max(0,1-tp)*3}vw,0)`;
+    tHead.style.translate = `0 ${(tp-.5)*-20}vh`;
+    tBg.style.transform = `translate3d(0,${(tp-.5)*22}%,0) scale(1.04)`;
+    tFg.style.transform = `translate3d(0,${(.5-tp)*8}vw,0)`;
     /* network: word sinks behind the hiker, layers drift at different speeds */
     const dr = disc.getBoundingClientRect(); const dp = clamp((vh - dr.top) / (vh + dr.height));
     discWord.style.transform = `translate3d(${discDx}px,${(dp-.5)*12}vh,0)`;
@@ -377,10 +378,10 @@ form.addEventListener('submit', e => {
     <p className="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br />והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
   </div>
   <div className="vcards">
-    <figure className="vcard rv" style={{ "--tint": "190 55% 28%" }} data-speed=".05"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption><h3>מעיינות</h3><p>מים צלולים בין סלעים וצמחייה, רחוק מההמונים.</p></figcaption></figure>
-    <figure className="vcard rv d1" style={{ "--tint": "140 40% 22%" }} data-speed=".02"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption><h3>שבילים</h3><p>מסלולים מסומנים ושבילים שרק מקומיים מכירים.</p></figcaption></figure>
-    <figure className="vcard rv d2" style={{ "--tint": "205 60% 26%" }} data-speed=".04"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption><h3>מפלים</h3><p>מים זורמים, בריכות טבעיות ורגעים של שקט.</p></figcaption></figure>
-    <figure className="vcard rv d3" style={{ "--tint": "30 60% 34%" }} data-speed=".01"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption><h3>נופים</h3><p>תצפיות על הגליל, הכנרת והמדבר, בכל עונה.</p></figcaption></figure>
+    <figure className="vcard rv" style={{ "--tint": "190 55% 28%" }} data-speed=".16"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption><h3>מעיינות</h3><p>מים צלולים בין סלעים וצמחייה, רחוק מההמונים.</p></figcaption></figure>
+    <figure className="vcard rv d1" style={{ "--tint": "140 40% 22%" }} data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy" /><figcaption><h3>שבילים</h3><p>מסלולים מסומנים ושבילים שרק מקומיים מכירים.</p></figcaption></figure>
+    <figure className="vcard rv d2" style={{ "--tint": "205 60% 26%" }} data-speed=".13"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption><h3>מפלים</h3><p>מים זורמים, בריכות טבעיות ורגעים של שקט.</p></figcaption></figure>
+    <figure className="vcard rv d3" style={{ "--tint": "30 60% 34%" }} data-speed=".05"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption><h3>נופים</h3><p>תצפיות על הגליל, הכנרת והמדבר, בכל עונה.</p></figcaption></figure>
   </div>
   <img className="tiul__fg" src="assets/img/tiul-fg.webp" alt="" loading="lazy" />
   <p className="tiul__note">מהמעיין הנסתר ועד התצפית הגדולה.</p>
