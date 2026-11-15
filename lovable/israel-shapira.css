@@ -114,8 +114,8 @@ em{font-style:normal;color:hsl(var(--rust))}
 .birds svg{display:block;width:100%;fill:currentColor;overflow:visible;transform-origin:50% 75%;animation:flap .3s ease-in-out infinite alternate}
 @keyframes flap{to{transform:scaleY(-.55)}}
 .header .btn{padding:.75em 1.4em;font-size:15px}
-.menu{display:none;width:46px;height:46px;border-radius:50%;border:1.5px solid hsl(0 0% 100%/.45);background:transparent;position:relative}
-.menu::before,.menu::after{content:"";position:absolute;right:8.5px;left:8.5px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .4s var(--ease)}
+.menu{display:none;width:46px;height:46px;border:0;padding:0;background:transparent;position:relative;color:inherit}
+.menu::before,.menu::after{content:"";position:absolute;right:8.5px;left:8.5px;height:1.8px;border-radius:2px;background:currentColor;transition:transform .4s var(--ease)}
 .menu span{display:none}
 .menu::before{top:18px}.menu::after{top:25px}
 body.open .menu::before{transform:translateY(3.5px) rotate(45deg)}body.open .menu::after{transform:translateY(-3.5px) rotate(-45deg)}
@@ -501,7 +501,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 .socials a{width:46px;height:46px;display:block;transition:transform .4s var(--ease)}
 .socials a:hover{transform:translateY(-4px) rotate(-6deg)}
 .legal .credit{height:22px;width:auto}
-@media (max-width:900px){.legal{justify-content:center;text-align:center;padding-bottom:78px}.legal .credit{height:20px}}
+@media (max-width:900px){.legal{justify-content:center;text-align:center;padding-bottom:78px}.legal .credit{width:100%;height:auto}.foot>div:last-child{grid-column:1/-1;text-align:center}.foot>div:last-child ul{justify-items:center}}
 .legal{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;opacity:.7}
 @media (max-width:900px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}
 

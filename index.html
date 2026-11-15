@@ -114,8 +114,8 @@ em{font-style:normal;color:hsl(var(--rust))}
 .birds svg{display:block;width:100%;fill:currentColor;overflow:visible;transform-origin:50% 75%;animation:flap .3s ease-in-out infinite alternate}
 @keyframes flap{to{transform:scaleY(-.55)}}
 .header .btn{padding:.75em 1.4em;font-size:15px}
-.menu{display:none;width:46px;height:46px;border-radius:50%;border:1.5px solid hsl(0 0% 100%/.45);background:transparent;position:relative}
-.menu::before,.menu::after{content:"";position:absolute;right:8.5px;left:8.5px;height:1.6px;border-radius:2px;background:currentColor;transition:transform .4s var(--ease)}
+.menu{display:none;width:46px;height:46px;border:0;padding:0;background:transparent;position:relative;color:inherit}
+.menu::before,.menu::after{content:"";position:absolute;right:8.5px;left:8.5px;height:1.8px;border-radius:2px;background:currentColor;transition:transform .4s var(--ease)}
 .menu span{display:none}
 .menu::before{top:18px}.menu::after{top:25px}
 body.open .menu::before{transform:translateY(3.5px) rotate(45deg)}body.open .menu::after{transform:translateY(-3.5px) rotate(-45deg)}
@@ -501,7 +501,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 .socials a{width:46px;height:46px;display:block;transition:transform .4s var(--ease)}
 .socials a:hover{transform:translateY(-4px) rotate(-6deg)}
 .legal .credit{height:22px;width:auto}
-@media (max-width:900px){.legal{justify-content:center;text-align:center;padding-bottom:78px}.legal .credit{height:20px}}
+@media (max-width:900px){.legal{justify-content:center;text-align:center;padding-bottom:78px}.legal .credit{width:100%;height:auto}.foot>div:last-child{grid-column:1/-1;text-align:center}.foot>div:last-child ul{justify-items:center}}
 .legal{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;opacity:.7}
 @media (max-width:900px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}
 
@@ -1017,7 +1017,7 @@ const flock = el => {
     const b = document.createElement('i'), sz = 15 + Math.random()*13;
     b.innerHTML = '<svg viewBox="0 0 24 12"><path d="M0 2.5Q6 1.5 12 9Q18 1.5 24 2.5Q17 3.5 12 11.5Q7 3.5 0 2.5Z"/></svg>';
     b.style.cssText = `width:${sz}px;left:${x0}px;top:${y0}px`;
-    b.firstChild.style.animationDuration = (.2 + Math.random()*.16) + 's';
+    b.firstChild.style.animationDuration = (.32 + Math.random()*.2) + 's';
     box.appendChild(b);
     const dir = mid ? (i % 2 ? 1 : -1) : (x0 < innerWidth/2 ? 1 : -1);
     const dx = dir * (innerWidth*.25 + Math.random()*innerWidth*.5), dy1 = 30 + Math.random()*110, dy2 = -40 + Math.random()*260;
@@ -1026,7 +1026,7 @@ const flock = el => {
       {transform:`translate(${dx*.18}px,${dy1*.6}px) scale(.9)`, opacity:1, offset:.18},
       {transform:`translate(${dx*.55}px,${dy1}px) scale(1)`, opacity:1, offset:.55},
       {transform:`translate(${dx}px,${dy2}px) scale(.75)`, opacity:0}
-    ], {duration:1700 + Math.random()*900, delay:i*55, easing:'cubic-bezier(.3,.6,.4,1)', fill:'both'})
+    ], {duration:3400 + Math.random()*1600, delay:i*90, easing:'cubic-bezier(.3,.6,.4,1)', fill:'both'})
     .onfinish = () => { if (--left === 0) box.remove(); };
   }
 };

@@ -50,7 +50,7 @@ const flock = el => {
     const b = document.createElement('i'), sz = 15 + Math.random()*13;
     b.innerHTML = '<svg viewBox="0 0 24 12"><path d="M0 2.5Q6 1.5 12 9Q18 1.5 24 2.5Q17 3.5 12 11.5Q7 3.5 0 2.5Z"/></svg>';
     b.style.cssText = `width:${sz}px;left:${x0}px;top:${y0}px`;
-    b.firstChild.style.animationDuration = (.2 + Math.random()*.16) + 's';
+    b.firstChild.style.animationDuration = (.32 + Math.random()*.2) + 's';
     box.appendChild(b);
     const dir = mid ? (i % 2 ? 1 : -1) : (x0 < innerWidth/2 ? 1 : -1);
     const dx = dir * (innerWidth*.25 + Math.random()*innerWidth*.5), dy1 = 30 + Math.random()*110, dy2 = -40 + Math.random()*260;
@@ -59,7 +59,7 @@ const flock = el => {
       {transform:`translate(${dx*.18}px,${dy1*.6}px) scale(.9)`, opacity:1, offset:.18},
       {transform:`translate(${dx*.55}px,${dy1}px) scale(1)`, opacity:1, offset:.55},
       {transform:`translate(${dx}px,${dy2}px) scale(.75)`, opacity:0}
-    ], {duration:1700 + Math.random()*900, delay:i*55, easing:'cubic-bezier(.3,.6,.4,1)', fill:'both'})
+    ], {duration:3400 + Math.random()*1600, delay:i*90, easing:'cubic-bezier(.3,.6,.4,1)', fill:'both'})
     .onfinish = () => { if (--left === 0) box.remove(); };
   }
 };
