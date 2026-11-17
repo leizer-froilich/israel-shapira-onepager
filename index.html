@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<meta name="description" content="ישראל שפירא, מדריך טיולים מוסמך ומשפיען הטבע והתיירות המוביל בציבור החרדי. שיווק אטרקציות, מלונות וצימרים לקהל החרדי, ימי נטוורקינג בטבע, סדנאות והרצאות.">
+<meta name="description" content="ישראל שפירא מקדם צימרים, וילות, מלונות ואטרקציות מול הציבור החרדי: סרטונים שמגיעים ל-100,000 עוקבים בערוצים שהקהל באמת קורא. וגם ימי נטוורקינג בשטח לבעלי עסקים.">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="preload" as="image" href="assets/img/hero-jezreel.jpg">
 <style>
@@ -154,7 +154,7 @@ body.open{overflow:hidden}body.open .drawer{opacity:1;visibility:visible}
 @keyframes rise{to{transform:none}}
 .hero .lead{color:hsl(0 0% 100%/.88);margin-inline:auto;line-height:1.42}
 .hero .pair{margin-top:34px}
-.fade-in{opacity:0;animation:fin 1s .55s var(--ease) forwards}.fade-in.l2{animation-delay:.75s}
+.fade-in{opacity:0;animation:fin 1s .55s var(--ease) forwards}.fade-in.l2{animation-delay:.75s}.fade-in.l3{animation-delay:.95s}
 @keyframes fin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 .hero__bar{position:absolute;inset:auto var(--side) 28px;display:flex;justify-content:flex-end;align-items:flex-end;font-size:var(--fs-small);z-index:2}
 .hero__count b{font-family:var(--font-display);font-size:2.2rem;font-weight:800;line-height:1}
@@ -546,6 +546,49 @@ h2 em{position:relative;display:inline-block}
 h2 em::after{content:"";position:absolute;left:0;right:0;bottom:-.1em;height:.17em;background:currentColor;opacity:.7;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 12'%3E%3Cpath d='M0 6Q15 0 30 6T60 6' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-dasharray='7 5'/%3E%3C/svg%3E") 0 50%/auto 100% repeat-x;clip-path:inset(0 0 0 100%);transition:clip-path 1.5s .35s cubic-bezier(.6,0,.2,1)}
 h2.drawn em::after{clip-path:inset(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){h2 em::after{clip-path:none;transition:none}}
+
+/* ---------- round 10: proof row, reach, stories, networking facts ---------- */
+.proof{margin-top:clamp(26px,3.4vh,40px);display:flex;flex-direction:column;align-items:center;gap:12px}
+.proof__row{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:clamp(18px,3vw,48px)}
+.proof__row li{display:flex;flex-direction:column;align-items:center;max-width:15em;line-height:1.25}
+.proof__row li+li{border-inline-start:1px solid hsl(var(--cream)/.25);padding-inline-start:clamp(18px,3vw,48px)}
+.proof__row b{font-family:var(--font-display);font-weight:800;font-size:clamp(1.9rem,2.6vw,2.7rem);line-height:1;color:hsl(var(--cream-h))}
+.proof__row span{font-size:clamp(13px,1vw,15px);opacity:.85;margin-top:4px}
+.proof__with{margin:0;font-size:clamp(13px,1vw,15px);opacity:.8}
+.reach{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 16px}
+.reach li{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:hsl(var(--forest))}
+.reach img{width:30px;height:30px}
+.creds .media{display:flex;align-items:center;gap:18px;margin-top:6px}
+.creds .media img{height:30px;width:auto;filter:brightness(0) saturate(100%);opacity:.65}
+.rbox{flex:none;display:flex;flex-direction:column;gap:14px;width:calc(min(64vh,600px)*9/16)}
+.rbox .reel{height:auto;width:100%;transform:none!important}
+.rbox:nth-child(odd){transform:translateY(-3vh)}.rbox:nth-child(even){transform:translateY(3vh)}
+.rbox__story{margin:0;font-size:15px;line-height:1.5;color:hsl(var(--stone))}
+.rbox__story b{display:block;font-family:var(--font-display);font-size:1.5rem;line-height:1.1;color:hsl(var(--rust));margin-bottom:4px}
+.field__media{height:auto;min-height:min(56vh,520px);align-self:center}
+.field__intro .btn{align-self:flex-start;margin-top:26px}
+.net__body{grid-template-areas:"h list" "lead side"}
+.net__side{grid-area:side;display:flex;flex-direction:column;align-items:flex-end;gap:22px}
+.net__list{grid-template-columns:repeat(2,1fr)}
+.net__story{margin:0;max-width:52ch;padding-inline-start:20px;border-inline-start:3px solid hsl(var(--rust));color:hsl(var(--cream)/.9);font-size:17px;line-height:1.6}
+.draft{display:inline-block;margin-inline-end:10px;padding:.15em .7em;border:1px dashed hsl(var(--cream)/.6);border-radius:999px;font-size:12px;letter-spacing:.04em;vertical-align:middle;opacity:.85}
+.form__privacy{margin:12px 0 0;font-size:13px;line-height:1.5;color:hsl(var(--stone))}
+.form__privacy a{text-decoration:underline}
+@media (max-width:1000px){.net__body{grid-template-areas:"h" "list" "lead" "side"}.net__side{align-items:flex-start}}
+@media (max-width:900px){
+  .rbox{width:auto}.rbox:nth-child(n){transform:none}
+  .rbox .reel{aspect-ratio:9/16}
+  .field__reels{grid-auto-columns:72%}
+  .field__media{min-height:0;scroll-snap-align:center}
+}
+@media (max-width:600px){
+  .proof__row{gap:10px}.proof__row li+li{padding-inline-start:10px}
+  .proof__row b{font-size:1.45rem}.proof__row span{font-size:11.5px}
+  .proof__with{font-size:12px;max-width:30ch;text-align:center}
+  .hero .pair{margin-top:22px}
+  .hero__inner .lead br{display:none}
+}
+
 /* WhatsApp: bottom right */
 .wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px}
 .wa a{width:66px;height:66px;display:block;transition:transform .3s}
@@ -578,7 +621,6 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   <defs>
     <symbol id="navmap" viewBox="0 0 520 420" fill="none" stroke="currentColor">
       <g stroke-width=".8" opacity=".55"><path d="M0 70H520M0 175H520M0 280H520M0 385H520M90 0V420M210 0V420M330 0V420M450 0V420" stroke-dasharray="2 6"/></g>
-      <g font-family="almoni,sans-serif" font-size="11" fill="currentColor" stroke="none" opacity=".8"><text x="96" y="64">31°46′</text><text x="216" y="64">32°10′</text><text x="336" y="64">32°48′</text><text x="456" y="166">35°13′</text></g>
       <path d="M40 360C90 330 120 340 150 300S200 220 250 230 320 280 360 230 390 140 440 120 490 90 505 60" stroke-width="2.2" stroke-dasharray="7 7" stroke-linecap="round"/>
       <g stroke-width="1.6"><circle cx="40" cy="360" r="6"/><circle cx="250" cy="230" r="5"/><path d="M499 54l12 12M511 54l-12 12"/></g>
       <path d="M150 300c-4-10 4-18 10-18s14 8 10 18l-10 14z" stroke-width="1.6" fill="currentColor" fill-opacity=".18"/>
@@ -624,11 +666,11 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
     <span><b>ישראל שפירא</b><small>חוקר. מטייל. משפיע.</small></span>
   </a>
   <nav aria-label="ניווט ראשי">
+    <a href="#why">למה דרכי</a>
+    <a href="#process">איך זה עובד</a>
+    <a href="#field">תוצאות</a>
+    <a href="#network">נטוורקינג</a>
     <a href="#about">נעים להכיר</a>
-    <a href="#regions">איפה מטיילים</a>
-    <a href="#services">לבעלי עסקים</a>
-    <a href="#field">מהשטח</a>
-    <a href="#community">הקהילה</a>
     <a href="#contact">צור קשר</a>
   </nav>
   <a class="btn btn-rust" href="#contact"><span class="long">לשיחת היכרות</span><span class="short">דברו איתי</span></a>
@@ -637,11 +679,11 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
 <nav class="drawer" id="drawer" aria-label="תפריט נייד">
   <svg class="topo" viewBox="0 0 800 600" style="width:170vw;left:-55%;bottom:-15%;color:hsl(var(--sage));opacity:.07"><use href="#topo"/></svg>
   <button class="drawer__close" id="drawerClose" type="button" aria-label="סגירת תפריט">סגירה</button>
+  <a href="#why">למה דרכי</a>
+  <a href="#process">איך זה עובד</a>
+  <a href="#field">תוצאות</a>
+  <a href="#network">נטוורקינג</a>
   <a href="#about">נעים להכיר</a>
-  <a href="#regions">איפה מטיילים</a>
-  <a href="#services">לבעלי עסקים</a>
-  <a href="#field">מהשטח</a>
-  <a href="#community">הקהילה</a>
   <a href="#contact">צור קשר</a>
 </nav>
 
@@ -657,10 +699,18 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
       <span class="ln"><span>הציבור החרדי יוצא לטייל.</span></span>
       <span class="ln"><span>אני מביא אותו אליכם.</span></span>
     </h1>
-    <p class="lead fade-in">עשור על השבילים ושם מוביל בתחום הטיולים בחברה החרדית.<br>אני מחבר בין אטרקציות, מלונות וצימרים<br>לבין הקהל שמחפש בדיוק אותם.</p>
+    <p class="lead fade-in">אני מצלם סרטונים בצימרים, בווילות ובאטרקציות, <br>ומפיץ אותם לקהל החרדי בערוצים שהוא באמת קורא.</p>
     <div class="pair fade-in l2">
       <a class="btn btn-rust" href="#contact">בואו נדבר על העסק שלכם</a>
-      <a class="btn btn-line" href="#field">לצפייה בעבודות</a>
+      <a class="btn btn-line" href="#field">לתוצאות ולסרטונים</a>
+    </div>
+    <div class="proof fade-in l3">
+      <ul class="proof__row">
+        <li><b>100,000</b><span>עוקבים</span></li>
+        <li><b>עשרות</b><span>צימרים ואטרקציות שקידמתי</span></li>
+        <li><b>1,700</b><span>קליקים לאתר של DCITY תוך יומיים</span></li>
+      </ul>
+      <p class="proof__with">עבדתי עם DCITY, סוסיא, גוש עציון ומועצת בנימין</p>
     </div>
   </div>
   <div class="hero__bar">
@@ -668,20 +718,125 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   </div>
 </section>
 
-<!-- ================= TIUL ================= -->
+<!-- ================= TIUL (who the audience is) ================= -->
 <section class="tiul dark" id="tiul">
-  <img class="tiul__bg" src="assets/img/tiul-base.jpg" alt="" loading="lazy">
+  <img class="tiul__bg" src="assets/img/tiul-base.jpg" alt="נוף הכנרת מלמעלה" loading="lazy">
   <div class="tiul__head">
-    <h2 class="rv">כל טיול מתחיל<br><em>במי שמוביל אותו.</em></h2>
-    <p class="lead rv d1">אני מכיר כל מעיין, כל שביל וכל נקודת תצפית.<br>והקהל שלי יודע: כשישראל ממליץ, שווה לנסוע.</p>
+    <h2 class="rv">מי הקהל<br><em>שאני מביא אליכם.</em></h2>
+    <p class="lead rv d1">משפחות גדולות שיוצאות לחופשה כמה פעמים בשנה,<br>ובוחרות מקום לפי המלצה של מישהו שהן מכירות.</p>
   </div>
   <div class="vcards">
-    <figure class="vcard rv" style="--tint:190 55% 28%" data-speed=".16"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption><h3>מעיינות</h3><p>מים צלולים בין סלעים וצמחייה, רחוק מההמונים.</p></figcaption></figure>
-    <figure class="vcard rv d1" style="--tint:140 40% 22%" data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy"><figcaption><h3>שבילים</h3><p>מסלולים מסומנים ושבילים שרק מקומיים מכירים.</p></figcaption></figure>
-    <figure class="vcard rv d2" style="--tint:205 60% 26%" data-speed=".13"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy"><figcaption><h3>מפלים</h3><p>מים זורמים, בריכות טבעיות ורגעים של שקט.</p></figcaption></figure>
-    <figure class="vcard rv d3" style="--tint:30 60% 34%" data-speed=".05"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy"><figcaption><h3>נופים</h3><p>תצפיות על הגליל, הכנרת והמדבר, בכל עונה.</p></figcaption></figure>
+    <figure class="vcard rv" style="--tint:190 55% 28%" data-speed=".16"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption><h3>משפחות גדולות</h3><p>מחפשות מקום שמתאים לכל הילדים, ומזמינות כמה חדרים או וילה שלמה.</p></figcaption></figure>
+    <figure class="vcard rv d1" style="--tint:140 40% 22%" data-speed=".08"><img src="assets/img/trail-meron.jpg" alt="שביל הליכה בהר מירון" loading="lazy"><figcaption><h3>בין הזמנים</h3><p>שלוש תקופות חופש בשנה, בניסן, באב ובתשרי, שבהן כולם יוצאים לטייל.</p></figcaption></figure>
+    <figure class="vcard rv d2" style="--tint:205 60% 26%" data-speed=".13"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy"><figcaption><h3>מקום שמתאים</h3><p>כשרות מוכרת, פרטיות ובריכה שאפשר להשתמש בה. מקום כזה מקבל אותם שוב ושוב.</p></figcaption></figure>
+    <figure class="vcard rv d3" style="--tint:30 60% 34%" data-speed=".05"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy"><figcaption><h3>לפי המלצה</h3><p>הם לא בוחרים לפי מודעה. הם בוחרים לפי מי שהם מכירים וסומכים עליו.</p></figcaption></figure>
   </div>
-  <img class="tiul__fg" src="assets/img/tiul-fg.webp" alt="" loading="lazy">
+  <img class="tiul__fg" src="assets/img/tiul-fg.webp" alt="" role="presentation" loading="lazy">
+</section>
+
+<!-- ================= WHY ================= -->
+<section class="why" id="why">
+  <svg class="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap"/></svg>
+  <div class="why__grid">
+    <div class="why__intro">
+      <h2 class="rv">קשה להגיע אליהם.<br><em>אני כבר שם.</em></h2>
+      <p class="lead rv d1" style="color:hsl(var(--stone))">רוב הציבור החרדי לא רואה טלוויזיה, לא גולש באינטרנט פתוח<br>ולא נחשף למודעות ברשתות. פרסום רגיל פשוט לא מגיע אליו.</p>
+      <div class="chips rv d2">
+        <span class="chip"><i><img class="ic3" src="assets/icons/cabin.png" alt="" loading="lazy"></i>צימרים ווילות</span>
+        <span class="chip"><i><img class="ic3" src="assets/icons/ferris.png" alt="" loading="lazy"></i>אטרקציות ופארקים</span>
+        <span class="chip"><i><img class="ic3" src="assets/icons/hotel.png" alt="" loading="lazy"></i>מלונות ובתי הארחה</span>
+        <span class="chip"><i><img class="ic3" src="assets/icons/tent.png" alt="" loading="lazy"></i>מתחמי אירוח</span>
+      </div>
+    </div>
+    <div class="why__list">
+      <div class="wi rv"><span class="n">01</span><div><h3>אני בערוצים שהם קוראים</h3><p>הקהל צורך תוכן בערוצי ווטסאפ, בקבוצות ובערוץ בנטפרי<br>(הסינון שדרכו גולש רוב הציבור החרדי). שם אני מפרסם.</p></div></div>
+      <div class="wi rv d1"><span class="n">02</span><div><h3>100,000 עוקבים</h3><p>כל סרטון שאני מעלה יוצא לכל הערוצים יחד:</p><ul class="reach" aria-label="הערוצים">
+        <li><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy">ווטסאפ</li><li><img class="ic3" src="assets/icons/drop.png" alt="" loading="lazy">נטפרי</li><li><img class="ic3" src="assets/icons/youtube.png" alt="" loading="lazy">יוטיוב</li><li><img class="ic3" src="assets/icons/instagram.png" alt="" loading="lazy">אינסטגרם</li><li><img class="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy">טיקטוק</li><li><img class="ic3" src="assets/icons/facebook.png" alt="" loading="lazy">פייסבוק</li>
+      </ul></div></div>
+      <div class="wi rv d2"><span class="n">03</span><div><h3>המלצה, לא מודעה</h3><p>הקהל מכיר אותי ויודע שאני מגיע למקום בעצמי לפני שאני ממליץ עליו.<br>לכן הוא מתקשר.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="process" id="process">
+  <div class="pinwrap" data-pin="process" style="height:calc(4 * 70vh + 100vh)">
+    <div class="pin">
+      <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
+      <div class="proc__stage">
+        <div class="proc__side">
+          <h2>איך זה עובד:<br><em>ארבעה צעדים.</em></h2>
+          <ol class="steps">
+            <span class="fill" id="stepFill"></span>
+            <li class="step on"><span class="dot"><img class="ic3" src="assets/icons/n1.png" alt="שלב 1"></span><h3>שיחה קצרה</h3><p>מספרים לי על המקום, למי הוא מתאים ומה אתם רוצים להשיג.</p></li>
+            <li class="step"><span class="dot"><img class="ic3" src="assets/icons/n2.png" alt="שלב 2"></span><h3>אני מגיע אליכם</h3><p>מסתובב במקום וחווה אותו כמו אורח. ממליץ רק על מה שראיתי בעצמי.</p></li>
+            <li class="step"><span class="dot"><img class="ic3" src="assets/icons/n3.png" alt="שלב 3"></span><h3>מצלם סרטון</h3><p>סרטון קצר שמראה את המקום כמו שהוא, ובסופו מספר הטלפון שלכם.</p></li>
+            <li class="step"><span class="dot"><img class="ic3" src="assets/icons/n4.png" alt="שלב 4"></span><h3>הפניות מגיעות</h3><p>הסרטון יוצא לכל הערוצים, והפניות מגיעות אליכם ישירות, בטלפון או בווטסאפ.</p></li>
+          </ol>
+        </div>
+        <div class="proc__visual">
+          <img class="on" src="assets/img/portrait.jpg" alt="ישראל שפירא" style="object-position:center 20%">
+          <img src="assets/video/reel3.jpg" alt="ביקור במתחם אירוח">
+          <img src="assets/video/reel2.jpg" alt="צילום תוכן בבריכה בטבע">
+          <img src="assets/img/arrive.jpg" alt="משפחות מגיעות למתחם אירוח בטבע">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= FIELD (results + videos) ================= -->
+<section class="field" id="field">
+  <div class="pinwrap" data-pin="field" id="fieldWrap">
+    <div class="pin">
+      <div class="field__track" id="fieldTrack">
+        <div class="field__intro">
+          <h2>מה זה הביא<br><em>למקומות שקידמתי.</em></h2>
+          <p class="lead">סיפורים מהשטח, וסרטונים שצילמתי במקומות האלה.<br>לחצו על סרטון כדי לצפות.</p>
+          <a class="btn btn-rust" href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener">לעוד סרטונים</a>
+        </div>
+        <div class="field__reels">
+          <div class="rbox"><div class="reel"><video src="assets/video/dcity.mp4" poster="assets/video/dcity.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: DCITY"><i><svg><use href="#i-play"/></svg></i><b>DCITY</b><span>פארק מים ואטרקציות</span></button></div><p class="rbox__story"><b>1,700 קליקים תוך יומיים.</b> סרטון אחד שעשיתי ל-DCITY הביא 1,700 קליקים לאתר שלהם תוך יומיים.</p></div>
+          <div class="field__media">
+            <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
+            <b>פעם בשבוע.<br>עכשיו זה קבוע.</b>
+            <p>בעל וילת אירוח התחיל לפרסם איתי פעם בשבוע. הלידים מכל פרסום מספיקים לו לשבוע שלם של שיחות וסגירות. עכשיו זה קבוע.</p>
+            <!-- מקום לציטוט של בעל הווילה. יוצג רק אחרי שיאשר אותו. -->
+            <blockquote class="field__quote" hidden></blockquote>
+          </div>
+          <div class="rbox"><div class="reel"><video src="assets/video/villa-galil.mp4" poster="assets/video/villa-galil.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: וילת אירוח בגליל"><i><svg><use href="#i-play"/></svg></i><b>וילת אירוח בגליל</b><span>בריכה, ג׳קוזי ומתחם לקבוצות</span></button></div></div>
+          <div class="rbox"><div class="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: מלון בוטיק עם בריכות"><i><svg><use href="#i-play"/></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div></div>
+          <div class="rbox"><div class="reel"><video src="assets/video/zimmer.mp4" poster="assets/video/zimmer.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: צימר ליד ירושלים"><i><svg><use href="#i-play"/></svg></i><b>צימר ליד ירושלים</b><span>רבע שעה מירושלים</span></button></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NETWORK ================= -->
+<section class="network" id="network">
+  <div class="disc" id="disc">
+    <img class="disc__bg" src="assets/img/network-hiker.jpg" alt="מטייל עם תרמיל על רכס, מביט אל עמק ירוק" loading="lazy">
+    <div class="disc__word" id="discWord" aria-hidden="true">נטוורקינג</div>
+    <img class="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="" role="presentation" loading="lazy">
+  </div>
+  <div class="net__body">
+    <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
+    <h2 class="net__h rv">יום נטוורקינג<br><em>בשטח.</em></h2>
+    <ul class="net__list">
+      <li class="rv"><i><img class="ic3" src="assets/icons/compass.png" alt="" loading="lazy"></i><b>פעם בשבועיים</b><span>בימי שלישי</span></li>
+      <li class="rv d1"><i><img class="ic3" src="assets/icons/clock.png" alt="" loading="lazy"></i><b>9:00-17:00</b><span>יום שלם בשטח</span></li>
+      <li class="rv d2"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i><b>כל פעם במקום אחר</b><span>ברחבי הארץ</span></li>
+      <li class="rv d3"><i><img class="ic3" src="assets/icons/people.png" alt="" loading="lazy"></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
+    </ul>
+    <!-- טיוטה: התיאור של מה קורה ביום עצמו צריך אישור של ישראל -->
+    <p class="lead net__lead rv d1"><span class="draft">טיוטה, לאישור</span>סיור משותף בשטח עם בעלי עסקים מתחומים שונים,<br>והרבה זמן להכיר, לדבר ולסגור עבודות.</p>
+    <div class="net__side rv d2">
+      <p class="net__story">באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב, ושף סגר אירוע עם אחד המשתתפים. כל עסקה סביב 30,000 ₪, מיום אחד של היכרות.</p>
+      <a class="btn btn-rust net__cta" href="#contact" data-pick="יום נטוורקינג">לשריון מקום ביום הבא</a>
+    </div>
+  </div>
 </section>
 
 <!-- ================= ABOUT ================= -->
@@ -690,15 +845,13 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   <svg class="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap"/></svg>
   <div class="about__grid">
     <div>
-      <h2 class="rv">עשור על השבילים.<br><em>בלב הקהל החרדי.</em></h2>
-      <p class="lead rv d1">אני ישראל שפירא, מדריך טיולים מוסמך, חוקר שטח ויוצר תוכן.<br>מוביל טיולים לקהלים רחבים, מעביר סדנאות, ימי גיבוש והרצאות,<br>ובונה את הקהילה הגדולה של מטיילים חרדים בישראל.</p>
+      <h2 class="rv">נעים להכיר,<br><em>ישראל שפירא.</em></h2>
+      <p class="lead rv d1">מדריך טיולים מוסמך, עשר שנים בשטח.<br>אני מטייל בכל הארץ, מצלם ומספר לקהילה שלי איפה שווה לנפוש.</p>
       <ul class="creds">
-        <li class="rv"><span class="ic"><img class="ic3" src="assets/icons/compass.png" alt="" loading="lazy"></span><span><b>מדריך טיולים מוסמך</b><span>עשור שלם של הדרכה בכל רחבי הארץ</span></span></li>
-        <li class="rv d1"><span class="ic"><img class="ic3" src="assets/icons/grad.png" alt="" loading="lazy"></span><span><b>בוגר 4 מוסדות אקדמיים</b><span>מכללת ירושלים · מכללת וינגייט · מכללת הרצוג · האוניברסיטה העברית</span></span></li>
-        <li class="rv d2"><span class="ic"><img class="ic3" src="assets/icons/book.png" alt="" loading="lazy"></span><span><b>מכשיר את הדור הבא של המדריכים</b><span>מעביר קורסי מדריכי טיולים מטעם אוניברסיטת חיפה</span></span></li>
-        <li class="rv d3"><span class="ic"><img class="ic3" src="assets/icons/mic.png" alt="" loading="lazy"></span><span><b>מרואיין בכל הערוצים</b><span>קול מוכר בתקשורת בנושאי טבע, טיולים ותיירות</span></span></li>
+        <li class="rv"><span class="ic"><img class="ic3" src="assets/icons/compass.png" alt="" loading="lazy"></span><span><b>מדריך טיולים מוסמך</b><span>בוגר מכללת ירושלים, מכללת וינגייט, מכללת הרצוג והאוניברסיטה העברית</span></span></li>
+        <li class="rv d1"><span class="ic"><img class="ic3" src="assets/icons/mic.png" alt="" loading="lazy"></span><span><b>מופיע בתקשורת</b><span class="media"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></span></span></li>
       </ul>
-      <p class="quote rv">"המטרה שלי פשוטה:<br>שכל משפחה חרדית תכיר את הארץ,<br>ושכל מקום טוב יכיר אותה."</p>
+      <p class="quote rv">"המטרה שלי פשוטה:<br>שכל משפחה חרדית תכיר את הארץ,<br>ושכל מקום טוב בארץ יכיר את המשפחות האלה."</p>
     </div>
     <div class="portrait rv d2">
       <div class="frame"><img src="assets/img/israel.jpg" alt="ישראל שפירא בשביל ביער, עם תרמיל טיולים"></div>
@@ -716,213 +869,17 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   </div>
 </section>
 
-<!-- ================= REGIONS ================= -->
-<section class="regions dark" id="regions">
-  <div class="pinwrap" data-pin="regions" style="height:calc(5 * 80vh + 100vh)">
-    <div class="pin">
-      <div class="reg__slide"><img src="assets/img/galil-meron.jpg" alt="הר מירון בגליל העליון"></div>
-      <div class="reg__slide"><img src="assets/img/kinneret.jpg" alt="תצפית על הכנרת"></div>
-      <div class="reg__slide"><img src="assets/img/judea-masada.jpg" alt="מדבר יהודה וים המלח ממצדה"></div>
-      <div class="reg__slide"><img src="assets/img/ein-gedi.jpg" alt="מפל בשמורת עין גדי"></div>
-      <div class="reg__slide"><img src="assets/img/negev-ramon.jpg" alt="מכתש רמון בנגב"></div>
-      <div class="reg__head"><h2>איפה מטיילים איתי</h2></div>
-      <div class="reg__titles">
-        <div class="reg__t"><span class="loc"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i>צפון · הגליל העליון</span><h3>הגליל</h3><p>מירון, נחלים ושבילים ירוקים. האזור שהקהל החרדי הכי אוהב, ועדיין מלא בפינות שאף אחד לא מכיר.</p></div>
-        <div class="reg__t"><span class="loc"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i>צפון · עמק הירדן</span><h3>הכנרת</h3><p>חופים, מעיינות ותצפיות. היעד המשפחתי הקלאסי לבין הזמנים, עם הרבה יותר ממה שרואים מהכביש.</p></div>
-        <div class="reg__t"><span class="loc"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i>מזרח · ים המלח</span><h3>מדבר יהודה</h3><p>מצדה, נחלי אכזב ושקט של מדבר. מסלולים לגברים, לבחורי ישיבות ולמשפחות.</p></div>
-        <div class="reg__t"><span class="loc"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i>המעיינות הנדירים</span><h3>עין גדי</h3><p>מפלים בלב המדבר. בדיוק בשביל מקומות כאלה נולד "המעיינות הנדירים", הערוץ שמגלה לקהילה מקומות מים נסתרים.</p></div>
-        <div class="reg__t"><span class="loc"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i>דרום · הנגב</span><h3>הנגב</h3><p>מכתש רמון, לילות כוכבים ומרחבים אינסופיים. חוויה שמשנה פרספקטיבה, לקבוצות ולמשפחות.</p></div>
-      </div>
-      <div class="reg__nav">
-        <span class="num" id="regNum">01</span><span style="opacity:.6">/ 05</span>
-        <div class="bar"><i id="regBar"></i></div>
-      </div>
-    </div>
-  </div>
-  <div class="mob">
-    <h2>איפה מטיילים איתי:<br><em>מהגליל ועד הנגב.</em></h2>
-    <article class="mcard rv"><img src="assets/img/galil-meron.jpg" alt="" loading="lazy"><span class="loc">צפון</span><h3>הגליל</h3><p>מירון, נחלים ושבילים ירוקים.</p></article>
-    <article class="mcard rv"><img src="assets/img/kinneret.jpg" alt="" loading="lazy"><span class="loc">עמק הירדן</span><h3>הכנרת</h3><p>חופים, מעיינות ותצפיות.</p></article>
-    <article class="mcard rv"><img src="assets/img/judea-masada.jpg" alt="" loading="lazy"><span class="loc">ים המלח</span><h3>מדבר יהודה</h3><p>מצדה, נחלי אכזב ושקט של מדבר.</p></article>
-    <article class="mcard rv"><img src="assets/img/ein-gedi.jpg" alt="" loading="lazy"><span class="loc">המעיינות הנדירים</span><h3>עין גדי</h3><p>מפלים בלב המדבר.</p></article>
-    <article class="mcard rv"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy"><span class="loc">דרום</span><h3>הנגב</h3><p>מכתש רמון ומרחבים אינסופיים.</p></article>
-  </div>
-</section>
-
-<!-- ================= SERVICES ================= -->
-<section class="services dark" id="services">
-  <div class="pinwrap" data-pin="services" style="height:calc(5 * 80vh + 100vh)">
-    <div class="pin" id="svcStage">
-      <div class="svc__layer"><img src="assets/img/galilee-view.jpg" alt=""></div>
-      <div class="svc__layer"><img src="assets/img/trail-meron.jpg" alt=""></div>
-      <div class="svc__layer"><img src="assets/img/waterfall-oasis.jpg" alt=""></div>
-      <div class="svc__layer"><img src="assets/img/spring-tabgha.jpg" alt=""></div>
-      <div class="svc__layer"><img src="assets/img/hero-jezreel.jpg" alt=""></div>
-      <div class="svc__layer"><img src="assets/img/negev-ramon.jpg" alt=""></div>
-      <div class="svc__slot" id="svcSlot"></div>
-      <div class="svc__labels">
-        <div class="svc__label"><i>01</i>שיווק ופרסום</div>
-        <div class="svc__label"><i>02</i>ימי נטוורקינג</div>
-        <div class="svc__label"><i>03</i>טיולים מודרכים</div>
-        <div class="svc__label"><i>04</i>סדנאות וגיבוש</div>
-        <div class="svc__label"><i>05</i>הרצאות</div>
-        <div class="svc__label"><i>06</i>קורס מדריכים</div>
-      </div>
-      <div class="svc__head"><h2>לבעלי עסקים <em>ולמטיילים</em></h2></div>
-      <div class="svc__text">
-        <div class="svc__item"><h3>שיווק ופרסום לאתרי תיירות</h3><p>אני מגיע, חווה את המקום ומספר עליו לקהילה שלי בסרטונים, בסטטוסים ובערוצים שבהם הקהל החרדי באמת נמצא. תוכן שנראה כמו המלצה מחבר, לא כמו פרסומת.</p><a class="btn btn-rust" href="#contact">לבדיקת התאמה</a></div>
-        <div class="svc__item"><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים וגם עושים עסקים. מסלול מודרך והיכרויות אמיתיות, קשרים שנבנים על השביל ומחזיקים הרבה אחרי.</p><a class="btn btn-rust" href="#network">ליום הבא</a></div>
-        <div class="svc__item"><h3>טיולים מודרכים</h3><p>מסלולים מותאמים למשפחות, ישיבות, מוסדות וקהילות. מהמעיין הנסתר ועד התצפית הגדולה.</p><a class="btn btn-rust" href="#contact">לתיאום טיול</a></div>
-        <div class="svc__item"><h3>סדנאות וימי גיבוש</h3><p>סדנאות לעצמאים בטבע וימי גיבוש לצוותים. לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a class="btn btn-rust" href="#contact">לפרטים</a></div>
-        <div class="svc__item"><h3>הרצאות</h3><p>הרצאות מרתקות על טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a class="btn btn-rust" href="#contact">להזמנת הרצאה</a></div>
-        <div class="svc__item"><h3>קורס מדריכי טיולים</h3><p>הכשרת הדור הבא של המדריכים מטעם אוניברסיטת חיפה,<br>מהשטח ועם ניסיון של עשור.</p><a class="btn btn-rust" href="#contact">להצטרפות</a></div>
-      </div>
-    </div>
-  </div>
-  <div class="mob smob">
-    <h2>לבעלי עסקים<br><em>ולמטיילים.</em></h2>
-    <article class="scard" style="--i:0"><div class="scard__in"><img src="assets/img/galilee-view.jpg" alt="" loading="lazy"><span class="scard__n">01</span><h3>שיווק ופרסום לאתרי תיירות</h3><p>תוכן שנראה כמו המלצה מחבר, בערוצים שבהם הקהל החרדי נמצא.</p><a class="btn btn-rust" href="#contact">לבדיקת התאמה</a></div></article>
-    <article class="scard" style="--i:1"><div class="scard__in"><img src="assets/img/trail-meron.jpg" alt="" loading="lazy"><span class="scard__n">02</span><h3>ימי נטוורקינג בטבע</h3><p>גם מטיילים, גם עושים עסקים. קשרים שנבנים על השביל.</p><a class="btn btn-rust" href="#network">ליום הבא</a></div></article>
-    <article class="scard" style="--i:2"><div class="scard__in"><img src="assets/img/waterfall-oasis.jpg" alt="" loading="lazy"><span class="scard__n">03</span><h3>טיולים מודרכים</h3><p>למשפחות, ישיבות, מוסדות וקהילות.</p><a class="btn btn-rust" href="#contact">לתיאום טיול</a></div></article>
-    <article class="scard" style="--i:3"><div class="scard__in"><img src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="scard__n">04</span><h3>סדנאות וימי גיבוש</h3><p>לנשום, לחשוב ולצמוח מחוץ למשרד.</p><a class="btn btn-rust" href="#contact">לפרטים</a></div></article>
-    <article class="scard" style="--i:4"><div class="scard__in"><img src="assets/img/hero-jezreel.jpg" alt="" loading="lazy"><span class="scard__n">05</span><h3>הרצאות</h3><p>טבע, ארץ ישראל ומסע, לקהילות, כנסים וארגונים.</p><a class="btn btn-rust" href="#contact">להזמנת הרצאה</a></div></article>
-    <article class="scard" style="--i:5"><div class="scard__in"><img src="assets/img/negev-ramon.jpg" alt="" loading="lazy"><span class="scard__n">06</span><h3>קורס מדריכי טיולים</h3><p>מטעם אוניברסיטת חיפה, מהשטח ועם ניסיון של עשור.</p><a class="btn btn-rust" href="#contact">להצטרפות</a></div></article>
-  </div>
-</section>
-
-<!-- ================= PRESS / PARTNERS ================= -->
-<section class="press" aria-label="ערוצים וגופים שעבדתי איתם">
-  <div class="press__band"><div class="press__track"><div class="press__copy"><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="אוניברסיטת חיפה" loading="lazy"></div></div><div class="press__copy" aria-hidden="true"><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy"></div><div class="plogo pl-kan11"><img src="assets/logos/kan11-mono.svg" alt="" data-a="כאן 11" loading="lazy"></div><div class="plogo pl-reshet13"><img src="assets/logos/reshet13-mono.svg" alt="" data-a="רשת 13" loading="lazy"></div><div class="plogo pl-news13"><img src="assets/logos/news13-mono.svg" alt="" data-a="חדשות 13" loading="lazy"></div><div class="plogo pl-haifa-univ"><img src="assets/logos/haifa-univ.svg" alt="" data-a="אוניברסיטת חיפה" loading="lazy"></div></div></div></div>
-</section>
-
-<!-- ================= WHY ================= -->
-<section class="why">
-  <svg class="navmap" viewBox="0 0 520 420" aria-hidden="true"><use href="#navmap"/></svg>
-  <div class="why__grid">
-    <div class="why__intro">
-      <h2 class="rv">יש לכם מקום מדהים.<br><em>חסר לכם קהל?</em></h2>
-      <p class="lead rv d1" style="color:hsl(var(--stone))">הציבור החרדי הוא קהל נאמן, משפחתי ועצום,<br>אבל הוא לא נמצא איפה שכולם מפרסמים.<br>אני כבר שם.</p>
-      <div class="chips rv d2">
-        <span class="chip"><i><img class="ic3" src="assets/icons/ferris.png" alt="" loading="lazy"></i>אטרקציות ופארקים</span>
-        <span class="chip"><i><img class="ic3" src="assets/icons/hotel.png" alt="" loading="lazy"></i>מלונות ובתי הארחה</span>
-        <span class="chip"><i><img class="ic3" src="assets/icons/cabin.png" alt="" loading="lazy"></i>צימרים ווילות</span>
-        <span class="chip"><i><img class="ic3" src="assets/icons/tent.png" alt="" loading="lazy"></i>מתחמי אירוח וגיבוש</span>
-      </div>
-    </div>
-    <div class="why__list">
-      <div class="wi rv"><span class="n">01</span><div><h3>קהל שסומך עליי</h3><p>הקהילה שלי לא בוחרת מקום לפי מודעה,<br>היא בוחרת לפי מי שהיא סומכת עליו.<br>האמון הזה עובר אליכם.</p></div></div>
-      <div class="wi rv d1"><span class="n">02</span><div><h3>נוכחות בערוצים הסגורים</h3><p>ערוצי ווטסאפ, ערוץ בנטפרי, צ'אט בגוגל ורשתות.<br>בדיוק במקומות שבהם הקהל החרדי צורך תוכן.</p></div></div>
-      <div class="wi rv d2"><span class="n">03</span><div><h3>תוכן שמוכר בלי למכור</h3><p>אני מגיע לשטח, חווה ומצלם.<br>התוצאה: סרטונים אותנטיים שמביאים הזמנות, לא רק צפיות.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= PROCESS ================= -->
-<section class="process" id="process">
-  <div class="pinwrap" data-pin="process" style="height:calc(4 * 70vh + 100vh)">
-    <div class="pin">
-      <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
-      <div class="proc__stage">
-        <div class="proc__side">
-          <h2>ארבע תחנות<br><em>בדרך ללקוחות.</em></h2>
-          <ol class="steps">
-            <span class="fill" id="stepFill"></span>
-            <li class="step on"><span class="dot"><img class="ic3" src="assets/icons/n1.png" alt="1"></span><h3>שיחת היכרות</h3><p>מבינים מה המקום שלכם מציע, למי הוא מתאים ומה היעד.</p></li>
-            <li class="step"><span class="dot"><img class="ic3" src="assets/icons/n2.png" alt="2"></span><h3>מגיע לשטח</h3><p>אני חווה את המקום בעצמי, כי אני ממליץ רק על מה שאני מאמין בו.</p></li>
-            <li class="step"><span class="dot"><img class="ic3" src="assets/icons/n3.png" alt="3"></span><h3>יוצרים תוכן</h3><p>סרטונים וסטוריז אותנטיים, בשפה ובטון שהקהל החרדי מתחבר אליהם.</p></li>
-            <li class="step"><span class="dot"><img class="ic3" src="assets/icons/n4.png" alt="4"></span><h3>הקהל מגיע</h3><p>הפצה בכל הערוצים והקהילות, ושיחות טלפון שמתחילות להיכנס.</p></li>
-          </ol>
-        </div>
-        <div class="proc__visual">
-          <img class="on" src="assets/img/portrait.jpg" alt="ישראל שפירא" style="object-position:center 20%">
-          <img src="assets/video/reel3.jpg" alt="ביקור במתחם אירוח">
-          <img src="assets/video/reel2.jpg" alt="צילום תוכן בבריכה בטבע">
-          <img src="assets/img/arrive.jpg" alt="משפחות מגיעות למתחם אירוח בטבע">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FIELD (horizontal) ================= -->
-<section class="field" id="field">
-  <div class="pinwrap" data-pin="field" id="fieldWrap">
-    <div class="pin">
-      <div class="field__track" id="fieldTrack">
-        <div class="field__intro">
-          <h2>ככה זה נראה<br><em>כשאני מגיע.</em></h2>
-          <p class="lead">מבחר סרטונים ממקומות שהבאתי אליהם את הקהל.<br>לחצו על סרטון כדי לצפות.</p>
-        </div>
-        <div class="field__reels">
-          <div class="reel"><video src="assets/video/reel1.mp4" poster="assets/video/reel1.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: מתחם כיפות במדבר"><i><svg><use href="#i-play"/></svg></i><b>מתחם כיפות במדבר</b><span>20 דקות מירושלים</span></button></div>
-          <div class="reel"><video src="assets/video/reel2.mp4" poster="assets/video/reel2.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: באר ובריכה בטבע"><i><svg><use href="#i-play"/></svg></i><b>באר ובריכה בטבע</b><span>15 דקות ממודיעין עילית</span></button></div>
-          <div class="reel"><video src="assets/video/reel3.mp4" poster="assets/video/reel3.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: אחוזת אברהם"><i><svg><use href="#i-play"/></svg></i><b>אחוזת אברהם</b><span>מתחם אירוח למשפחות</span></button></div>
-          <div class="reel"><video src="assets/video/reel4.mp4" poster="assets/video/reel4.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: הטבה לעוקבים"><i><svg><use href="#i-play"/></svg></i><b>הטבה בלעדית לעוקבים</b><span>שיתוף פעולה עם בית עסק</span></button></div>
-          <div class="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: מלון בוטיק"><i><svg><use href="#i-play"/></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= NETWORK ================= -->
-<section class="network" id="network">
-  <div class="disc" id="disc">
-    <img class="disc__bg" src="assets/img/network-hiker.jpg" alt="מטייל עם תרמיל על רכס, מביט אל עמק ירוק" loading="lazy">
-    <div class="disc__word" id="discWord" aria-hidden="true">נטוורקינג</div>
-    <img class="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="" loading="lazy">
-  </div>
-  <div class="net__body">
-    <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
-    <h2 class="net__h rv">גם מטיילים.<br><em>גם עושים עסקים.</em></h2>
-    <ul class="net__list">
-      <li class="rv"><i><img class="ic3" src="assets/icons/backpack.png" alt="" loading="lazy"></i><b>מסלול מודרך</b><span>מותאם לקבוצה,<br>בקצב נוח לכולם</span></li>
-      <li class="rv d1"><i><img class="ic3" src="assets/icons/people.png" alt="" loading="lazy"></i><b>היכרויות אמיתיות</b><span>בעלי עסקים<br>מתחומים משלימים</span></li>
-      <li class="rv d2"><i><img class="ic3" src="assets/icons/chat.png" alt="" loading="lazy"></i><b>שיחות שנשארות</b><span>קשרים שנבנים על השביל<br>ומחזיקים</span></li>
-    </ul>
-    <p class="lead net__lead rv d1">יום אחד בשטח<br>שמחליף עשר פגישות במשרד.</p>
-    <a class="btn btn-rust net__cta rv d2" href="#contact">להרשמה ליום הבא</a>
-  </div>
-</section>
-
-<!-- ================= COMMUNITY ================= -->
-<section class="community dark" id="community">
-  <img class="comm__land" src="assets/img/galilee-view.jpg" alt="" loading="lazy">
-  <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
-  <div class="sec-head">
-    <div>
-      <h2 class="rv">מטיילים איתי<br><em>בכל ערוץ.</em></h2>
-    </div>
-    <p class="lead rv d1 to-left" style="color:hsl(var(--cream)/.8)">מסלולים, מעיינות נסתרים והמלצות, ישר לטלפון.<br>בחרו את הערוץ שנוח לכם.</p>
-  </div>
-  <div class="ch-grid">
-    <a class="ch big rv" href="https://channel.israelshapira.com" target="_blank" rel="noopener"><img class="ch__bg" src="assets/img/spring-tabgha.jpg" alt="" loading="lazy"><span class="ic"><img class="ic3" src="assets/icons/drop.png" alt="" loading="lazy"></span><span><b>המעיינות הנדירים</b><span>הערוץ בנטפרי: המקומות שאף אחד עוד לא מכיר</span></span></a>
-    <a class="ch rv" style="--tint:142 68% 40%" href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></span><span><b>ערוץ הווטסאפ</b><span>עדכונים ומסלולים</span></span></a>
-    <a class="ch rv d1" style="--tint:205 85% 48%" href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/gchat.png" alt="" loading="lazy"></span><span><b>הצ'אט בגוגל</b><span>הצטרפות דרך טופס קצר</span></span></a>
-    <a class="ch rv d2" style="--tint:0 75% 50%" href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/youtube.png" alt="" loading="lazy"></span><span><b>יוטיוב</b><span>סרטוני טיולים מלאים</span></span></a>
-    <a class="ch rv" style="--tint:330 70% 55%" href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/instagram.png" alt="" loading="lazy"></span><span><b>אינסטגרם</b><span>@israel_shapira_travels</span></span></a>
-    <a class="ch rv d1" style="--tint:178 70% 36%" href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy"></span><span><b>טיקטוק</b><span>רגעים קצרים מהשטח</span></span></a>
-    <a class="ch rv d2" style="--tint:220 70% 55%" href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener"><span class="ic"><img class="ic3" src="assets/icons/facebook.png" alt="" loading="lazy"></span><span><b>פייסבוק</b><span>הקהילה הרחבה</span></span></a>
-  </div>
-  <svg class="ccut" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 70C210 10 420 150 700 120S1150 6 1440 64" fill="none" stroke="hsl(var(--sage))" stroke-opacity=".45" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
-    <path d="M0 110C220 50 430 190 710 160S1160 46 1440 104" fill="none" stroke="hsl(var(--cream))" stroke-opacity=".45" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
-    <path d="M0 150C230 90 440 230 720 200S1170 86 1440 144V250H0Z" fill="hsl(var(--cream))"/>
-  </svg>
-</section>
-
 <!-- ================= CONTACT ================= -->
 <section class="contact" id="contact">
   <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
   <div class="contact__grid">
     <div>
       <h2 class="rv">יש לכם מקום<br>ששווה לטייל אליו?<br><em>בואו נביא אליו קהל.</em></h2>
-      <p class="lead rv d1">ספרו לי על העסק שלכם,<br>ואחזור אליכם לשיחת היכרות קצרה, בלי התחייבות.</p>
+      <p class="lead rv d1">ספרו לי על העסק שלכם,<br>ואחזור אליכם לשיחה קצרה, בלי התחייבות.</p>
       <div class="ways rv d2">
-        <!-- TODO: להחליף במספר הטלפון של ישראל -->
-        <a class="way" href="tel:+972000000000"><i><img class="ic3" src="assets/icons/phone.png" alt="" loading="lazy"></i><b>חייגו</b><span dir="ltr">050-000-0000</span></a>
-        <a class="way" href="https://wa.me/972000000000" target="_blank" rel="noopener"><i><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></i><b>ווטסאפ</b><span>מענה מהיר</span></a>
-        <div class="way"><i><img class="ic3" src="assets/icons/clock.png" alt="" loading="lazy"></i><b>זמינות</b><span>א'-ה' · 9:00-19:00</span></div>
+        <a class="way" href="tel:+972547965608"><i><img class="ic3" src="assets/icons/phone.png" alt="" loading="lazy"></i><b>חייגו</b><span dir="ltr">054-7965608</span></a>
+        <a class="way" href="https://wa.me/972547965608" target="_blank" rel="noopener"><i><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></i><b>ווטסאפ</b><span>מענה מהיר</span></a>
+        <a class="way" href="mailto:7115039@gmail.com"><i><img class="ic3" src="assets/icons/chat.png" alt="" loading="lazy"></i><b>מייל</b><span dir="ltr">7115039@gmail.com</span></a>
       </div>
     </div>
     <form class="card rv d2" id="leadForm" novalidate>
@@ -936,13 +893,14 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
         <div class="dd" id="dd">
           <button type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ddLbl ddVal"><span id="ddVal">אטרקציה</span><svg><use href="#i-down"/></svg></button>
           <ul role="listbox" aria-labelledby="ddLbl">
-            <li role="option" aria-selected="true">אטרקציה</li><li role="option">מלון או בית הארחה</li><li role="option">צימר או וילה</li><li role="option">מתחם אירוח</li><li role="option">יום נטוורקינג</li><li role="option">טיול, סדנה או הרצאה</li><li role="option">אחר</li>
+            <li role="option" aria-selected="true">אטרקציה</li><li role="option">מלון או בית הארחה</li><li role="option">צימר או וילה</li><li role="option">מתחם אירוח</li><li role="option">יום נטוורקינג</li><li role="option">אחר</li>
           </ul>
           <input type="hidden" name="type" id="ddInput" value="אטרקציה">
         </div>
       </div>
       <div class="f"><label for="f-msg">ספרו לי בקצרה</label><textarea id="f-msg" name="message"></textarea></div>
-      <button class="btn btn-rust" type="submit">שליחה</button>
+      <button class="btn btn-rust" type="submit">שליחה בווטסאפ</button>
+      <p class="form__privacy">הפרטים נשלחים לישראל בווטסאפ ומשמשים רק כדי לחזור אליכם. לא שומרים אותם באתר. <a href="privacy.html">מדיניות פרטיות</a></p>
     </form>
   </div>
 </section>
@@ -952,7 +910,7 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   <div class="foot">
     <div>
       <a href="#top" class="logo"><img src="assets/img/avatar.jpg" alt="" width="44" height="44"><span><b>ישראל שפירא</b><small>חוקר. מטייל. משפיע.</small></span></a>
-      <p>מדריך טיולים מוסמך ומשפיען טבע ותיירות. מחבר בין הציבור החרדי לבין המקומות היפים בארץ.</p>
+      <p>מקדם צימרים, וילות ואטרקציות מול הציבור החרדי, ומארגן ימי נטוורקינג לבעלי עסקים.</p>
       <div class="socials">
         <a href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener" aria-label="יוטיוב"><img class="ic3" src="assets/icons/youtube.png" alt="" loading="lazy"></a>
         <a href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener" aria-label="אינסטגרם"><img class="ic3" src="assets/icons/instagram.png" alt="" loading="lazy"></a>
@@ -961,19 +919,18 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
         <a href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener" aria-label="ערוץ ווטסאפ"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></a>
       </div>
     </div>
-    <div><h4>ניווט</h4><ul><li><a href="#about">נעים להכיר</a></li><li><a href="#regions">איפה מטיילים</a></li><li><a href="#services">לבעלי עסקים</a></li><li><a href="#field">מהשטח</a></li></ul></div>
-    <div><h4>הקהילה</h4><ul><li><a href="https://channel.israelshapira.com" target="_blank" rel="noopener">המעיינות הנדירים</a></li><li><a href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener">ערוץ הווטסאפ</a></li><li><a href="https://forms.gle/zjmyZazE2Z7CBLLHA" target="_blank" rel="noopener">הצ'אט בגוגל</a></li></ul></div>
-    <div><h4>יצירת קשר</h4><ul><li><a href="https://wa.me/972000000000">ווטסאפ</a></li><li><a href="tel:+972000000000" dir="ltr">050-000-0000</a></li><li>א'-ה' · 9:00-19:00</li></ul></div>
+    <div><h4>ניווט</h4><ul><li><a href="#why">למה דרכי</a></li><li><a href="#process">איך זה עובד</a></li><li><a href="#field">תוצאות</a></li><li><a href="#about">נעים להכיר</a></li></ul></div>
+    <div><h4>מה אני מציע</h4><ul><li><a href="#process">קידום מקומות תיירות</a></li><li><a href="#network">יום נטוורקינג בשטח</a></li></ul></div>
+    <div><h4>יצירת קשר</h4><ul><li><a href="https://wa.me/972547965608" target="_blank" rel="noopener">ווטסאפ</a></li><li><a href="tel:+972547965608" dir="ltr">054-7965608</a></li><li><a href="mailto:7115039@gmail.com" dir="ltr">7115039@gmail.com</a></li></ul></div>
   </div>
   <div class="legal">
-    <span>© 2026 ישראל שפירא · כל הזכויות שמורות · <a href="#">הצהרת נגישות</a> · <a href="#">מדיניות פרטיות</a></span>
+    <span>© 2026 ישראל שפירא · כל הזכויות שמורות · <a href="accessibility.html">הצהרת נגישות</a> · <a href="privacy.html">מדיניות פרטיות</a></span>
     <img class="credit" src="assets/img/credit.webp" alt="בניית אתרים ואפליקציות · לייזר פרוליך" width="951" height="95" loading="lazy">
   </div>
 </footer>
 
 <div class="wa" id="wa">
-  <!-- TODO: להחליף במספר הטלפון של ישראל -->
-  <a href="https://wa.me/972000000000" target="_blank" rel="noopener" aria-label="שיחה בווטסאפ"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></a>
+  <a href="https://wa.me/972547965608" target="_blank" rel="noopener" aria-label="שיחה בווטסאפ"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></a>
   <span class="bubble">רוצים קהל חרדי? דברו איתי</span>
 </div>
 <div class="route" id="route" role="scrollbar" aria-label="התקדמות בדף" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="-1">
@@ -985,7 +942,7 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   <span class="r-start"></span><span class="r-end"></span>
   <div class="car" id="rCar"><img src="assets/icons/pin.png" alt=""></div>
 </div>
-<div class="toast" id="toast" role="status">תודה! אחזור אליכם בהקדם</div>
+<div class="toast" id="toast" role="status">פתחנו לכם ווטסאפ עם הפרטים. נשאר רק לשלוח</div>
 
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
@@ -1083,9 +1040,6 @@ const stepped = (p,n) => { const pos = p*(n-1), i = Math.floor(pos), f = pos - i
 
 const heroInner = $('#heroInner'), heroBg = $('#heroBg');
 const tcards = $$('.vcard'), tiul = $('#tiul'), tBg = $('.tiul__bg'), tFg = $('.tiul__fg'), tHead = $('.tiul__head');
-const regWrap = $('[data-pin="regions"]'), regSlides = $$('.reg__slide'), regT = $$('.reg__t'), regNames = $$('#regNames span');
-const svcWrap = $('[data-pin="services"]'), svcStage = $('#svcStage');
-const layers = $$('.svc__layer'), labels = $$('.svc__label'), items = $$('.svc__item'), slot = $('#svcSlot');
 const procWrap = $('[data-pin="process"]'), stepsEl = $$('.step'), procImgs = $$('.proc__visual img');
 const fieldWrap = $('#fieldWrap'), track = $('#fieldTrack');
 const disc = $('#disc'), discWord = $('#discWord'), discFg = $('#discFg'), discBg = $('.disc__bg');
@@ -1106,7 +1060,7 @@ const sizeField = () => {
 };
 
 
-let lastProc = -1, regCur = 0, svcCur = 0;
+let lastProc = -1;
 function frame(){
   const vh = innerHeight, y = scrollY;
   if (!RM){
@@ -1129,62 +1083,6 @@ function frame(){
   }
 
   if (isDesk()){
-    /* regions: blur crossfade, title grows and flies out */
-    const n = regSlides.length; regCur += (stepped(prog(regWrap), n) - regCur) * .09; const pos = regCur;
-    regSlides.forEach((s,i)=>{
-      const a = Math.abs(pos - i);
-      s.style.opacity = clamp(1 - a);
-      s.style.filter = a < .01 ? 'none' : `blur(${Math.min(a,1)*22}px)`;
-      s.style.transform = `scale(${1 + Math.min(a,1)*.08})`;
-    });
-    regT.forEach((t,i)=>{
-      const d = pos - i;
-      if (d >= 0){
-        t.style.opacity = clamp(1 - d*1.6);
-        t.style.transform = `translate3d(${d*-28}vw,-50%,0) scale(${1 + d*1.6})`;
-        t.style.filter = d < .01 ? 'none' : `blur(${clamp(d*2)*8}px)`;
-      } else {
-        t.style.opacity = clamp(1 + d*1.8);
-        t.style.transform = `translate3d(0,calc(-50% + ${-d*70}px),0)`;
-        t.style.filter = `blur(${clamp(-d*2)*10}px)`;
-      }
-    });
-    const ri = Math.round(pos);
-    $('#regNum').textContent = String(ri+1).padStart(2,'0');
-    $('#regBar').style.transform = `scaleX(${pos/(n-1)})`;
-    regNames.forEach((s,i)=>s.classList.toggle('on',i===ri));
-
-    /* services: the next card expands into the background, the row slides along */
-    const W = svcStage.clientWidth, H = svcStage.clientHeight;
-    const sr = slot.getBoundingClientRect(), st = svcStage.getBoundingClientRect();
-    const sx = sr.left - st.left, sy = sr.top - st.top, cw = sr.width, chh = sr.height, gap = 16;
-    const m = layers.length; svcCur += (smooth(prog(svcWrap), m) - svcCur) * .08; const sp = svcCur;
-    layers.forEach((L,k)=>{
-      L.style.zIndex = k;
-      const e = sp - (k-1);
-      let x = sx, t = 0, vis = 1;
-      if (k===0 || e>=1) t = 1;
-      else if (e>0) t = ease(e);
-      else { x = sx - (-e)*(cw+gap); if (x + cw < -40) vis = 0; }
-      const L0 = x, T0 = sy, R0 = W - (x+cw), B0 = H - (sy+chh);
-      L.style.clipPath = `inset(${T0*(1-t)}px ${R0*(1-t)}px ${B0*(1-t)}px ${L0*(1-t)}px round ${18*(1-t)}px)`;
-      L.style.opacity = vis;
-      L.classList.toggle('card', t<.5);
-      const lab = labels[k];
-      if (k===0){ lab.style.opacity = 0; }
-      else {
-        lab.style.opacity = vis * clamp(1 - Math.max(0,e)*3);
-        lab.style.transform = `translate3d(${x}px,${sy + chh - 74}px,0)`;
-        lab.style.width = cw + 'px';
-      }
-    });
-    items.forEach((it,i)=>{
-      const d = sp - i;
-      it.style.opacity = clamp(1 - Math.abs(d)*1.7);
-      it.style.transform = `translate3d(0,calc(-50% + ${d*-36}px),0)`;
-      it.style.pointerEvents = Math.abs(d) < .3 ? 'auto' : 'none';
-    });
-
     /* process: trail fills, steps activate, visual changes */
     const pp = prog(procWrap), ps = Math.min(3, Math.floor(pp*4));
     $('#stepFill').style.transform = `scaleY(${pp})`;
@@ -1285,14 +1183,18 @@ document.addEventListener('click', e => { if(!dd.contains(e.target)) closeDD(); 
 setTimeout(()=>$('#wa').classList.add('show'),3000);
 setTimeout(()=>$('#wa').classList.remove('show'),10000);
 
-/* form (preview only) */
+/* form: opens WhatsApp to Israel with the details filled in */
 const form = $('#leadForm'), toast = $('#toast');
 form.addEventListener('submit', e => {
   e.preventDefault();
   if (!form.name.value.trim()){ form.name.focus(); return; }
   if (!form.phone.value.trim()){ form.phone.focus(); return; }
-  form.reset(); toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),3500);
+  const msg = `שלום ישראל, הגעתי מהאתר.\nשם: ${form.name.value.trim()}\nטלפון: ${form.phone.value.trim()}\nסוג: ${$('#ddInput').value}` + (form.message.value.trim() ? `\n${form.message.value.trim()}` : '');
+  window.open('https://wa.me/972547965608?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+  form.reset(); toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),4000);
 });
+/* "save a place" buttons pre-select the matching option in the form */
+$$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = opts.find(o => o.textContent === a.dataset.pick); if (li) li.click(); }));
 })();
 </script>
 </body>
