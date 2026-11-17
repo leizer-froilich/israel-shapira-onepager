@@ -501,7 +501,7 @@ footer{background:hsl(var(--deep));color:hsl(var(--cream)/.8);padding:clamp(56px
 .socials a{width:46px;height:46px;display:block;transition:transform .4s var(--ease)}
 .socials a:hover{transform:translateY(-4px) rotate(-6deg)}
 .legal .credit{height:22px;width:auto}
-@media (max-width:900px){.legal{justify-content:center;text-align:center;padding-bottom:78px}.legal .credit{width:100%;height:auto}.foot>div:last-child{grid-column:1/-1;text-align:center}.foot>div:last-child ul{justify-items:center}}
+@media (max-width:900px){.legal{justify-content:center;text-align:center}.foot>div:last-child{grid-column:1/-1;text-align:center}.foot>div:last-child ul{justify-items:center}}
 .legal{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:22px;font-size:13px;opacity:.7}
 @media (max-width:900px){.foot{grid-template-columns:1fr 1fr}.foot>div:first-child{grid-column:1/-1}}
 
@@ -587,6 +587,54 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   .proof__with{font-size:12px;max-width:30ch;text-align:center}
   .hero .pair{margin-top:22px}
   .hero__inner .lead br{display:none}
+}
+
+
+/* ---------- round 11 ---------- */
+.stats{position:relative;z-index:3;background:hsl(var(--deep));color:hsl(var(--cream));padding:clamp(34px,3.6vw,56px) var(--side)}
+.stats__row{list-style:none;margin:0 auto;padding:0;max-width:1100px;display:grid;grid-template-columns:repeat(3,1fr)}
+.stats__row li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:0 16px}
+.stats__row li+li{border-inline-start:1px solid hsl(var(--cream)/.18)}
+.stats__row b{font-family:var(--font-display);font-weight:800;font-size:clamp(2.4rem,4vw,4.2rem);line-height:.9;color:hsl(var(--cream-h))}
+.stats__row span{font-size:clamp(14px,1.1vw,17px);opacity:.8;line-height:1.35}
+.tiul h2{line-height:.98}
+.tiul .tiul__head .lead{line-height:1.5}
+.why__list,.wi>div{min-width:0}
+.reach{display:grid;grid-template-columns:repeat(3,max-content);justify-content:start;gap:12px 28px}
+.network{overflow:hidden}
+@media (min-width:641px){.disc__word{top:42%}}
+.net__body{grid-template-columns:.8fr 1.2fr;grid-template-areas:none;align-items:start;row-gap:34px;padding-bottom:calc(var(--sec) + clamp(100px,14vw,230px))}
+.net__body .net__list{grid-area:auto;grid-template-columns:repeat(3,1fr)}
+.net__intro{display:flex;flex-direction:column;align-items:flex-start;gap:24px}
+.net__intro .net__h,.net__intro .net__lead{margin:0}
+.net__lead{max-width:30ch}
+.net__list li.story{background:hsl(var(--rust)/.14);border-color:hsl(var(--rust)/.4)}
+.net__list li.story span{font-size:14.5px;opacity:.88}
+.field__arrows{display:none}
+.credit-bar{position:relative;z-index:5;background:#fcfcfc}
+.credit-bar a{display:flex;justify-content:center;padding:16px}
+.credit-bar img{display:block;width:100%;max-width:359px;height:auto}
+.wa.off{opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+@media (max-width:1000px){.net__body{grid-template-columns:1fr}.net__body .net__list{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){
+  .stats__row li{padding:0 6px}
+  .reach{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px}.reach li{font-size:13.5px;gap:5px}.reach img{width:26px;height:26px;flex:none}
+  .tiul__head .lead br{display:none}
+  .tiul{padding-bottom:44vw}
+  .vcard{aspect-ratio:auto;min-height:62vw}
+  .vcard::before{background:linear-gradient(180deg,hsl(var(--tint)/.95) 0%,hsl(var(--tint)/.8) 45%,hsl(var(--tint)/.15) 85%)}
+  .vcard figcaption{padding:14px 14px 30px}
+  .vcard p{max-width:none}
+  .field__reels{scroll-padding-inline:var(--side)}
+  .rbox,.field__media{scroll-snap-align:start}
+  .field__arrows{display:flex;justify-content:center;gap:14px;margin-top:8px}
+  .farr{width:52px;height:52px;border-radius:50%;border:1.5px solid hsl(var(--forest)/.35);background:hsl(var(--cream));color:hsl(var(--forest));display:grid;place-items:center;padding:0}
+  .farr svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .farr:disabled{opacity:.35}
+}
+@media (max-width:640px){
+  .stats__row b{font-size:1.75rem}.stats__row span{font-size:12px}
+  .net__list li.story{grid-column:1/-1}
 }
 
 /* WhatsApp: bottom right */
@@ -704,18 +752,19 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
       <a class="btn btn-rust" href="#contact">בואו נדבר על העסק שלכם</a>
       <a class="btn btn-line" href="#field">לתוצאות ולסרטונים</a>
     </div>
-    <div class="proof fade-in l3">
-      <ul class="proof__row">
-        <li><b>100,000</b><span>עוקבים</span></li>
-        <li><b>עשרות</b><span>צימרים ואטרקציות שקידמתי</span></li>
-        <li><b>1,700</b><span>קליקים לאתר של DCITY תוך יומיים</span></li>
-      </ul>
-      <p class="proof__with">עבדתי עם DCITY, סוסיא, גוש עציון ומועצת בנימין</p>
-    </div>
   </div>
   <div class="hero__bar">
     <div class="hint">גללו למסע</div>
   </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section class="stats" aria-label="במספרים">
+  <ul class="stats__row">
+    <li class="rv"><b><bdi dir="ltr">60+</bdi></b><span>צימרים ואטרקציות שקידמתי</span></li>
+    <li class="rv d1"><b><bdi dir="ltr">100,000+</bdi></b><span>עוקבים בכל הערוצים</span></li>
+    <li class="rv d2"><b><bdi dir="ltr">1,700+</bdi></b><span>קליקים לאתר של DCITY תוך יומיים</span></li>
+  </ul>
 </section>
 
 <!-- ================= TIUL (who the audience is) ================= -->
@@ -723,7 +772,7 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   <img class="tiul__bg" src="assets/img/tiul-base.jpg" alt="נוף הכנרת מלמעלה" loading="lazy">
   <div class="tiul__head">
     <h2 class="rv">מי הקהל<br><em>שאני מביא אליכם.</em></h2>
-    <p class="lead rv d1">משפחות גדולות שיוצאות לחופשה כמה פעמים בשנה,<br>ובוחרות מקום לפי המלצה של מישהו שהן מכירות.</p>
+    <p class="lead rv d1">משפחות גדולות שיוצאות לחופשה כמה פעמים בשנה, <br>ובוחרות מקום לפי המלצה של מישהו שהן מכירות.</p>
   </div>
   <div class="vcards">
     <figure class="vcard rv" style="--tint:190 55% 28%" data-speed=".16"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy"><figcaption><h3>משפחות גדולות</h3><p>מחפשות מקום שמתאים לכל הילדים, ומזמינות כמה חדרים או וילה שלמה.</p></figcaption></figure>
@@ -778,7 +827,7 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
           <img class="on" src="assets/img/portrait.jpg" alt="ישראל שפירא" style="object-position:center 20%">
           <img src="assets/video/reel3.jpg" alt="ביקור במתחם אירוח">
           <img src="assets/video/reel2.jpg" alt="צילום תוכן בבריכה בטבע">
-          <img src="assets/img/arrive.jpg" alt="משפחות מגיעות למתחם אירוח בטבע">
+          <img src="assets/img/dcity-step.jpg" alt="פארק DCITY: דינוזאור במתחם המקורה">
         </div>
       </div>
     </div>
@@ -809,6 +858,10 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
           <div class="rbox"><div class="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: מלון בוטיק עם בריכות"><i><svg><use href="#i-play"/></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div></div>
           <div class="rbox"><div class="reel"><video src="assets/video/zimmer.mp4" poster="assets/video/zimmer.jpg" playsinline preload="none"></video><button class="play" aria-label="הפעלת סרטון: צימר ליד ירושלים"><i><svg><use href="#i-play"/></svg></i><b>צימר ליד ירושלים</b><span>רבע שעה מירושלים</span></button></div></div>
         </div>
+        <div class="field__arrows" aria-label="מעבר בין הסרטונים">
+          <button type="button" class="farr" data-dir="-1" aria-label="הקודם"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          <button type="button" class="farr" data-dir="1" aria-label="הבא"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        </div>
       </div>
     </div>
   </div>
@@ -823,20 +876,25 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   </div>
   <div class="net__body">
     <svg class="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo"/></svg>
-    <h2 class="net__h rv">יום נטוורקינג<br><em>בשטח.</em></h2>
+    <div class="net__intro">
+      <h2 class="net__h rv">יום נטוורקינג<br><em>בשטח.</em></h2>
+      <p class="lead net__lead rv d1">סיור משותף בשטח עם בעלי עסקים מתחומים שונים, והרבה זמן להכיר, לדבר ולסגור עבודות.</p>
+      <a class="btn btn-rust net__cta rv d2" href="#contact" data-pick="יום נטוורקינג">לשריון מקום ביום הבא</a>
+    </div>
     <ul class="net__list">
       <li class="rv"><i><img class="ic3" src="assets/icons/compass.png" alt="" loading="lazy"></i><b>פעם בשבועיים</b><span>בימי שלישי</span></li>
       <li class="rv d1"><i><img class="ic3" src="assets/icons/clock.png" alt="" loading="lazy"></i><b>9:00-17:00</b><span>יום שלם בשטח</span></li>
       <li class="rv d2"><i><img class="ic3" src="assets/icons/pin.png" alt="" loading="lazy"></i><b>כל פעם במקום אחר</b><span>ברחבי הארץ</span></li>
-      <li class="rv d3"><i><img class="ic3" src="assets/icons/people.png" alt="" loading="lazy"></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
+      <li class="rv"><i><img class="ic3" src="assets/icons/people.png" alt="" loading="lazy"></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
+      <li class="rv d1 story"><i><img class="ic3" src="assets/icons/check.png" alt="" loading="lazy"></i><b>אינסטלטור ויקב</b><span>באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב. עסקה של כ-30,000 ₪.</span></li>
+      <li class="rv d2 story"><i><img class="ic3" src="assets/icons/chat.png" alt="" loading="lazy"></i><b>שף ומשתתף</b><span>באותו יום שף סגר אירוע עם אחד המשתתפים, גם כן סביב 30,000 ₪.</span></li>
     </ul>
-    <!-- טיוטה: התיאור של מה קורה ביום עצמו צריך אישור של ישראל -->
-    <p class="lead net__lead rv d1"><span class="draft">טיוטה, לאישור</span>סיור משותף בשטח עם בעלי עסקים מתחומים שונים,<br>והרבה זמן להכיר, לדבר ולסגור עבודות.</p>
-    <div class="net__side rv d2">
-      <p class="net__story">באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב, ושף סגר אירוע עם אחד המשתתפים. כל עסקה סביב 30,000 ₪, מיום אחד של היכרות.</p>
-      <a class="btn btn-rust net__cta" href="#contact" data-pick="יום נטוורקינג">לשריון מקום ביום הבא</a>
-    </div>
   </div>
+  <svg class="ccut" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70C210 10 420 150 700 120S1150 6 1440 64" fill="none" stroke="hsl(var(--sage))" stroke-opacity=".45" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+    <path d="M0 110C220 50 430 190 710 160S1160 46 1440 104" fill="none" stroke="hsl(var(--cream))" stroke-opacity=".45" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+    <path d="M0 150C230 90 440 230 720 200S1170 86 1440 144V250H0Z" fill="hsl(var(--cream))"/>
+  </svg>
 </section>
 
 <!-- ================= ABOUT ================= -->
@@ -925,9 +983,9 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   </div>
   <div class="legal">
     <span>© 2026 ישראל שפירא · כל הזכויות שמורות · <a href="accessibility.html">הצהרת נגישות</a> · <a href="privacy.html">מדיניות פרטיות</a></span>
-    <img class="credit" src="assets/img/credit.webp" alt="בניית אתרים ואפליקציות · לייזר פרוליך" width="951" height="95" loading="lazy">
   </div>
 </footer>
+<div class="credit-bar" id="creditBar"><a href="https://leizer-froilich.com" target="_blank" rel="noopener" dir="ltr"><img src="assets/img/credit.gif" alt="לייזר פרוליך, בניית אתרים ואפליקציות" width="1106" height="160" loading="lazy"></a></div>
 
 <div class="wa" id="wa">
   <a href="https://wa.me/972547965608" target="_blank" rel="noopener" aria-label="שיחה בווטסאפ"><img class="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy"></a>
@@ -1178,6 +1236,17 @@ function closeDD(){ dd.classList.remove('open'); ddBtn.setAttribute('aria-expand
 ddBtn.onclick = () => { const o = !dd.classList.contains('open'); dd.classList.toggle('open',o); ddBtn.setAttribute('aria-expanded',o); };
 opts.forEach(li => li.onclick = () => { opts.forEach(o=>o.setAttribute('aria-selected','false')); li.setAttribute('aria-selected','true'); $('#ddVal').textContent = li.textContent; $('#ddInput').value = li.textContent; closeDD(); });
 document.addEventListener('click', e => { if(!dd.contains(e.target)) closeDD(); });
+
+/* videos on mobile: arrows move one card at a time (RTL: "next" scrolls left) */
+(() => {
+  const rail = $('.field__reels'), btns = $$('.farr'); if (!rail || !btns.length) return;
+  const step = () => { const c = rail.children[0]; return c.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 14); };
+  btns.forEach(b => b.addEventListener('click', () => rail.scrollBy({left: -step() * +b.dataset.dir, behavior: 'smooth'})));
+  const upd = () => { const max = rail.scrollWidth - rail.clientWidth, x = Math.abs(rail.scrollLeft); btns[0].disabled = x < 4; btns[1].disabled = x > max - 4; };
+  rail.addEventListener('scroll', upd, {passive: true}); addEventListener('resize', upd); upd();
+})();
+/* the floating WhatsApp button steps aside when the studio credit is on screen */
+new IntersectionObserver(es => es.forEach(e => $('#wa').classList.toggle('off', e.isIntersecting))).observe($('#creditBar'));
 
 /* WhatsApp bubble */
 setTimeout(()=>$('#wa').classList.add('show'),3000);

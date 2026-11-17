@@ -255,6 +255,17 @@ ddBtn.onclick = () => { const o = !dd.classList.contains('open'); dd.classList.t
 opts.forEach(li => li.onclick = () => { opts.forEach(o=>o.setAttribute('aria-selected','false')); li.setAttribute('aria-selected','true'); $('#ddVal').textContent = li.textContent; $('#ddInput').value = li.textContent; closeDD(); });
 document.addEventListener('click', e => { if(!dd.contains(e.target)) closeDD(); });
 
+/* videos on mobile: arrows move one card at a time (RTL: "next" scrolls left) */
+(() => {
+  const rail = $('.field__reels'), btns = $$('.farr'); if (!rail || !btns.length) return;
+  const step = () => { const c = rail.children[0]; return c.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 14); };
+  btns.forEach(b => b.addEventListener('click', () => rail.scrollBy({left: -step() * +b.dataset.dir, behavior: 'smooth'})));
+  const upd = () => { const max = rail.scrollWidth - rail.clientWidth, x = Math.abs(rail.scrollLeft); btns[0].disabled = x < 4; btns[1].disabled = x > max - 4; };
+  rail.addEventListener('scroll', upd, {passive: true}); addEventListener('resize', upd); upd();
+})();
+/* the floating WhatsApp button steps aside when the studio credit is on screen */
+new IntersectionObserver(es => es.forEach(e => $('#wa').classList.toggle('off', e.isIntersecting))).observe($('#creditBar'));
+
 /* WhatsApp bubble */
 setTimeout(()=>$('#wa').classList.add('show'),3000);
 setTimeout(()=>$('#wa').classList.remove('show'),10000);
@@ -373,14 +384,6 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <a className="btn btn-rust" href="#contact">בואו נדבר על העסק שלכם</a>
       <a className="btn btn-line" href="#field">לתוצאות ולסרטונים</a>
     </div>
-    <div className="proof fade-in l3">
-      <ul className="proof__row">
-        <li><b>100,000</b><span>עוקבים</span></li>
-        <li><b>עשרות</b><span>צימרים ואטרקציות שקידמתי</span></li>
-        <li><b>1,700</b><span>קליקים לאתר של DCITY תוך יומיים</span></li>
-      </ul>
-      <p className="proof__with">עבדתי עם DCITY, סוסיא, גוש עציון ומועצת בנימין</p>
-    </div>
   </div>
   <div className="hero__bar">
     <div className="hint">גללו למסע</div>
@@ -388,11 +391,20 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
 </section>
 
 
+<section className="stats" aria-label="במספרים">
+  <ul className="stats__row">
+    <li className="rv"><b><bdi dir="ltr">60+</bdi></b><span>צימרים ואטרקציות שקידמתי</span></li>
+    <li className="rv d1"><b><bdi dir="ltr">100,000+</bdi></b><span>עוקבים בכל הערוצים</span></li>
+    <li className="rv d2"><b><bdi dir="ltr">1,700+</bdi></b><span>קליקים לאתר של DCITY תוך יומיים</span></li>
+  </ul>
+</section>
+
+
 <section className="tiul dark" id="tiul">
   <img className="tiul__bg" src="assets/img/tiul-base.jpg" alt="נוף הכנרת מלמעלה" loading="lazy" />
   <div className="tiul__head">
     <h2 className="rv">מי הקהל<br /><em>שאני מביא אליכם.</em></h2>
-    <p className="lead rv d1">משפחות גדולות שיוצאות לחופשה כמה פעמים בשנה,<br />ובוחרות מקום לפי המלצה של מישהו שהן מכירות.</p>
+    <p className="lead rv d1">משפחות גדולות שיוצאות לחופשה כמה פעמים בשנה, <br />ובוחרות מקום לפי המלצה של מישהו שהן מכירות.</p>
   </div>
   <div className="vcards">
     <figure className="vcard rv" style={{ "--tint": "190 55% 28%" }} data-speed=".16"><img src="assets/img/spring-tabgha.jpg" alt="מעיין זורם לכנרת בטבחה" loading="lazy" /><figcaption><h3>משפחות גדולות</h3><p>מחפשות מקום שמתאים לכל הילדים, ומזמינות כמה חדרים או וילה שלמה.</p></figcaption></figure>
@@ -447,7 +459,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
           <img className="on" src="assets/img/portrait.jpg" alt="ישראל שפירא" style={{ objectPosition: "center 20%" }} />
           <img src="assets/video/reel3.jpg" alt="ביקור במתחם אירוח" />
           <img src="assets/video/reel2.jpg" alt="צילום תוכן בבריכה בטבע" />
-          <img src="assets/img/arrive.jpg" alt="משפחות מגיעות למתחם אירוח בטבע" />
+          <img src="assets/img/dcity-step.jpg" alt="פארק DCITY: דינוזאור במתחם המקורה" />
         </div>
       </div>
     </div>
@@ -478,6 +490,10 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
           <div className="rbox"><div className="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: מלון בוטיק עם בריכות"><i><svg><use href="#i-play" /></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div></div>
           <div className="rbox"><div className="reel"><video src="assets/video/zimmer.mp4" poster="assets/video/zimmer.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: צימר ליד ירושלים"><i><svg><use href="#i-play" /></svg></i><b>צימר ליד ירושלים</b><span>רבע שעה מירושלים</span></button></div></div>
         </div>
+        <div className="field__arrows" aria-label="מעבר בין הסרטונים">
+          <button type="button" className="farr" data-dir="-1" aria-label="הקודם"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
+          <button type="button" className="farr" data-dir="1" aria-label="הבא"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
+        </div>
       </div>
     </div>
   </div>
@@ -492,20 +508,25 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
   </div>
   <div className="net__body">
     <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
-    <h2 className="net__h rv">יום נטוורקינג<br /><em>בשטח.</em></h2>
+    <div className="net__intro">
+      <h2 className="net__h rv">יום נטוורקינג<br /><em>בשטח.</em></h2>
+      <p className="lead net__lead rv d1">סיור משותף בשטח עם בעלי עסקים מתחומים שונים, והרבה זמן להכיר, לדבר ולסגור עבודות.</p>
+      <a className="btn btn-rust net__cta rv d2" href="#contact" data-pick="יום נטוורקינג">לשריון מקום ביום הבא</a>
+    </div>
     <ul className="net__list">
       <li className="rv"><i><img className="ic3" src="assets/icons/compass.png" alt="" loading="lazy" /></i><b>פעם בשבועיים</b><span>בימי שלישי</span></li>
       <li className="rv d1"><i><img className="ic3" src="assets/icons/clock.png" alt="" loading="lazy" /></i><b>9:00-17:00</b><span>יום שלם בשטח</span></li>
       <li className="rv d2"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i><b>כל פעם במקום אחר</b><span>ברחבי הארץ</span></li>
-      <li className="rv d3"><i><img className="ic3" src="assets/icons/people.png" alt="" loading="lazy" /></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
+      <li className="rv"><i><img className="ic3" src="assets/icons/people.png" alt="" loading="lazy" /></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
+      <li className="rv d1 story"><i><img className="ic3" src="assets/icons/check.png" alt="" loading="lazy" /></i><b>אינסטלטור ויקב</b><span>באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב. עסקה של כ-30,000 ₪.</span></li>
+      <li className="rv d2 story"><i><img className="ic3" src="assets/icons/chat.png" alt="" loading="lazy" /></i><b>שף ומשתתף</b><span>באותו יום שף סגר אירוע עם אחד המשתתפים, גם כן סביב 30,000 ₪.</span></li>
     </ul>
-    
-    <p className="lead net__lead rv d1"><span className="draft">טיוטה, לאישור</span>סיור משותף בשטח עם בעלי עסקים מתחומים שונים,<br />והרבה זמן להכיר, לדבר ולסגור עבודות.</p>
-    <div className="net__side rv d2">
-      <p className="net__story">באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב, ושף סגר אירוע עם אחד המשתתפים. כל עסקה סביב 30,000 ₪, מיום אחד של היכרות.</p>
-      <a className="btn btn-rust net__cta" href="#contact" data-pick="יום נטוורקינג">לשריון מקום ביום הבא</a>
-    </div>
   </div>
+  <svg className="ccut" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70C210 10 420 150 700 120S1150 6 1440 64" fill="none" stroke="hsl(var(--sage))" strokeOpacity=".45" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+    <path d="M0 110C220 50 430 190 710 160S1160 46 1440 104" fill="none" stroke="hsl(var(--cream))" strokeOpacity=".45" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+    <path d="M0 150C230 90 440 230 720 200S1170 86 1440 144V250H0Z" fill="hsl(var(--cream))" />
+  </svg>
 </section>
 
 
@@ -594,9 +615,9 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
   </div>
   <div className="legal">
     <span>© 2026 ישראל שפירא · כל הזכויות שמורות · <a href="accessibility.html">הצהרת נגישות</a> · <a href="privacy.html">מדיניות פרטיות</a></span>
-    <img className="credit" src="assets/img/credit.webp" alt="בניית אתרים ואפליקציות · לייזר פרוליך" width="951" height="95" loading="lazy" />
   </div>
 </footer>
+<div className="credit-bar" id="creditBar"><a href="https://leizer-froilich.com" target="_blank" rel="noopener" dir="ltr"><img src="assets/img/credit.gif" alt="לייזר פרוליך, בניית אתרים ואפליקציות" width="1106" height="160" loading="lazy" /></a></div>
 
 <div className="wa" id="wa">
   <a href="https://wa.me/972547965608" target="_blank" rel="noopener" aria-label="שיחה בווטסאפ"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></a>
