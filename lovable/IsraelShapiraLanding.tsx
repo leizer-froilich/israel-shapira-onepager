@@ -252,7 +252,7 @@ $$('.reel').forEach(r=>{
 const dd = $('#dd'), ddBtn = dd.querySelector('button'), opts = [...dd.querySelectorAll('li')];
 function closeDD(){ dd.classList.remove('open'); ddBtn.setAttribute('aria-expanded','false'); }
 ddBtn.onclick = () => { const o = !dd.classList.contains('open'); dd.classList.toggle('open',o); ddBtn.setAttribute('aria-expanded',o); };
-opts.forEach(li => li.onclick = () => { opts.forEach(o=>o.setAttribute('aria-selected','false')); li.setAttribute('aria-selected','true'); $('#ddVal').textContent = li.textContent; $('#ddInput').value = li.textContent; closeDD(); });
+opts.forEach(li => li.onclick = () => { opts.forEach(o=>o.setAttribute('aria-selected','false')); li.setAttribute('aria-selected','true'); $('#ddVal').textContent = li.textContent; $('#ddVal').classList.remove('ph'); $('#ddInput').value = li.textContent; closeDD(); });
 document.addEventListener('click', e => { if(!dd.contains(e.target)) closeDD(); });
 
 /* videos on mobile: arrows move one card at a time (RTL: "next" scrolls left) */
@@ -276,9 +276,9 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   if (!form.name.value.trim()){ form.name.focus(); return; }
   if (!form.phone.value.trim()){ form.phone.focus(); return; }
-  const msg = `שלום ישראל, הגעתי מהאתר.\nשם: ${form.name.value.trim()}\nטלפון: ${form.phone.value.trim()}\nסוג: ${$('#ddInput').value}` + (form.message.value.trim() ? `\n${form.message.value.trim()}` : '');
+  const msg = `שלום ישראל, הגעתי מהאתר.\nשם: ${form.name.value.trim()}\nטלפון: ${form.phone.value.trim()}\nסוג: ${$('#ddInput').value || 'לא צוין'}` + (form.message.value.trim() ? `\n${form.message.value.trim()}` : '');
   window.open('https://wa.me/972547965608?text=' + encodeURIComponent(msg), '_blank', 'noopener');
-  form.reset(); toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),4000);
+  form.reset(); $('#ddVal').textContent = 'בחרו מהרשימה'; $('#ddVal').classList.add('ph'); opts.forEach(o=>o.setAttribute('aria-selected','false')); $('#ddInput').value = ''; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),4000);
 });
 /* "save a place" buttons pre-select the matching option in the form */
 $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = opts.find(o => o.textContent === a.dataset.pick); if (li) li.click(); }));
@@ -290,9 +290,9 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
     <div className="is-root">
 <div className="loader" id="loader" aria-hidden="true">
   <div className="loader__logo">
-    <img className="loader__art" src="assets/img/logo-full.jpg" alt="" />
-    <img className="loader__name" src="assets/img/logo-full.jpg" alt="" />
-    <img className="loader__tag" src="assets/img/logo-full.jpg" alt="" />
+    <img className="loader__art" src="assets/img/logo-full.jpg" alt="לוגו ישראל שפירא" aria-hidden="true" />
+    <img className="loader__name" src="assets/img/logo-full.jpg" alt="ישראל שפירא" aria-hidden="true" />
+    <img className="loader__tag" src="assets/img/logo-full.jpg" alt="חוקר. מטייל. משפיע." aria-hidden="true" />
     <span className="loader__pen"></span>
   </div>
 </div>
@@ -304,7 +304,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <path d="M40 360C90 330 120 340 150 300S200 220 250 230 320 280 360 230 390 140 440 120 490 90 505 60" strokeWidth="2.2" strokeDasharray="7 7" strokeLinecap="round" />
       <g strokeWidth="1.6"><circle cx="40" cy="360" r="6" /><circle cx="250" cy="230" r="5" /><path d="M499 54l12 12M511 54l-12 12" /></g>
       <path d="M150 300c-4-10 4-18 10-18s14 8 10 18l-10 14z" strokeWidth="1.6" fill="currentColor" fill-opacity=".18" />
-      <g transform="translate(400 300)" strokeWidth="1.3"><circle r="54" /><circle r="44" strokeDasharray="1.5 4" /><path d="M0-70V70M-70 0H70" strokeWidth=".7" /><path d="M0-62L10-10 0 0-10-10z" fill="currentColor" fill-opacity=".55" /><path d="M0 62L10 10 0 0-10 10z" /><path d="M-40-40l8 4M40-40l-4 8M-40 40l4-8M40 40l-8-4" strokeWidth=".9" /><text y="-74" text-anchor="middle" font-family="almoni-tzar,sans-serif" fontSize="16" fontWeight="800" fill="currentColor" stroke="none">N</text></g>
+      <g transform="translate(400 300)" strokeWidth="1.3"><circle r="54" /><circle r="44" strokeDasharray="1.5 4" /><path d="M0-70V70M-70 0H70" strokeWidth=".7" /><path d="M0-62L10-10 0 0-10-10z" fill="currentColor" fill-opacity=".55" /><path d="M0 62L10 10 0 0-10 10z" /><path d="M-40-40l8 4M40-40l-4 8M-40 40l4-8M40 40l-8-4" strokeWidth=".9" /></g>
       <g strokeWidth=".9" opacity=".7"><path d="M60 120c40-30 90-30 120 0s70 30 100 0" /><path d="M70 140c40-24 80-24 106 0s66 24 96 0" /><path d="M84 160c34-18 66-18 88 0s56 18 82 0" /></g>
     </symbol>
     <symbol id="topo" viewBox="0 0 800 600" fill="none" stroke="currentColor" strokeWidth="1.2">
@@ -342,7 +342,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
 
 <header className="header" id="header">
   <a href="#top" className="logo" aria-label="ישראל שפירא, לראש העמוד">
-    <img src="assets/img/avatar.jpg" alt="" width="44" height="44" />
+    <img src="assets/img/avatar.jpg" alt="איור של ישראל שפירא" width="44" height="44" />
     <span><b>ישראל שפירא</b><small>חוקר. מטייל. משפיע.</small></span>
   </a>
   <nav aria-label="ניווט ראשי">
@@ -381,7 +381,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
     </h1>
     <p className="lead fade-in">אני מצלם סרטונים בצימרים, בווילות ובאטרקציות, <br />ומפיץ אותם לקהל החרדי בערוצים שהוא באמת קורא.</p>
     <div className="pair fade-in l2">
-      <a className="btn btn-rust" href="#contact">בואו נדבר על העסק שלכם</a>
+      <a className="btn btn-rust" href="https://wa.me/972547965608?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%94%D7%93%D7%A3%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%9C%D7%9E%D7%A7%D7%95%D7%9D%20%D7%A9%D7%9C%D7%99" target="_blank" rel="noopener">דברו איתי בוואטסאפ</a>
       <a className="btn btn-line" href="#field">לתוצאות ולסרטונים</a>
     </div>
   </div>
@@ -400,6 +400,20 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
 </section>
 
 
+<section className="gets" id="gets">
+  <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
+  <div className="gets__head">
+    <h2 className="rv">מה מקבלים<br /><em>כשמפרסמים אצלי.</em></h2>
+    <a className="btn btn-rust rv d1" href="https://wa.me/972547965608?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%94%D7%93%D7%A3%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%9C%D7%9E%D7%A7%D7%95%D7%9D%20%D7%A9%D7%9C%D7%99" target="_blank" rel="noopener">דברו איתי בוואטסאפ</a>
+  </div>
+  <ol className="gets__list">
+    <li className="rv"><span className="gets__n">01</span><i><img className="ic3" src="assets/icons/youtube.png" alt="אייקון סרטון" aria-hidden="true" loading="lazy" /></i><h3>2 סרטוני חשיפה</h3><p>אני מגיע אליכם ומצלם במקום שני סרטוני חשיפה.</p></li>
+    <li className="rv d1"><span className="gets__n">02</span><i><img className="ic3" src="assets/icons/people.png" alt="אייקון קהל" aria-hidden="true" loading="lazy" /></i><h3>100,000 עוקבים</h3><p>פרסום לקהל של 100,000 עוקבים חרדים שמחפשים לאן לצאת.</p></li>
+    <li className="rv d2"><span className="gets__n">03</span><i><img className="ic3" src="assets/icons/phone.png" alt="אייקון טלפון" aria-hidden="true" loading="lazy" /></i><h3>פניות ישירות</h3><p>פניות ישירות אליכם, מאנשים שבאמת מתכננים להגיע.</p></li>
+  </ol>
+</section>
+
+
 <section className="tiul dark" id="tiul">
   <img className="tiul__bg" src="assets/img/tiul-base.jpg" alt="נוף הכנרת מלמעלה" loading="lazy" />
   <div className="tiul__head">
@@ -412,7 +426,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
     <figure className="vcard rv d2" style={{ "--tint": "205 60% 26%" }} data-speed=".13"><img src="assets/img/waterfall-oasis.jpg" alt="מפל בנווה מדבר" loading="lazy" /><figcaption><h3>מקום שמתאים</h3><p>כשרות מוכרת, פרטיות ובריכה שאפשר להשתמש בה. מקום כזה מקבל אותם שוב ושוב.</p></figcaption></figure>
     <figure className="vcard rv d3" style={{ "--tint": "30 60% 34%" }} data-speed=".05"><img src="assets/img/galil-meron.jpg" alt="נוף ירוק בגליל העליון" loading="lazy" /><figcaption><h3>לפי המלצה</h3><p>הם לא בוחרים לפי מודעה. הם בוחרים לפי מי שהם מכירים וסומכים עליו.</p></figcaption></figure>
   </div>
-  <img className="tiul__fg" src="assets/img/tiul-fg.webp" alt="" role="presentation" loading="lazy" />
+  <img className="tiul__fg" src="assets/img/tiul-fg.webp" alt="גבעות הגליל בחזית" aria-hidden="true" loading="lazy" />
 </section>
 
 
@@ -423,16 +437,16 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <h2 className="rv">קשה להגיע אליהם.<br /><em>אני כבר שם.</em></h2>
       <p className="lead rv d1" style={{ color: "hsl(var(--stone))" }}>רוב הציבור החרדי לא רואה טלוויזיה, לא גולש באינטרנט פתוח<br />ולא נחשף למודעות ברשתות. פרסום רגיל פשוט לא מגיע אליו.</p>
       <div className="chips rv d2">
-        <span className="chip"><i><img className="ic3" src="assets/icons/cabin.png" alt="" loading="lazy" /></i>צימרים ווילות</span>
-        <span className="chip"><i><img className="ic3" src="assets/icons/ferris.png" alt="" loading="lazy" /></i>אטרקציות ופארקים</span>
-        <span className="chip"><i><img className="ic3" src="assets/icons/hotel.png" alt="" loading="lazy" /></i>מלונות ובתי הארחה</span>
-        <span className="chip"><i><img className="ic3" src="assets/icons/tent.png" alt="" loading="lazy" /></i>מתחמי אירוח</span>
+        <span className="chip"><i><img className="ic3" src="assets/icons/cabin.png" alt="אייקון צימר" aria-hidden="true" loading="lazy" /></i>צימרים ווילות</span>
+        <span className="chip"><i><img className="ic3" src="assets/icons/ferris.png" alt="אייקון גלגל ענק" aria-hidden="true" loading="lazy" /></i>אטרקציות ופארקים</span>
+        <span className="chip"><i><img className="ic3" src="assets/icons/hotel.png" alt="אייקון מלון" aria-hidden="true" loading="lazy" /></i>מלונות ובתי הארחה</span>
+        <span className="chip"><i><img className="ic3" src="assets/icons/tent.png" alt="אייקון אוהל" aria-hidden="true" loading="lazy" /></i>מתחמי אירוח</span>
       </div>
     </div>
     <div className="why__list">
       <div className="wi rv"><span className="n">01</span><div><h3>אני בערוצים שהם קוראים</h3><p>הקהל צורך תוכן בערוצי ווטסאפ, בקבוצות ובערוץ בנטפרי<br />(הסינון שדרכו גולש רוב הציבור החרדי). שם אני מפרסם.</p></div></div>
       <div className="wi rv d1"><span className="n">02</span><div><h3>100,000 עוקבים</h3><p>כל סרטון שאני מעלה יוצא לכל הערוצים יחד:</p><ul className="reach" aria-label="הערוצים">
-        <li><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" />ווטסאפ</li><li><img className="ic3" src="assets/icons/drop.png" alt="" loading="lazy" />נטפרי</li><li><img className="ic3" src="assets/icons/youtube.png" alt="" loading="lazy" />יוטיוב</li><li><img className="ic3" src="assets/icons/instagram.png" alt="" loading="lazy" />אינסטגרם</li><li><img className="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy" />טיקטוק</li><li><img className="ic3" src="assets/icons/facebook.png" alt="" loading="lazy" />פייסבוק</li>
+        <li><img className="ic3" src="assets/icons/whatsapp.png" alt="אייקון ווטסאפ" aria-hidden="true" loading="lazy" />ווטסאפ</li><li><img className="ic3" src="assets/icons/drop.png" alt="אייקון טיפת מים" aria-hidden="true" loading="lazy" />נטפרי</li><li><img className="ic3" src="assets/icons/youtube.png" alt="אייקון יוטיוב" aria-hidden="true" loading="lazy" />יוטיוב</li><li><img className="ic3" src="assets/icons/instagram.png" alt="אייקון אינסטגרם" aria-hidden="true" loading="lazy" />אינסטגרם</li><li><img className="ic3" src="assets/icons/tiktok.png" alt="אייקון טיקטוק" aria-hidden="true" loading="lazy" />טיקטוק</li><li><img className="ic3" src="assets/icons/facebook.png" alt="אייקון פייסבוק" aria-hidden="true" loading="lazy" />פייסבוק</li>
       </ul></div></div>
       <div className="wi rv d2"><span className="n">03</span><div><h3>המלצה, לא מודעה</h3><p>הקהל מכיר אותי ויודע שאני מגיע למקום בעצמי לפני שאני ממליץ עליו.<br />לכן הוא מתקשר.</p></div></div>
     </div>
@@ -478,7 +492,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
           <a className="btn btn-rust" href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener">לעוד סרטונים</a>
         </div>
         <div className="field__reels">
-          <div className="rbox"><div className="reel"><video src="assets/video/dcity.mp4" poster="assets/video/dcity.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: DCITY"><i><svg><use href="#i-play" /></svg></i><b>DCITY</b><span>פארק מים ואטרקציות</span></button></div><p className="rbox__story"><b>1,700 קליקים תוך יומיים.</b> סרטון אחד שעשיתי ל-DCITY הביא 1,700 קליקים לאתר שלהם תוך יומיים.</p></div>
+          <div className="rbox"><div className="reel"><video src="assets/video/dcity.mp4" poster="assets/video/dcity.jpg" playsInline preload="none" aria-label="סרטון"><p>הדפדפן לא מציג את הסרטון.</p></video><button className="play" aria-label="הפעלת סרטון: DCITY"><i><svg><use href="#i-play" /></svg></i><b>DCITY</b><span>פארק מים ואטרקציות</span></button></div><p className="rbox__story"><b>1,700 קליקים תוך יומיים.</b> סרטון אחד שעשיתי ל-DCITY הביא 1,700 קליקים לאתר שלהם תוך יומיים.</p></div>
           <div className="field__media">
             <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
             <b>פעם בשבוע.<br />עכשיו זה קבוע.</b>
@@ -486,9 +500,9 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
             
             <blockquote className="field__quote" hidden></blockquote>
           </div>
-          <div className="rbox"><div className="reel"><video src="assets/video/villa-galil.mp4" poster="assets/video/villa-galil.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: וילת אירוח בגליל"><i><svg><use href="#i-play" /></svg></i><b>וילת אירוח בגליל</b><span>בריכה, ג׳קוזי ומתחם לקבוצות</span></button></div></div>
-          <div className="rbox"><div className="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: מלון בוטיק עם בריכות"><i><svg><use href="#i-play" /></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div></div>
-          <div className="rbox"><div className="reel"><video src="assets/video/zimmer.mp4" poster="assets/video/zimmer.jpg" playsInline preload="none"></video><button className="play" aria-label="הפעלת סרטון: צימר ליד ירושלים"><i><svg><use href="#i-play" /></svg></i><b>צימר ליד ירושלים</b><span>רבע שעה מירושלים</span></button></div></div>
+          <div className="rbox"><div className="reel"><video src="assets/video/villa-galil.mp4" poster="assets/video/villa-galil.jpg" playsInline preload="none" aria-label="סרטון"><p>הדפדפן לא מציג את הסרטון.</p></video><button className="play" aria-label="הפעלת סרטון: וילת אירוח בגליל"><i><svg><use href="#i-play" /></svg></i><b>וילת אירוח בגליל</b><span>בריכה, ג׳קוזי ומתחם לקבוצות</span></button></div></div>
+          <div className="rbox"><div className="reel"><video src="assets/video/reel5.mp4" poster="assets/video/reel5.jpg" playsInline preload="none" aria-label="סרטון"><p>הדפדפן לא מציג את הסרטון.</p></video><button className="play" aria-label="הפעלת סרטון: מלון בוטיק עם בריכות"><i><svg><use href="#i-play" /></svg></i><b>מלון בוטיק עם בריכות</b><span>13 חדרים · 1,500 מ"ר</span></button></div></div>
+          <div className="rbox"><div className="reel"><video src="assets/video/zimmer.mp4" poster="assets/video/zimmer.jpg" playsInline preload="none" aria-label="סרטון"><p>הדפדפן לא מציג את הסרטון.</p></video><button className="play" aria-label="הפעלת סרטון: צימר ליד ירושלים"><i><svg><use href="#i-play" /></svg></i><b>צימר ליד ירושלים</b><span>רבע שעה מירושלים</span></button></div></div>
         </div>
         <div className="field__arrows" aria-label="מעבר בין הסרטונים">
           <button type="button" className="farr" data-dir="-1" aria-label="הקודם"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
@@ -504,7 +518,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
   <div className="disc" id="disc">
     <img className="disc__bg" src="assets/img/network-hiker.jpg" alt="מטייל עם תרמיל על רכס, מביט אל עמק ירוק" loading="lazy" />
     <div className="disc__word" id="discWord" aria-hidden="true">נטוורקינג</div>
-    <img className="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="" role="presentation" loading="lazy" />
+    <img className="disc__fg" id="discFg" src="assets/img/network-hiker-cut.png" alt="מטייל עומד על רכס" aria-hidden="true" loading="lazy" />
   </div>
   <div className="net__body">
     <svg className="topo" viewBox="0 0 800 600" aria-hidden="true"><use href="#topo" /></svg>
@@ -514,12 +528,12 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <a className="btn btn-rust net__cta rv d2" href="#contact" data-pick="יום נטוורקינג">לשריון מקום ביום הבא</a>
     </div>
     <ul className="net__list">
-      <li className="rv"><i><img className="ic3" src="assets/icons/compass.png" alt="" loading="lazy" /></i><b>פעם בשבועיים</b><span>בימי שלישי</span></li>
-      <li className="rv d1"><i><img className="ic3" src="assets/icons/clock.png" alt="" loading="lazy" /></i><b>9:00-17:00</b><span>יום שלם בשטח</span></li>
-      <li className="rv d2"><i><img className="ic3" src="assets/icons/pin.png" alt="" loading="lazy" /></i><b>כל פעם במקום אחר</b><span>ברחבי הארץ</span></li>
-      <li className="rv"><i><img className="ic3" src="assets/icons/people.png" alt="" loading="lazy" /></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
-      <li className="rv d1 story"><i><img className="ic3" src="assets/icons/check.png" alt="" loading="lazy" /></i><b>אינסטלטור ויקב</b><span>באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב. עסקה של כ-30,000 ₪.</span></li>
-      <li className="rv d2 story"><i><img className="ic3" src="assets/icons/chat.png" alt="" loading="lazy" /></i><b>שף ומשתתף</b><span>באותו יום שף סגר אירוע עם אחד המשתתפים, גם כן סביב 30,000 ₪.</span></li>
+      <li className="rv"><i><img className="ic3" src="assets/icons/compass.png" alt="אייקון מצפן" aria-hidden="true" loading="lazy" /></i><b>פעם בשבועיים</b><span>בימי שלישי</span></li>
+      <li className="rv d1"><i><img className="ic3" src="assets/icons/clock.png" alt="אייקון שעון" aria-hidden="true" loading="lazy" /></i><b>9:00-17:00</b><span>יום שלם בשטח</span></li>
+      <li className="rv d2"><i><img className="ic3" src="assets/icons/pin.png" alt="אייקון סמן מיקום" aria-hidden="true" loading="lazy" /></i><b>כל פעם במקום אחר</b><span>ברחבי הארץ</span></li>
+      <li className="rv"><i><img className="ic3" src="assets/icons/people.png" alt="אייקון אנשים" aria-hidden="true" loading="lazy" /></i><b>מ-280 ₪ ליום</b><span>בחבילה של 5 ימים</span></li>
+      <li className="rv d1 story"><i><img className="ic3" src="assets/icons/check.png" alt="אייקון וי" aria-hidden="true" loading="lazy" /></i><b>אינסטלטור ויקב</b><span>באחד הימים האחרונים אינסטלטור סגר עבודה עם יקב. עסקה של כ-30,000 ₪.</span></li>
+      <li className="rv d2 story"><i><img className="ic3" src="assets/icons/chat.png" alt="אייקון בועת שיחה" aria-hidden="true" loading="lazy" /></i><b>שף ומשתתף</b><span>באותו יום שף סגר אירוע עם אחד המשתתפים, גם כן סביב 30,000 ₪.</span></li>
     </ul>
   </div>
   <svg className="ccut" viewBox="0 0 1440 250" preserveAspectRatio="none" aria-hidden="true">
@@ -538,8 +552,8 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <h2 className="rv">נעים להכיר,<br /><em>ישראל שפירא.</em></h2>
       <p className="lead rv d1">מדריך טיולים מוסמך, עשר שנים בשטח.<br />אני מטייל בכל הארץ, מצלם ומספר לקהילה שלי איפה שווה לנפוש.</p>
       <ul className="creds">
-        <li className="rv"><span className="ic"><img className="ic3" src="assets/icons/compass.png" alt="" loading="lazy" /></span><span><b>מדריך טיולים מוסמך</b><span>בוגר מכללת ירושלים, מכללת וינגייט, מכללת הרצוג והאוניברסיטה העברית</span></span></li>
-        <li className="rv d1"><span className="ic"><img className="ic3" src="assets/icons/mic.png" alt="" loading="lazy" /></span><span><b>מופיע בתקשורת</b><span className="media"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></span></span></li>
+        <li className="rv"><span className="ic"><img className="ic3" src="assets/icons/compass.png" alt="אייקון מצפן" aria-hidden="true" loading="lazy" /></span><span><b>מדריך טיולים מוסמך</b><span>בוגר מכללת ירושלים, מכללת וינגייט, מכללת הרצוג והאוניברסיטה העברית</span></span></li>
+        <li className="rv d1"><span className="ic"><img className="ic3" src="assets/icons/mic.png" alt="אייקון מיקרופון" aria-hidden="true" loading="lazy" /></span><span><b>מופיע בתקשורת</b><span className="media"><img src="assets/logos/kan11-mono.svg" alt="כאן 11" loading="lazy" /><img src="assets/logos/reshet13-mono.svg" alt="רשת 13" loading="lazy" /></span></span></li>
       </ul>
       <p className="quote rv">"המטרה שלי פשוטה:<br />שכל משפחה חרדית תכיר את הארץ,<br />ושכל מקום טוב בארץ יכיר את המשפחות האלה."</p>
     </div>
@@ -567,9 +581,9 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <h2 className="rv">יש לכם מקום<br />ששווה לטייל אליו?<br /><em>בואו נביא אליו קהל.</em></h2>
       <p className="lead rv d1">ספרו לי על העסק שלכם,<br />ואחזור אליכם לשיחה קצרה, בלי התחייבות.</p>
       <div className="ways rv d2">
-        <a className="way" href="tel:+972547965608"><i><img className="ic3" src="assets/icons/phone.png" alt="" loading="lazy" /></i><b>חייגו</b><span dir="ltr">054-7965608</span></a>
-        <a className="way" href="https://wa.me/972547965608" target="_blank" rel="noopener"><i><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></i><b>ווטסאפ</b><span>מענה מהיר</span></a>
-        <a className="way" href="mailto:7115039@gmail.com"><i><img className="ic3" src="assets/icons/chat.png" alt="" loading="lazy" /></i><b>מייל</b><span dir="ltr">7115039@gmail.com</span></a>
+        <a className="way" href="tel:+972547965608"><i><img className="ic3" src="assets/icons/phone.png" alt="אייקון טלפון" aria-hidden="true" loading="lazy" /></i><b>חייגו</b><span dir="ltr">054-7965608</span></a>
+        <a className="way" href="https://wa.me/972547965608?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%94%D7%93%D7%A3%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%9C%D7%9E%D7%A7%D7%95%D7%9D%20%D7%A9%D7%9C%D7%99" target="_blank" rel="noopener"><i><img className="ic3" src="assets/icons/whatsapp.png" alt="אייקון ווטסאפ" aria-hidden="true" loading="lazy" /></i><b>ווטסאפ</b><span>מענה מהיר</span></a>
+        <a className="way" href="mailto:7115039@gmail.com"><i><img className="ic3" src="assets/icons/chat.png" alt="אייקון בועת שיחה" aria-hidden="true" loading="lazy" /></i><b>מייל</b><span dir="ltr">7115039@gmail.com</span></a>
       </div>
     </div>
     <form className="card rv d2" id="leadForm" noValidate>
@@ -581,11 +595,11 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
       <div className="f">
         <span className="lbl" id="ddLbl">סוג העסק או הפנייה</span>
         <div className="dd" id="dd">
-          <button type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ddLbl ddVal"><span id="ddVal">אטרקציה</span><svg><use href="#i-down" /></svg></button>
+          <button type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="ddLbl ddVal"><span id="ddVal" className="ph">בחרו מהרשימה</span><svg><use href="#i-down" /></svg></button>
           <ul role="listbox" aria-labelledby="ddLbl">
-            <li role="option" aria-selected="true">אטרקציה</li><li role="option">מלון או בית הארחה</li><li role="option">צימר או וילה</li><li role="option">מתחם אירוח</li><li role="option">יום נטוורקינג</li><li role="option">אחר</li>
+            <li role="option" aria-selected="false">אטרקציה</li><li role="option">מלון או בית הארחה</li><li role="option">צימר או וילה</li><li role="option">מתחם אירוח</li><li role="option">יום נטוורקינג</li><li role="option">אחר</li>
           </ul>
-          <input type="hidden" name="type" id="ddInput" defaultValue="אטרקציה" />
+          <input type="hidden" name="type" id="ddInput" value="" />
         </div>
       </div>
       <div className="f"><label htmlFor="f-msg">ספרו לי בקצרה</label><textarea id="f-msg" name="message"></textarea></div>
@@ -599,14 +613,14 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
 <footer className="dark">
   <div className="foot">
     <div>
-      <a href="#top" className="logo"><img src="assets/img/avatar.jpg" alt="" width="44" height="44" /><span><b>ישראל שפירא</b><small>חוקר. מטייל. משפיע.</small></span></a>
+      <a href="#top" className="logo"><img src="assets/img/avatar.jpg" alt="איור של ישראל שפירא" width="44" height="44" /><span><b>ישראל שפירא</b><small>חוקר. מטייל. משפיע.</small></span></a>
       <p>מקדם צימרים, וילות ואטרקציות מול הציבור החרדי, ומארגן ימי נטוורקינג לבעלי עסקים.</p>
       <div className="socials">
-        <a href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener" aria-label="יוטיוב"><img className="ic3" src="assets/icons/youtube.png" alt="" loading="lazy" /></a>
-        <a href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener" aria-label="אינסטגרם"><img className="ic3" src="assets/icons/instagram.png" alt="" loading="lazy" /></a>
-        <a href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener" aria-label="טיקטוק"><img className="ic3" src="assets/icons/tiktok.png" alt="" loading="lazy" /></a>
-        <a href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener" aria-label="פייסבוק"><img className="ic3" src="assets/icons/facebook.png" alt="" loading="lazy" /></a>
-        <a href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener" aria-label="ערוץ ווטסאפ"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></a>
+        <a href="https://youtube.com/channel/UCOkbVLgjU1xOhOZoKdm82cA" target="_blank" rel="noopener" aria-label="יוטיוב"><img className="ic3" src="assets/icons/youtube.png" alt="אייקון יוטיוב" aria-hidden="true" loading="lazy" /></a>
+        <a href="https://instagram.com/israel_shapira_travels" target="_blank" rel="noopener" aria-label="אינסטגרם"><img className="ic3" src="assets/icons/instagram.png" alt="אייקון אינסטגרם" aria-hidden="true" loading="lazy" /></a>
+        <a href="https://www.tiktok.com/@user611937327755949" target="_blank" rel="noopener" aria-label="טיקטוק"><img className="ic3" src="assets/icons/tiktok.png" alt="אייקון טיקטוק" aria-hidden="true" loading="lazy" /></a>
+        <a href="https://www.facebook.com/share/14wAL1mBdbT/" target="_blank" rel="noopener" aria-label="פייסבוק"><img className="ic3" src="assets/icons/facebook.png" alt="אייקון פייסבוק" aria-hidden="true" loading="lazy" /></a>
+        <a href="https://whatsapp.com/channel/0029VaKwhBJDDmFMr271lu2S" target="_blank" rel="noopener" aria-label="ערוץ ווטסאפ"><img className="ic3" src="assets/icons/whatsapp.png" alt="אייקון ווטסאפ" aria-hidden="true" loading="lazy" /></a>
       </div>
     </div>
     <div><h4>ניווט</h4><ul><li><a href="#why">למה דרכי</a></li><li><a href="#process">איך זה עובד</a></li><li><a href="#field">תוצאות</a></li><li><a href="#about">נעים להכיר</a></li></ul></div>
@@ -620,7 +634,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
 <div className="credit-bar" id="creditBar"><a href="https://leizer-froilich.com" target="_blank" rel="noopener" dir="ltr"><img src="assets/img/credit.gif" alt="לייזר פרוליך, בניית אתרים ואפליקציות" width="1106" height="160" loading="lazy" /></a></div>
 
 <div className="wa" id="wa">
-  <a href="https://wa.me/972547965608" target="_blank" rel="noopener" aria-label="שיחה בווטסאפ"><img className="ic3" src="assets/icons/whatsapp.png" alt="" loading="lazy" /></a>
+  <a href="https://wa.me/972547965608?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%94%D7%93%D7%A3%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%A4%D7%A8%D7%A1%D7%95%D7%9D%20%D7%9C%D7%9E%D7%A7%D7%95%D7%9D%20%D7%A9%D7%9C%D7%99" target="_blank" rel="noopener" aria-label="דברו איתי בוואטסאפ"><img className="ic3" src="assets/icons/whatsapp.png" alt="אייקון ווטסאפ" aria-hidden="true" loading="lazy" /></a>
   <span className="bubble">רוצים קהל חרדי? דברו איתי</span>
 </div>
 <div className="route" id="route" role="scrollbar" aria-label="התקדמות בדף" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabIndex="-1">
@@ -630,7 +644,7 @@ $$('[data-pick]').forEach(a => a.addEventListener('click', () => { const li = op
     <path className="r-line" vectorEffect="non-scaling-stroke" d="M17 0C30 70 4 140 17 220S30 360 17 440 4 580 17 660 30 800 17 880 10 960 17 1000" />
   </svg>
   <span className="r-start"></span><span className="r-end"></span>
-  <div className="car" id="rCar"><img src="assets/icons/pin.png" alt="" /></div>
+  <div className="car" id="rCar"><img src="assets/icons/pin.png" alt="סמן ההתקדמות בדף" aria-hidden="true" /></div>
 </div>
 <div className="toast" id="toast" role="status">פתחנו לכם ווטסאפ עם הפרטים. נשאר רק לשלוח</div>
     </div>

@@ -637,6 +637,29 @@ h2.drawn em::after{clip-path:inset(0 0 0 0)}
   .net__list li.story{grid-column:1/-1}
 }
 
+
+/* ---------- round 12: what you get ---------- */
+.gets{position:relative;overflow:hidden;background:hsl(var(--cream));padding:var(--sec) var(--side)}
+.gets .topo{width:min(900px,120vw);left:-20%;top:-30%;color:hsl(var(--forest));opacity:.06}
+.gets__head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:var(--group)}
+.gets__head h2{margin:0}
+.gets__list{position:relative;z-index:1;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,24px)}
+.gets__list li{position:relative;display:flex;flex-direction:column;gap:10px;padding:clamp(26px,2.6vw,40px);border-radius:var(--r);background:hsl(var(--paper));box-shadow:0 30px 60px -44px hsl(var(--deep)/.5);transition:transform .5s var(--ease)}
+.gets__list li:hover{transform:translateY(-6px)}
+.gets__list i{width:72px;height:72px}
+.gets__n{position:absolute;top:clamp(20px,2vw,30px);left:clamp(22px,2.2vw,34px);font-family:var(--font-display);font-weight:800;font-size:clamp(2.6rem,3.6vw,3.8rem);line-height:.85;color:hsl(var(--rust)/.9)}
+.gets__list h3{margin:6px 0 0;font-size:clamp(1.7rem,2.2vw,2.3rem);line-height:1;color:hsl(var(--forest))}
+.gets__list p{margin:0;color:hsl(var(--stone))}
+#ddVal.ph{opacity:.55}
+@media (max-width:900px){
+  .gets__head{flex-direction:column;align-items:flex-start;gap:20px}
+  .gets__list{grid-template-columns:1fr}
+  .gets__list li{display:grid;grid-template-columns:60px 1fr;column-gap:16px;row-gap:4px;align-items:center;padding:22px}
+  .gets__list i{width:60px;height:60px;grid-row:span 2}
+  .gets__list h3{margin:0;font-size:1.6rem}
+  .gets__n{font-size:2.2rem;top:18px;left:18px}
+}
+
 /* WhatsApp: bottom right */
 .wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px}
 .wa a{width:66px;height:66px;display:block;transition:transform .3s}
